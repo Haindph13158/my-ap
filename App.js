@@ -5,51 +5,92 @@
  * @format
  * @flow strict-local
  */
-
+ import {NavigationContainer} from '@react-navigation/native';
+ import {createNativeStackNavigator} from '@react-navigation/native-stack';
  import React from 'react';
- import {View , StyleSheet, TouchableOpacity, Text} from 'react-native'
-//  import auth from '@react-native-firebase/auth';
- import {GoogleSignin} from '@react-native-google-signin/google-signin';
- GoogleSignin.configure({
-   webClientId: "843106096419-ht98iqnuu97kpc8uaiipnki67r6glogt.apps.googleusercontent.com",
-   offlineAccess: false,
- });
- 
+ import {StyleSheet, View} from 'react-native';
+ import {Provider} from 'react-redux';
+ import {PersistGate} from 'redux-persist/integration/react';
+ import persistor, {store} from './src/app/store';
+ import NavBottom from './src/container/navBottom';
+ import FeeScreen from './src/screens/FeeScreen';
+ import SmsScreen from './src/screens/SmsScreen';
+ import FirstLoginScreen from './src/screens/authScreen/firstLoginScreen';
+ import LoginScreen from './src/screens/authScreen/loginScreen';
+ import StartApp from './src/screens/homeScreen/StartApp';
+ import Notification from './src/screens/Notification';
+ import ViewContent from './src/screens/ScheduleScreen/ViewContent';
+ import RewardScreen from './src/screens/RewardScreen';
  const styles = StyleSheet.create({
- 
- })
+   container: {
+     flex: 1,
+   },
+ });
+ const Stack = createNativeStackNavigator();
  const App = () => {
-  
-   const onGoogleButtonPress = async () => {
-     // Get the users ID token
-     const {idToken} = await GoogleSignin.signIn();
-     console.log('token', idToken);
-     // Create a Google credential with the token
-    //  const googleCredential = auth.GoogleAuthProvider.credential(idToken);
- 
-     // Sign-in the user with the credential
-    //  const user_login = auth().signInWithCredential(googleCredential);
-    //  user_login.then((user) => {
-    //    if(user){
-    //      // console.log(user.additionalUserInfo.profile);
-    //      dispatch(login(user.additionalUserInfo.profile))
-    //      navigation.navigate("Home")
-    //    }
-    //  }).catch(err => console.log(err));
+   const MainScreen = () => {
+     return <NavBottom />;
    };
    return (
-     <View style={styles.buttonContainer}>
-       <TouchableOpacity
-         style={styles.button_second}
-         onPress={() =>
-           onGoogleButtonPress().then(() =>
-             console.log('Signed in with Google!'),
-           )
-         }>
-         <Text style={styles.buttonText}>Đăng nhập bằng tài khoản google</Text>
-     </TouchableOpacity>
-   </View>
+     <Provider store={store}>
+       <PersistGate loading={null} persistor={persistor}>
+         <View style={styles.container}>
+           <NavigationContainer>
+             <Stack.Navigator initialRouteName="App">
+               <Stack.Screen
+                 name="App"
+                 component={StartApp}
+                 options={{headerShown: false}}
+               />
+               <Stack.Screen
+                 name="Home"
+                 component={MainScreen}
+                 options={{headerShown: false}}
+               />
+               <Stack.Screen
+                 options={{headerShown: false}}
+                 name="Login"
+                 component={LoginScreen}
+               />
+               <Stack.Screen
+                 options={{headerShown: false}}
+                 name="Fee"
+                 component={FeeScreen}
+               />
+               <Stack.Screen
+                 options={{headerShown: false}}
+                 name="Reward"
+                 component={RewardScreen}
+               />
+ 
+               <Stack.Screen
+                 options={{headerShown: false}}
+                 name="Sms"
+                 component={SmsScreen}
+               />
+ 
+               <Stack.Screen
+                 options={{headerShown: false}}
+                 name="FirstLogin"
+                 component={FirstLoginScreen}
+               />
+               <Stack.Screen
+                 options={{headerShown: false}}
+                 name="viewContent"
+                 component={ViewContent}
+               />
+               <Stack.Screen
+                 options={{headerShown: false}}
+                 name="notification"
+                 component={Notification}
+               />
+             </Stack.Navigator>
+           </NavigationContainer>
+         </View>
+       </PersistGate>
+     </Provider>
    );
  };
  
  export default App;
+ 
