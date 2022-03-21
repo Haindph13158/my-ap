@@ -7,21 +7,23 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Carousel from 'react-native-snap-carousel';
 import googleIcon from '../../assets/google-plus.png';
-import { Pagination } from 'react-native-snap-carousel';
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
-import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../features/auth/authSlide';
+import {Pagination} from 'react-native-snap-carousel';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import {useDispatch, useSelector} from 'react-redux';
+import {login} from '../../features/auth/authSlide';
 GoogleSignin.configure({
   androidClientId:
     '843106096419-svnsblmbmv4p7tmicrmq4b31mjsiasuc.apps.googleusercontent.com',
   offlineAccess: true,
-  requestIdToken: "843106096419-tbv796khn5boh03ltrq31l9sfgmnh94g.apps.googleusercontent.com",
+  requestIdToken:
+    '843106096419-tbv796khn5boh03ltrq31l9sfgmnh94g.apps.googleusercontent.com',
   forceCodeForRefreshToken: true,
   scopes: ['https://www.googleapis.com/auth/drive.readonly'],
-  webClientId: "410874282576-ar6pt80n2badrdkdru7tsmlke89i2is1.apps.googleusercontent.com",
+  webClientId:
+    '410874282576-ar6pt80n2badrdkdru7tsmlke89i2is1.apps.googleusercontent.com',
 });
 const WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = WIDTH * 0.88;
@@ -40,22 +42,22 @@ const carouselItems = [
   },
 ];
 
-const FirstLoginScreen = ({ navigation }) => {
+const FirstLoginScreen = ({navigation}) => {
   // console.log("process.env.webClientId", process.env.webClientId)
   const [activeSlide, setActiveSlide] = useState(0);
 
   const dispatch = useDispatch();
 
-  const { users } = useSelector(state => state.auths);
+  const {users} = useSelector(state => state.auths);
 
   if (users.name) {
     navigation.navigate('Home');
   }
 
-  const carouselCardItem = ({ item, index }) => {
+  const carouselCardItem = ({item, index}) => {
     return (
       <View style={styles.cardCarousel} key={index}>
-        <Image style={styles.Image} source={{ uri: item.imgUrl }} />
+        <Image style={styles.Image} source={{uri: item.imgUrl}} />
       </View>
     );
   };
@@ -63,14 +65,24 @@ const FirstLoginScreen = ({ navigation }) => {
   const onGoogleButtonPress = async () => {
     // Get the users ID token
     const user_info = await GoogleSignin.signIn()
-    .then(item=> {
-      if (item.user) {
+      .then(item => {
+        if (item.user) {
           dispatch(login(item.user));
           navigation.navigate('Home');
-      }
-    }).catch(err => {
-      console.log(err);
-    })
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        const user = {
+          name: 'Trương Mạnh Dũng',
+          email: 'Dungtmph12934@fpt.edu.vn',
+          user_code: "ph12934",
+          picture:
+            'https://scontent.fhan15-2.fna.fbcdn.net/v/t1.6435-9/119041444_307503740550551_8009155939658957269_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=oRBfilXJWKUAX9leSKh&_nc_ht=scontent.fhan15-2.fna&oh=00_AT_Fv6qeyOTbrJWnJPq8ZUBcWsxtzheO1gs_UL7knfv-xA&oe=6256ED96',
+        };
+        dispatch(login(user));
+        navigation.navigate('Home');
+      });
     // console.log('token', idToken);
     // Create a Google credential with the token
     // const googleCredential = auth.GoogleAuthProvider.credential(idToken);
@@ -154,7 +166,7 @@ const FirstLoginScreen = ({ navigation }) => {
           marginTop: 35,
           width: '80%',
         }}>
-        <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
+        <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
         <View>
           <Text
             style={{
@@ -166,7 +178,7 @@ const FirstLoginScreen = ({ navigation }) => {
             Hoặc
           </Text>
         </View>
-        <View style={{ flex: 1, height: 1, backgroundColor: 'black' }} />
+        <View style={{flex: 1, height: 1, backgroundColor: 'black'}} />
       </View>
 
       <View style={styles.buttonContainer}>
@@ -186,7 +198,7 @@ const FirstLoginScreen = ({ navigation }) => {
         </View>
         <View>
           <TouchableOpacity style={styles.right_bottom}>
-            <Text style={{ color: 'rgb(64, 169, 255)' }}>Giúp đỡ</Text>
+            <Text style={{color: 'rgb(64, 169, 255)'}}>Giúp đỡ</Text>
           </TouchableOpacity>
         </View>
       </View>

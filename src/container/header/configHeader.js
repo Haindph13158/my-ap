@@ -99,8 +99,6 @@ function ConfigHeader(props) {
 
   const dispatch = useDispatch();
   const {users} = useSelector(state => state.auths);
-  console.log(users);
-
   const [isShowModal, setIsShowModal] = useState(false);
 
   const onShowModal = () => {
@@ -185,7 +183,7 @@ function ConfigHeader(props) {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate('Home');
+                    navigation.navigate('forminfomember');
                     setIsShowModal(false);
                   }}
                   style={styles.optionViewBtn}>

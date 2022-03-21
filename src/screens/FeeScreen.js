@@ -7,9 +7,11 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import {Button} from 'react-native-elements';
 import TopBar from '../container/header/TopBar';
+const HEIGHT = Dimensions.get('window').height;
 const data = [
   {
     name: 'Nguyễn Đức Hải',
@@ -22,7 +24,7 @@ const data = [
 ];
 function FeeScreen(props) {
   return (
-    <>
+    <View style={styles.wrapper}>
       <TopBar />
       <ScrollView style={styles.scroll}>
         <View style={styles.container}>
@@ -45,6 +47,7 @@ function FeeScreen(props) {
             </View>
           ))}
         </View>
+        
         <View style={styles.container}>
           <>
             <Text style={styles.textTitle}>
@@ -64,21 +67,29 @@ function FeeScreen(props) {
             />
           </>
         </View>
-        <View style={styles.container}>
+        <View style={[styles.container, {marginBottom: 30}]}>
           <>
             <Text style={styles.textTitle}>Tệp đính kèm</Text>
           </>
         </View>
+      </ScrollView>
+      <View style={{marginBottom: 30}}>
         <TouchableOpacity style={styles.button} activeOpacity={0.5}>
           <Text style={styles.textBtn}>Gia hạn học phí</Text>
         </TouchableOpacity>
-      </ScrollView>
-    </>
+      </View>
+    </View>
   );
 }
 const styles = StyleSheet.create({
-  scroll: {
+  wrapper: {
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     backgroundColor: '#DDDDDD',
+    height: HEIGHT,
+  },
+  scroll: {
+    backgroundColor: '#DDDDDD', 
   },
   container: {
     backgroundColor: '#ffffff',
@@ -128,6 +139,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     padding: 10,
     borderRadius: 24,
+    marginBottom: 10,
   },
   textBtn: {
     textAlign: 'center',

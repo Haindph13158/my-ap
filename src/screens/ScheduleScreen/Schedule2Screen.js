@@ -1,26 +1,23 @@
-import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react';
 import {
-  View,
-  StyleSheet,
   SafeAreaView,
-  StatusBar,
-  TouchableOpacity,
+  StatusBar, StyleSheet, View
 } from 'react-native';
-import {Text} from 'react-native-elements';
-import {useNavigation} from '@react-navigation/native';
-import ConfigHeader from '../../container/header/configHeader';
+import { ScrollView } from 'react-native-gesture-handler';
 import ScrollableTabView, {
-  ScrollableTabBar,
+  ScrollableTabBar
 } from 'react-native-scrollable-tab-view';
-import {ScrollView} from 'react-native-gesture-handler';
-import {useDispatch, useSelector} from 'react-redux';
-import {onSetSchedule} from '../../features/scheduleSlide/scheduleSlide';
+import { useDispatch, useSelector } from 'react-redux';
+import AttendanceContent from '../../components/ScheduleComponent/attendanceContent';
+import ScheduleComponent from '../../components/ScheduleComponent/scheduleComponent';
+import ScheduleItem from '../../components/ScheduleComponent/scheduleItemComponent';
+import ConfigHeader from '../../container/header/configHeader';
+import { onSetSchedule } from '../../features/scheduleSlide/scheduleSlide';
 
 const colums = [
   {
     id: 0,
-    title: 'Học Tập',
+    title: 'Lịch học',
     titleStyle: {
       fontSize: 20,
       color: 'red',
@@ -29,7 +26,7 @@ const colums = [
   },
   {
     id: 1,
-    title: 'Hoạt động',
+    title: 'Lịch thi',
     titleStyle: {
       fontSize: 12,
       color: 'red',
@@ -38,14 +35,13 @@ const colums = [
   },
   {
     id: 2,
-    title: 'Học phí',
+    title: 'Điểm danh',
     titleStyle: {
       fontSize: 12,
       color: 'red',
     },
     keyIndex: 'hoc',
   },
-  
 ];
 const styles = StyleSheet.create({
   header: {
@@ -68,6 +64,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderRadius: 10,
     flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   title: {
     fontSize: 14,
@@ -93,44 +91,44 @@ const styles = StyleSheet.create({
     paddingRight: 7,
   },
 });
-function ScheduleScreen() {
-  const navigation = useNavigation();
+function Schedule2Screen() {
   const dispatch = useDispatch();
   const {schedules} = useSelector(state => state.schedules);
-  const navigate = () => {
-    navigation.navigate('viewContent', {
-      headerTitle: 'THÔNG BÁO NHẬN BẰNG TỐT NGHIỆP ĐỢT 3.2020',
-    });
-  };
-
+  const [keyActive, setKeyActive] = useState('Lịch học');
   const setOptionSchedule = keyIndex => {
+    setKeyActive(keyIndex.ref.props.tabLabel);
     dispatch(onSetSchedule(keyIndex.ref.props));
   };
-  
 
   const renderData = () => {
-    return (
-      <SafeAreaView style={styles.container}>
-        {schedules.map((item, index) => (
-          <View key={index}>
-            <TouchableOpacity
-              onPress={() => navigate()}
-              activeOpacity={0.8}
-              style={styles.item}>
-              <View>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.text}>
-                  {item.authorTitle}: {item.author}{' '}
-                </Text>
-                <Text style={styles.text}>
-                  {item.timeTitle}: {item.time}{' '}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </SafeAreaView>
-    );
+    let render = null;
+    if (keyActive === 'Lịch học') {
+      render = (
+        <SafeAreaView style={styles.container}>
+          {/* <ScheduleComponent schedules={schedules} /> */}
+          {schedules.map(schedule => (
+            <ScheduleItem key={schedule.id} schedule={schedule} />
+          ))}
+        </SafeAreaView>
+      );
+    }
+    else if(keyActive === "Lịch thi"){
+      render = (
+        <SafeAreaView style={styles.container}>
+          <ScheduleComponent schedules={schedules} />
+        </SafeAreaView>
+      );
+    }
+    else {
+      render = (
+        <SafeAreaView style={styles.container}>
+          {schedules.map((item, index) => {
+            return <AttendanceContent attendance={item} key={index} />;
+          })}
+        </SafeAreaView>
+      );
+    }
+    return render;
   };
 
   return (
@@ -165,6 +163,6 @@ function ScheduleScreen() {
   );
 }
 
-ScheduleScreen.propTypes = {};
+Schedule2Screen.propTypes = {};
 
-export default ScheduleScreen;
+export default Schedule2Screen;

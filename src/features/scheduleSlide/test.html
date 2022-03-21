@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var myHeaders = new Headers();
+myHeaders.append("Accept", "application/json");
+
+var formdata = new FormData();
+
+var requestOptions = {
+  method: 'GET',
+  headers: myHeaders,
+  redirect: 'follow'
+};
+
+fetch("https://api.poly.edu.vn/ssm-api/fu/schedule/get-schedule?campus_id=ph&days=7&user_code=PH12934", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(JSON.parse(result)))
+  .catch(error => console.log('error', error));
+    </script>
+</body>
+</html>
