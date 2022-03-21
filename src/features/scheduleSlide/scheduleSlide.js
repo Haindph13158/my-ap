@@ -1,12 +1,26 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
-import {fakeData} from '../fakeData';
+import SchedulesApi from '../../app/data/schedules';
+import {dataSchedule, fakeData} from '../fakeData';
 
 export const fetchSchedules = createAsyncThunk(
   // type action
   'schedules/fetchSchedules',
-  async () => {
-    const data = fakeData;
+  async (action) => {
+    console.log(1);
+    await axios({
+      method: 'get',
+      url: 'http://localhost:8866/api/categorys',
+      // headers: { 
+        // 'Accept': 'application/json',
+      // }
+    })
+    .then(function (response) {
+      console.log(222222222, JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(111111111111111, error);
+    });
     return data;
   },
 );
@@ -15,6 +29,7 @@ const initialState = {
   error: '',
   loading: false,
   schedules: fakeData[0].data,
+  listSchedule: ''
 };
 
 export const scheduleSlice = createSlice({
@@ -34,6 +49,8 @@ export const scheduleSlice = createSlice({
     });
 
     builder.addCase(fetchSchedules.rejected, (state, action) => {
+      console.log('Không thể truy xuất dữ liệu');
+      state.listSchedule = dataSchedule;
       state.error = 'Không thể truy xuất dữ liệu';
     });
 

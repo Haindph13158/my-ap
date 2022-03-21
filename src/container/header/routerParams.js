@@ -22,6 +22,10 @@ const routers = [
     {
         name: "Reward",
         title: "Khen thưởng / Kỷ luật"
+    },
+    {
+        name: "forminfomember",
+        title: "Hồ sơ cá nhân"
     }
 ]
 
