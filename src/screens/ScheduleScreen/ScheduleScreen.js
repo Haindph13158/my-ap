@@ -16,6 +16,7 @@ import ScrollableTabView, {
 import {ScrollView} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
 import {onSetSchedule} from '../../features/scheduleSlide/scheduleSlide';
+import ContentOption from '../../components/ScheduleComponent/ContentOption';
 
 const colums = [
   {
@@ -45,7 +46,6 @@ const colums = [
     },
     keyIndex: 'hoc',
   },
-  
 ];
 const styles = StyleSheet.create({
   header: {
@@ -106,32 +106,6 @@ function ScheduleScreen() {
   const setOptionSchedule = keyIndex => {
     dispatch(onSetSchedule(keyIndex.ref.props));
   };
-  
-
-  const renderData = () => {
-    return (
-      <SafeAreaView style={styles.container}>
-        {schedules.map((item, index) => (
-          <View key={index}>
-            <TouchableOpacity
-              onPress={() => navigate()}
-              activeOpacity={0.8}
-              style={styles.item}>
-              <View>
-                <Text style={styles.title}>{item.title}</Text>
-                <Text style={styles.text}>
-                  {item.authorTitle}: {item.author}{' '}
-                </Text>
-                <Text style={styles.text}>
-                  {item.timeTitle}: {item.time}{' '}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        ))}
-      </SafeAreaView>
-    );
-  };
 
   return (
     <>
@@ -157,7 +131,13 @@ function ScheduleScreen() {
       >
         {colums.map((item, index) => (
           <View key={index} tabLabel={item.title}>
-            <ScrollView>{renderData()}</ScrollView>
+            <ScrollView>
+              <TouchableOpacity activeOpacity={1} style={styles.container}>
+                {schedules.map((item, index) => (
+                  <ContentOption content={item} key={index} />
+                ))}
+              </TouchableOpacity>
+            </ScrollView>
           </View>
         ))}
       </ScrollableTabView>
