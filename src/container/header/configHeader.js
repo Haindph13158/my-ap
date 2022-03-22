@@ -183,7 +183,7 @@ function ConfigHeader(props) {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate('forminfomember');
+                    navigation.navigate('FormInfo');
                     setIsShowModal(false);
                   }}
                   style={styles.optionViewBtn}>

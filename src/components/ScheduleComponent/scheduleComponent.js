@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import Modal from 'react-native-modal';
 import {Button, DataTable} from 'react-native-paper';
+import formatTimeSchool from '../../common/formatTimeSchool';
 import IconView from '../../common/IconView';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -169,7 +170,6 @@ const styles = StyleSheet.create({
 
 function ScheduleComponent(props) {
   const {schedules} = props;
-  console.log('schedules', schedules);
   const [page, setPage] = React.useState(0);
   const [numberOfItemsPerPage, onItemsPerPageChange] = React.useState(numberOfItemsPerPageList[0]);
   const from = page * numberOfItemsPerPage;
@@ -196,24 +196,6 @@ function ScheduleComponent(props) {
     setIsShowModal(false);
   };
 
-  const setConfigTime = ca => {
-    let time = '00:00:00 - 23:59:59';
-    if (ca === 1) {
-      time = '07:15:00 - 09:15:00';
-    } else if (ca === 2) {
-      time = '09:25:00 - 11:25:00';
-    } else if (ca === 3) {
-      time = '12:00:00 - 14:00:00';
-    } else if (ca === 4) {
-      time = '14:10:00 - 16:10:00';
-    } else if (ca === 5) {
-      time = '16:20:00 - 18:20:00';
-    } else if (ca === 6) {
-      time = '18:30:00 - 20:30:00';
-    }
-    return time;
-  };
-
   return (
     <View style={styles.container}>
       <View style={styles.table}>
@@ -234,7 +216,7 @@ function ScheduleComponent(props) {
 
         {schedules.map((item, index) => (
           <>
-            <View style={styles.rowTable}>
+            <TouchableOpacity onPress={() => onShowDetail(item.id)} activeOpacity={0.8} style={styles.rowTable}>
               <View key={item.id} style={styles.row1}>
                 {idShow === item.id && isCheckShow ? (
                   <TouchableOpacity
@@ -279,7 +261,7 @@ function ScheduleComponent(props) {
                   {item.area_name}
                 </Text>
               </View>
-            </View>
+            </TouchableOpacity>
             {idShow === item.id && isCheckShow && (
               <View
                 style={{
@@ -311,7 +293,7 @@ function ScheduleComponent(props) {
                 <View style={styles.viewFlex}>
                   <Text style={styles.textLeft}>Thời gian:</Text>
                   <Text style={styles.textHeader}>
-                    {setConfigTime(item.slot)}
+                    {formatTimeSchool(item.slot)}
                   </Text>
                 </View>
                 <View style={styles.viewFlex}>
