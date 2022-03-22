@@ -32,7 +32,7 @@ const data = [
 const RewardScreen = () => {
   const renderItem = ({item}) => (
     <>
-      <TopBar />
+      
       <TouchableOpacity activeOpacity={0.8} style={styles.item}>
         <View>
           <Text style={styles.textItemLeft}>{item.kihoc}</Text>
@@ -49,7 +49,7 @@ const RewardScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TopBar />
+     <TopBar/>
       <FlatList
         data={data}
         renderItem={renderItem}

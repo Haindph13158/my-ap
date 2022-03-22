@@ -8,6 +8,7 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
+import TopBar from '../container/header/TopBar';
 
 const data = [
   {
@@ -46,18 +47,21 @@ const SmsScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
-    </SafeAreaView>
+    <>
+      <TopBar />
+      <SafeAreaView style={styles.container2}>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+        />
+      </SafeAreaView>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  container2: {
     flex: 1,
     flexDirection: 'row',
   },

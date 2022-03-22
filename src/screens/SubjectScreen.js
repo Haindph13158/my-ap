@@ -30,19 +30,19 @@ const data = [
   },
   {
     name: '* Đăng ký học lại',
-    nameScreen: 'Subject',
+    nameScreen: 'Đăng ký học lại',
   },
   {
     name: '* Đăng ký thi lại',
-    nameScreen: 'Subject',
+    nameScreen: 'Đăng ký thi lại',
   },
   {
     name: '* Chuyển ngành',
-    nameScreen: 'Subject',
+    nameScreen: 'Đăng ký chuyển ngành',
   },
   {
     name: '* Đăng ký bảo lưu',
-    nameScreen: 'Subject',
+    nameScreen: 'Đăng ký bảo lưu',
   },
 ];
 const data2 = [
