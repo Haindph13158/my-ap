@@ -32,7 +32,6 @@ const data = [
 const RewardScreen = () => {
   const renderItem = ({item}) => (
     <>
-      
       <TouchableOpacity activeOpacity={0.8} style={styles.item}>
         <View>
           <Text style={styles.textItemLeft}>{item.kihoc}</Text>

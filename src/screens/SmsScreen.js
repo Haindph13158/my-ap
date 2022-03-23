@@ -32,6 +32,7 @@ const data = [
 const SmsScreen = () => {
   const renderItem = ({item}) => (
     <>
+      
       <TouchableOpacity activeOpacity={0.8} style={styles.item}>
         <View>
           <Text style={styles.textItemLeft}>{item.kihoc}</Text>
@@ -47,23 +48,20 @@ const SmsScreen = () => {
   );
 
   return (
-    <>
+    <SafeAreaView style={styles.container}>
       <TopBar />
-      <SafeAreaView style={styles.container2}>
-        <FlatList
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={item => item.id}
-        />
-      </SafeAreaView>
-    </>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+      />
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container2: {
+  container: {
     flex: 1,
-    flexDirection: 'row',
   },
   item: {
     flexDirection: 'row',

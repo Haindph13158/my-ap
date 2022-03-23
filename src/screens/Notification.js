@@ -8,13 +8,13 @@ const Notification = () => {
     const fakeData = [
         {
             title: 'Lịch học ngày 20/11/2020',
-            content: 'Font-end Freameworks - PT15202-Phòng P305',
+            content: 'Front-end Freameworks - PT15202-Phòng P305',
             time: '2 giờ trước',
             icon: 'check'
         },
         {
             title: 'Lịch học ngày 20/11/2020',
-            content: 'Font-end Freameworks - PT15202-Phòng P305',
+            content: 'Front-end Freameworks - PT15202-Phòng P305',
             time: '2 giờ trước',
             icon: 'check'
         },
