@@ -12,6 +12,7 @@ import {
   colors,
 } from "react-native-elements";
 import IconView from "../common/IconView";
+import ConfigHeader from "../container/header/configHeader";
 const data = [
   {
     icon: 'heart-half',
@@ -35,6 +36,8 @@ const data = [
 
 function SettingScreen(props) {
   return (
+    <>
+      <ConfigHeader />
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.content}>
@@ -58,6 +61,7 @@ function SettingScreen(props) {
         ))}
       </View>
     </ScrollView>
+    </>
   );
 }
 const styles = StyleSheet.create({

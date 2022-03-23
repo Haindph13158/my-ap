@@ -25,6 +25,7 @@ import ExamScreen from './src/screens/ExamScreen';
 import StudyScreen from './src/screens/StudyScreen';
 import ChangeIndustryScreen from './src/screens/ChangeIndustryScreen';
 import SemesterScreen from './src/screens/SemesterScreen';
+import FormInfoMember from './src/screens/member/FormInfoMember'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -107,6 +108,11 @@ const App = () => {
                 options={{headerShown: false}}
                 name="notification"
                 component={Notification}
+              />
+                 <Stack.Screen
+                options={{headerShown: false}}
+                name="FormInfo"
+                component={FormInfoMember}
               />
             </Stack.Navigator>
           </NavigationContainer>
