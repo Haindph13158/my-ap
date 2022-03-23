@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import ScheduleItem from '../../components/ScheduleComponent/scheduleItemComponent';
-import {onSetSchedule} from '../../features/scheduleSlide/scheduleSlide';
+import {fetchSchedules, onSetSchedule} from '../../features/scheduleSlide/scheduleSlide';
 import ScheduleComponent from '../../components/ScheduleComponent/scheduleComponent';
 import ContentOption from '../../components/ScheduleComponent/ContentOption';
 export const optionTabar = {
@@ -76,9 +76,10 @@ const styles = StyleSheet.create({
 function ScheduleContainer(props) {
   const {colums} = props;
   const {schedules} = useSelector(state => state.schedules);
+  const {users} = useSelector(state => state.auths);
   const [option, setOption] = useState(optionTabar.lich_hoc);
   const dispatch = useDispatch();
-
+  const {listSchedule} = useSelector(state => state.schedules)
   const setOptionSchedule = useCallback(
     opt => {
       setOption(opt);
@@ -92,7 +93,7 @@ function ScheduleContainer(props) {
       case optionTabar.lich_hoc:
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            {schedules.map((schedule, index)  => (
+            {listSchedule.map((schedule, index)  => (
               <ScheduleItem key={index} schedule={schedule} />
             ))}
           </TouchableOpacity>

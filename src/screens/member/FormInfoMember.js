@@ -9,6 +9,7 @@ import {
   Button,
   Dimensions,
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import ConfigHeader from '../../container/header/configHeader';
 import TopBar from '../../container/header/TopBar';
 // import RNPickerSelect from "react-native-picker-select";
@@ -25,32 +26,35 @@ const FormInfoMember = ({navigation}) => {
   const [course, setCourse] = useState('');
   const [specializ, setSpecializ] = useState('');
   const [higtSchoolCode, setHigtSchoolCode] = useState('');
-
+  // const dispatch = useDispatch()
+  const {users} = useSelector(state => state.auths);
   const handleSubmit = () => {};
-
   return (
     <View style={styles.swapper}>
       <TopBar />
       <ScrollView>
         <View style={styles.container}>
+        <Text style={styles.wrapperInputs_title}>Thông tin cá nhân</Text>
           <View style={styles.wrapperInputs}>
-            <Text style={styles.wrapperInputs_title}>Thông tin cá nhân</Text>
             <TextInput
               placeholder="Họ tên"
-              value={userName}
+              value={users.full_name}
               onChangeText={text => setUserName(text)}
               style={styles.input}
-              secureTextEntry
+              editable={false}
+              selectTextOnFocus={false}
             />
             <TextInput
               placeholder="Mã sinh viên"
-              value={studentCode}
+              value={users.user_code}
               onChangeText={text => setStudentCode(text)}
               style={styles.input}
-              secureTextEntry
+              editable={false}
+              selectTextOnFocus={false}
+
             />
-            <View style={styles.wrapperInput}>
-              {/* <RNPickerSelect
+            {/* <View style={styles.wrapperInput}>
+              <RNPickerSelect
               style={styles.genderPicker}
               placeholder={{ label: "Giới tính", value: null }}
               onValueChange={(value) => setGender(value)}
@@ -59,8 +63,8 @@ const FormInfoMember = ({navigation}) => {
                 { label: "Nữ", value: 2 },
                 { label: "Khác", value: 3 },
               ]}
-            /> */}
-            </View>
+            />
+            </View> */}
 
             {/* <View style={styles.wrapperInput}>
             <DatePicker date={date} onDateChange={setDate} mode={'date'} />
@@ -68,22 +72,21 @@ const FormInfoMember = ({navigation}) => {
 
             <TextInput
               placeholder="Địa chỉ"
-              value={address}
+              value={users.user_address}
               onChangeText={text => setAddress(text)}
               style={styles.input}
-              secureTextEntry
             />
           </View>
-          <View style={styles.wrapperInputs}>
-            <Text style={styles.wrapperInputs_title}>
+          <Text style={styles.wrapperInputs_title}>
               CMND/Căn cước/Hộ chiếu
             </Text>
+          <View style={styles.wrapperInputs}>
+            
             <TextInput
               placeholder="Số CMND | CCCD | Hộ chiếu"
               value={passportCode}
               onChangeText={text => setPassportCode(text)}
               style={styles.input}
-              secureTextEntry
             />
             {/* <View style={styles.wrapperInput}>
             <DatePicker date={date} onDateChange={setDate} mode={'date'} />
@@ -93,26 +96,27 @@ const FormInfoMember = ({navigation}) => {
               value={addressIssued}
               onChangeText={text => setAddressIssued(text)}
               style={styles.input}
-              secureTextEntry
             />
           </View>
-          <View style={styles.wrapperInputs}>
-            <Text style={styles.wrapperInputs_title}>
-              CMND/Căn cước/Hộ chiếu
+          <Text style={styles.wrapperInputs_title}>
+            Thông tin học tập
             </Text>
+          <View style={styles.wrapperInputs}>
+           
             <TextInput
               placeholder="Mã tài khoản"
-              value={accountCode}
+              value={users.user_login}
               onChangeText={text => setAccountCode(text)}
               style={styles.input}
-              secureTextEntry
+              editable={false}
+              selectTextOnFocus={false}
+
             />
             <TextInput
               placeholder="Khoá học"
               value={course}
               onChangeText={text => setCourse(text)}
               style={styles.input}
-              secureTextEntry
             />
             {/* <View style={styles.wrapperInput}>
             <RNPickerSelect
@@ -198,6 +202,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
     fontSize: 16,
+    fontWeight: "bold",
+    paddingBottom: 10
   },
   button: {
     backgroundColor: 'transparent',

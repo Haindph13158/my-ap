@@ -1,6 +1,7 @@
 import React from 'react';
 import ConfigHeader from '../../container/header/configHeader';
 import ScheduleContainer from '../../container/schedule/ScheduleContainer';
+import { getData } from '../../ultis/ultis';
 const colums = [
   {
     id: 4,
@@ -31,7 +32,7 @@ const colums = [
   },
 ];
 function HomeScreen(props) {
-  // const dispatch = useDispatch();
+
   return (
     <>
       <ConfigHeader />

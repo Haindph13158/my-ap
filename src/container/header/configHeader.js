@@ -110,15 +110,14 @@ function ConfigHeader(props) {
     dispatch(logout({}));
     navigation.navigate('FirstLogin');
   };
-
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
         <View style={styles.image}>
           <TouchableOpacity onPress={onShowModal}>
-            <Avatar width={40} height={40} uri={users.photo} />
+            <Avatar width={40} height={40} uri="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"/>
           </TouchableOpacity>
-          <Text style={styles.textUser}>Xin chào, {users.name}</Text>
+          <Text style={styles.textUser}>Xin chào, {users.full_name}</Text>
         </View>
         <View style={styles.flexRow}>
           <TouchableOpacity
@@ -160,10 +159,10 @@ function ConfigHeader(props) {
           hasBackdrop={true}>
           <View style={styles.modal}>
             <View style={styles.modalUser}>
-              <Avatar width={60} height={60} uri={users.photo} />
+              <Avatar width={60} height={60} uri="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" />
               <View style={styles.marginTop}>
-                <Text style={styles.textEmail}>{users.name}</Text>
-                <Text style={styles.textEmail}>{users.email}</Text>
+                <Text style={styles.textEmail}>{users.full_name}</Text>
+                <Text style={styles.textEmail}>{users.user_email}</Text>
               </View>
               <View style={styles.optionModal}>
                 <TouchableOpacity
