@@ -14,6 +14,8 @@ import {Pagination} from 'react-native-snap-carousel';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch, useSelector} from 'react-redux';
 import {login} from '../../features/auth/authSlide';
+import axios from 'axios';
+import {getData, storeData} from '../../ultis/ultis'
 GoogleSignin.configure({
   androidClientId:
     '843106096419-svnsblmbmv4p7tmicrmq4b31mjsiasuc.apps.googleusercontent.com',
@@ -23,7 +25,7 @@ GoogleSignin.configure({
   forceCodeForRefreshToken: true,
   scopes: ['https://www.googleapis.com/auth/drive.readonly'],
   webClientId:
-    '410874282576-ar6pt80n2badrdkdru7tsmlke89i2is1.apps.googleusercontent.com',
+    '977319685675-97jfg1gjq73e1bpfb5u8b9d85d7rlm2o.apps.googleusercontent.com',
 });
 const WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = WIDTH * 0.88;
@@ -49,11 +51,10 @@ const FirstLoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const {users} = useSelector(state => state.auths);
-
-  if (users.name) {
+  if (users) {
     navigation.navigate('Home');
   }
-
+  
   const carouselCardItem = ({item, index}) => {
     return (
       <View style={styles.cardCarousel} key={index}>
@@ -61,27 +62,22 @@ const FirstLoginScreen = ({navigation}) => {
       </View>
     );
   };
-
   const onGoogleButtonPress = async () => {
     // Get the users ID token
-    const user_info = await GoogleSignin.signIn()
-      .then(item => {
-        if (item.user) {
-          dispatch(login(item.user));
-          navigation.navigate('Home');
-        }
+       await GoogleSignin.signIn()
+      .then( async (item) => {
+          await axios.post("https://api.poly.edu.vn/api/auth/login-token-google", {
+            id_token: item.idToken
+          }).then(res => res.data)
+          .then( async (data) => {
+            if (data) {
+             await dispatch(login(data.data))
+              navigation.navigate('Home');
+            }
+          } )
       })
       .catch(err => {
         console.log(err);
-        const user = {
-          name: 'Trương Mạnh Dũng',
-          email: 'Dungtmph12934@fpt.edu.vn',
-          user_code: "ph12934",
-          picture:
-            'https://scontent.fhan15-2.fna.fbcdn.net/v/t1.6435-9/119041444_307503740550551_8009155939658957269_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=oRBfilXJWKUAX9leSKh&_nc_ht=scontent.fhan15-2.fna&oh=00_AT_Fv6qeyOTbrJWnJPq8ZUBcWsxtzheO1gs_UL7knfv-xA&oe=6256ED96',
-        };
-        dispatch(login(user));
-        navigation.navigate('Home');
       });
     // console.log('token', idToken);
     // Create a Google credential with the token

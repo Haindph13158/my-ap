@@ -23,7 +23,6 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action) => {
-            // console.log("action.payload",action.payload);
             state.users = action.payload
         },
         logout: (state, action) => {
@@ -31,7 +30,6 @@ export const authSlice = createSlice({
         }
     },
     extraReducers: (builder) => {
-        // trường hợp 1: gọi đến action fetchProduct và thành công
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
             console.log("fullfilled action", action.payload);
             state.users = action.payload;

@@ -1,45 +1,15 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
+
 import SchedulesApi from '../../app/data/schedules';
 import {dataSchedule, fakeData} from '../fakeData';
 
 export const fetchSchedules = createAsyncThunk(
   // type action
   'schedules/fetchSchedules',
-  async action => {
-    // var myHeaders = new Headers();
-    // myHeaders.append('Accept', 'application/json');
-    // myHeaders.append("Access-Control-Allow-Origin", "*");
-    // myHeaders.append("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    // var formdata = new FormData();
-
-    // var requestOptions = {
-    //   method: 'GET',
-    //   headers: myHeaders,
-    //   redirect: 'follow',
-    // };
-
-    // fetch(
-    //   'https://api.poly.edu.vn/ssm-api/fu/schedule/get-schedule?campus_id=ph&days=7&user_code=PH12934',
-    //   requestOptions,
-    // )
-    //   .then(response => response.text())
-    //   .then(result => console.log(JSON.parse(result)))
-    //   .catch(error => console.log('error', error));
-    // return data;
-
-
-    async (action) => {
-      const data =  await fetch('https://api.poly.edu.vn/ssm-api/fu/schedule/get-schedule?campus_id=ph&days=7&user_code=PH18005')
-     .then(res => res.json())
-     .then(data=> console.log(data))
-     .catch(function (error) {
-       // console.log(111111111111111, error);
-     });
-     return data;
+  async (action) => {
+      const {data} = await SchedulesApi.getSchedule(action)
+     return data.data;
    }
-   
-  },
 );
 
 const initialState = {
@@ -62,7 +32,7 @@ export const scheduleSlice = createSlice({
   extraReducers: builder => {
     // trường hợp 1: gọi đến action fetchProduct và thành công
     builder.addCase(fetchSchedules.fulfilled, (state, action) => {
-      console.log('fullfilled action', action.payload);
+      state.listSchedule = action.payload
     });
 
     builder.addCase(fetchSchedules.rejected, (state, action) => {
