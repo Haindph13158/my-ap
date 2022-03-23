@@ -215,7 +215,7 @@ function ScheduleComponent(props) {
         </View>
 
         {schedules.map((item, index) => (
-          <>
+          <View key={index}>
             <TouchableOpacity onPress={() => onShowDetail(item.id)} activeOpacity={0.8} style={styles.rowTable}>
               <View key={item.id} style={styles.row1}>
                 {idShow === item.id && isCheckShow ? (
@@ -309,7 +309,7 @@ function ScheduleComponent(props) {
                 </View>
               </View>
             )}
-          </>
+          </View>
         ))}
       </View>
       {isShowModal && (

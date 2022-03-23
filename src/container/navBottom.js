@@ -10,7 +10,7 @@ import ConfigHeader from './header/configHeader';
 const Tab = createMaterialBottomTabNavigator();
 
 
-function NavBottom(props) {
+function NavBottom() {
   return (
     <Tab.Navigator
       initialRouteName="Home"

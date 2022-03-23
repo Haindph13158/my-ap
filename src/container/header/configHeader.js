@@ -107,7 +107,6 @@ function ConfigHeader(props) {
 
   const Logout = async () => {
     await GoogleSignin.signOut();
-    await auth().signOut();
     dispatch(logout({}));
     navigation.navigate('FirstLogin');
   };
@@ -161,7 +160,7 @@ function ConfigHeader(props) {
           hasBackdrop={true}>
           <View style={styles.modal}>
             <View style={styles.modalUser}>
-              <Avatar width={60} height={60} uri={users.picture} />
+              <Avatar width={60} height={60} uri={users.photo} />
               <View style={styles.marginTop}>
                 <Text style={styles.textEmail}>{users.name}</Text>
                 <Text style={styles.textEmail}>{users.email}</Text>

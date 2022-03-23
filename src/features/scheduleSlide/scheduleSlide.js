@@ -27,6 +27,18 @@ export const fetchSchedules = createAsyncThunk(
     //   .then(result => console.log(JSON.parse(result)))
     //   .catch(error => console.log('error', error));
     // return data;
+
+
+    async (action) => {
+      const data =  await fetch('https://api.poly.edu.vn/ssm-api/fu/schedule/get-schedule?campus_id=ph&days=7&user_code=PH18005')
+     .then(res => res.json())
+     .then(data=> console.log(data))
+     .catch(function (error) {
+       // console.log(111111111111111, error);
+     });
+     return data;
+   }
+   
   },
 );
 

@@ -92,8 +92,8 @@ function ScheduleContainer(props) {
       case optionTabar.lich_hoc:
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            {schedules.map(schedule => (
-              <ScheduleItem key={schedule.id} schedule={schedule} />
+            {schedules.map((schedule, index)  => (
+              <ScheduleItem key={index} schedule={schedule} />
             ))}
           </TouchableOpacity>
         );
@@ -110,15 +110,15 @@ function ScheduleContainer(props) {
       case optionTabar.lich_thi:
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            <ScheduleComponent schedules={schedules} />
+            <ScheduleComponent  schedules={schedules} />
           </TouchableOpacity>
         );
         break;
       default:
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            {schedules.map(schedule => (
-              <ScheduleItem key={schedule.id} schedule={schedule} />
+            {schedules.map((schedule, index) => (
+              <ScheduleItem key={index} schedule={schedule} />
             ))}
           </TouchableOpacity>
         );
