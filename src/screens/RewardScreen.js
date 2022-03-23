@@ -48,7 +48,7 @@ const RewardScreen = () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <TopBar />
+     <TopBar/>
       <FlatList
         data={data}
         renderItem={renderItem}

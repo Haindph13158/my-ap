@@ -21,7 +21,10 @@ import StartApp from './src/screens/homeScreen/StartApp';
 import Notification from './src/screens/Notification';
 import ViewContent from './src/screens/ScheduleScreen/ViewContent';
 import RewardScreen from './src/screens/RewardScreen';
-import FormInfoMember from './src/screens/member/FormInfoMember';
+import ExamScreen from './src/screens/ExamScreen';
+import StudyScreen from './src/screens/StudyScreen';
+import ChangeIndustryScreen from './src/screens/ChangeIndustryScreen';
+import SemesterScreen from './src/screens/SemesterScreen';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -63,16 +66,31 @@ const App = () => {
                 name="Reward"
                 component={RewardScreen}
               />
-              <Stack.Screen
-                options={{headerShown: false}}
-                name="FormInfo"
-                component={FormInfoMember}
-              />
 
               <Stack.Screen
                 options={{headerShown: false}}
                 name="Sms"
                 component={SmsScreen}
+              />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="Đăng ký thi lại"
+                component={ExamScreen}
+              />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="Đăng ký học lại"
+                component={StudyScreen}
+              />
+               <Stack.Screen
+                options={{headerShown: false}}
+                name="Đăng ký chuyển ngành"
+                component={ChangeIndustryScreen}
+              />
+               <Stack.Screen
+                options={{headerShown: false}}
+                name="Đăng ký bảo lưu"
+                component={SemesterScreen}
               />
 
               <Stack.Screen
