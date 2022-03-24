@@ -1,9 +1,9 @@
-import React, {memo, useCallback, useState, useMemo} from 'react';
+import React, { memo, useCallback, useState, useMemo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ScrollableTabView, {
   ScrollableTabBar,
 } from 'react-native-scrollable-tab-view';
-import {useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   ScrollView,
   View,
@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import ScheduleItem from '../../components/ScheduleComponent/scheduleItemComponent';
-import {fetchSchedules, onSetSchedule} from '../../features/scheduleSlide/scheduleSlide';
+import { fetchAttendace, fetchSchedules, onSetSchedule } from '../../features/scheduleSlide/scheduleSlide';
 import ScheduleComponent from '../../components/ScheduleComponent/scheduleComponent';
 import ContentOption from '../../components/ScheduleComponent/ContentOption';
 export const optionTabar = {
@@ -73,36 +73,39 @@ const styles = StyleSheet.create({
   },
 });
 
-function ScheduleContainer(props) {
-  const {colums} = props;
-  const {schedules} = useSelector(state => state.schedules);
-  const {users} = useSelector(state => state.auths);
+function ScheduleContainer({ colums }) {
+  const { schedules } = useSelector(state => state.schedules);
+  const { users } = useSelector(state => state.auths);
+  const { listAttendance } = useSelector(state => state.schedules)
+
   const [option, setOption] = useState(optionTabar.lich_hoc);
   const dispatch = useDispatch();
-  const {listSchedule} = useSelector(state => state.schedules)
-  const setOptionSchedule = useCallback(
-    opt => {
+  const { listSchedule } = useSelector(state => state.schedules)
+  const setOptionSchedule = useCallback(opt => {
       setOption(opt);
-      dispatch(onSetSchedule({tabLabel: opt}));
     },
     [option],
   );
-
-  const renderData = useMemo(() => {
+  useEffect(() => {
+    dispatch(fetchSchedules(users))
+    dispatch(fetchAttendace(users))
+  }, [users]);
+  const renderData = () => {
     switch (option) {
       case optionTabar.lich_hoc:
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            {listSchedule.map((schedule, index)  => (
+            {listSchedule.map((schedule, index) => (
               <ScheduleItem key={index} schedule={schedule} />
             ))}
           </TouchableOpacity>
         );
         break;
       case optionTabar.diem_danh:
+
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            {schedules.map((item, index) => (
+            {listAttendance.map((item, index) => (
               <ContentOption key={index} content={item} />
             ))}
           </TouchableOpacity>
@@ -111,7 +114,7 @@ function ScheduleContainer(props) {
       case optionTabar.lich_thi:
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            <ScheduleComponent  schedules={schedules} />
+            <ScheduleComponent schedules={schedules} />
           </TouchableOpacity>
         );
         break;
@@ -125,7 +128,7 @@ function ScheduleContainer(props) {
         );
         break;
     }
-  }, [option]);
+  }
 
   return (
     <ScrollableTabView
@@ -143,11 +146,11 @@ function ScheduleContainer(props) {
       }}
       tabBarBackgroundColor={'white'}
       tabBarActiveTextColor={'red'}
-      tabBarTextStyle={{fontSize: 14}}>
+      tabBarTextStyle={{ fontSize: 14 }}>
       {colums.map((item, index) => (
         <View key={index} tabLabel={item.title}>
           <ScrollView keyboardShouldPersistTaps="always">
-            {renderData}
+            {renderData()}
           </ScrollView>
         </View>
       ))}

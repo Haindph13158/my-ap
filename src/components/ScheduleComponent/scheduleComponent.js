@@ -168,8 +168,7 @@ const styles = StyleSheet.create({
   },
 });
 
-function ScheduleComponent(props) {
-  const {schedules} = props;
+function ScheduleComponent({schedules}) {
   const [page, setPage] = React.useState(0);
   const [numberOfItemsPerPage, onItemsPerPageChange] = React.useState(numberOfItemsPerPageList[0]);
   const from = page * numberOfItemsPerPage;
