@@ -81,10 +81,8 @@ function ScheduleContainer({ colums }) {
   const [option, setOption] = useState(optionTabar.lich_hoc);
   const dispatch = useDispatch();
   const { listSchedule } = useSelector(state => state.schedules)
-  const setOptionSchedule = useCallback(
-    opt => {
+  const setOptionSchedule = useCallback(opt => {
       setOption(opt);
-      dispatch(onSetSchedule({ tabLabel: opt }));
     },
     [option],
   );
@@ -104,9 +102,10 @@ function ScheduleContainer({ colums }) {
         );
         break;
       case optionTabar.diem_danh:
+
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            {schedules.map((item, index) => (
+            {listAttendance.map((item, index) => (
               <ContentOption key={index} content={item} />
             ))}
           </TouchableOpacity>
