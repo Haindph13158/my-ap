@@ -12,11 +12,19 @@ export const fetchSchedules = createAsyncThunk(
    }
 );
 
+export const fetchAttendace = createAsyncThunk(
+  'schedules/fetchAttendace',
+  async (action) => {
+    const {data: data} = await SchedulesApi.getListAttendance(action)
+    return data.data
+  }
+)
 const initialState = {
   error: '',
   loading: false,
   schedules: fakeData[4].data,
-  listSchedule: '',
+  listSchedule: [],
+  listAttendance: []
 };
 
 export const scheduleSlice = createSlice({
@@ -36,8 +44,6 @@ export const scheduleSlice = createSlice({
     });
 
     builder.addCase(fetchSchedules.rejected, (state, action) => {
-      console.log('Không thể truy xuất dữ liệu');
-      state.listSchedule = dataSchedule;
       state.error = 'Không thể truy xuất dữ liệu';
     });
 
@@ -46,6 +52,17 @@ export const scheduleSlice = createSlice({
       state.loading = true;
     });
     // fullfillmed, rejected, pending
+
+
+    builder.addCase(fetchAttendace.fulfilled,(state, action) => {
+      state.listAttendance = action.payload
+    })
+    builder.addCase(fetchAttendace.rejected, (state, action)=> {
+      state.error = "error"
+    })
+    builder.addCase(fetchAttendace.pending, state => {
+      state.loading = true
+    })
   },
 });
 
