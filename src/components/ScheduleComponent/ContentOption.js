@@ -37,9 +37,7 @@ function ContentOption({ keyIndex, content }) {
   }, [])
 
   const contentOption = useMemo(() => {
-
     return (
-
       <TouchableOpacity
         onPress={() => navigate()}
         activeOpacity={0.8}
