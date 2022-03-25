@@ -36,6 +36,7 @@ function HomeScreen(props) {
   return (
     <>
       <ConfigHeader />
+    
       <ScheduleContainer colums={colums} />
     </>
   );

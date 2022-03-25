@@ -91,6 +91,7 @@ function ScheduleContainer({ colums }) {
     dispatch(fetchSchedules(users))
     dispatch(fetchAttendace(users))
   }, [users]);
+  console.log(listSchedule);
   const renderData = () => {
     switch (option) {
       case optionTabar.lich_hoc:

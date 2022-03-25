@@ -51,7 +51,7 @@ const FirstLoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
 
   const {users} = useSelector(state => state.auths);
-  if (users) {
+  if (users.length !== 0) {
     navigation.navigate('Home');
   }
   

@@ -8,12 +8,9 @@ export const fetchSchedules = createAsyncThunk(
   'schedules/fetchSchedules',
   async (action) => {
       const {data} = await SchedulesApi.getSchedule(action)
-      console.log(data)
      return data.data;
    }
 );
-
-
 const initialState = {
   error: '',
   loading: false,
