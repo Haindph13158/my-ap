@@ -1,14 +1,19 @@
-import React, {memo} from 'react';
+import React, {memo, useMemo} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import formatTimeSchool from '../../common/formatTimeSchool';
 
-const ScheduleItem = props => {
-  const {schedule} = props;
+const ScheduleItem = ({schedule}) => {
   const [expanded, setExpanded] = React.useState(false);
   return (
     <ListItem.Accordion
       style={styles.accordion}
+      animation={
+        {
+          type:'timing',
+          duration: 200
+        }
+      }
       content={
         <>
           <ListItem.Content style={styles.box_content_item}>
