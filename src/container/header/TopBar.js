@@ -25,9 +25,9 @@ const styles = StyleSheet.create({
       backgroundColor: '#F95B00'
   }
 });
-function TopBar(props) {
+function TopBar({headerTitle}) {
   const navigation = useNavigation();
-  const {headerTitle} = props;
+
   const activeRoute = useRoute();
  
   let headerName = headerTitle ? headerTitle : activeRoute.name;

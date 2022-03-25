@@ -1,18 +1,45 @@
-import React, { memo } from 'react';
+import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
-import {useNavigation} from '@react-navigation/native';
-import {TouchableOpacity, View, StyleSheet, Text, StatusBar} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { TouchableOpacity, View, StyleSheet, Text, StatusBar } from 'react-native';
 
-function ContentOption(props) {
-  const {content} = props;
+function ContentOption({ keyIndex, content }) {
   const navigation = useNavigation();
-  const navigate = () => {
-    navigation.navigate('viewContent', {
-      headerTitle: 'THÔNG BÁO NHẬN BẰNG TỐT NGHIỆP ĐỢT 3.2020',
-    });
+  const navigate = (id, name, code) => {
+    navigation.navigate('Atendance', {
+      id: id,
+      headerTitle: name + '-' + code
+    })
   };
-  return (
-    <View key={content.id}>
+  const listAttendance = useMemo(() => {
+    return (
+      <TouchableOpacity
+        onPress={() => navigate(content.subject_id, content.subject_name, content.group_name)}
+        activeOpacity={0.8}
+        style={styles.item}>
+        <View>
+          <Text style={styles.titleAttendace}>{content.subject_name}</Text>
+          <Text style={styles.text}>
+            Vắng: <Text
+              style={styles.total_absent}
+            >{content.total_absent}/{content.total_to_now}</Text> cho tới hiện tại
+          </Text>
+          <Text style={styles.text}>
+            Vắng: <Text
+              style={styles.total_absent}
+            >{content.total_absent}/{content.total_session}</Text> trên tổng số
+          </Text>
+        </View>
+      </TouchableOpacity>
+    )
+
+
+  }, [])
+
+  const contentOption = useMemo(() => {
+
+    return (
+
       <TouchableOpacity
         onPress={() => navigate()}
         activeOpacity={0.8}
@@ -27,6 +54,16 @@ function ContentOption(props) {
           </Text>
         </View>
       </TouchableOpacity>
+    )
+
+  })
+
+
+  return (
+    <View key={content.id}>
+      {
+        keyIndex === 'attendance' ? listAttendance : contentOption
+      }
     </View>
   );
 }
@@ -58,7 +95,9 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#888',
-    fontSize: 12,
+    fontSize: 13,
+    paddingBottom: 5,
+    paddingTop: 5
   },
   icon: {
     marginLeft: 350,
@@ -76,10 +115,18 @@ const styles = StyleSheet.create({
   icon: {
     paddingRight: 7,
   },
+  titleAttendace: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  total_absent: {
+    color: 'orange',
+    fontWeight: 'bold'
+  }
 });
 
 ContentOption.propTypes = {
-    content: PropTypes.object
+  content: PropTypes.object
 };
 
 export default memo(ContentOption);

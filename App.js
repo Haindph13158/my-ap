@@ -26,6 +26,8 @@ import StudyScreen from './src/screens/StudyScreen';
 import ChangeIndustryScreen from './src/screens/ChangeIndustryScreen';
 import SemesterScreen from './src/screens/SemesterScreen';
 import FormInfoMember from './src/screens/member/FormInfoMember'
+import Atendance from './src/screens/homeScreen/Atendance';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -51,6 +53,11 @@ const App = () => {
                 name="Home"
                 component={MainScreen}
                 options={{headerShown: false}}
+              />
+               <Stack.Screen
+                options={{headerShown: false}}
+                name="Atendance"
+                component={Atendance}
               />
               <Stack.Screen
                 options={{headerShown: false}}
