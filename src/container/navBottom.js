@@ -4,7 +4,7 @@ import IconView from '../common/IconView';
 import HomeScreen from '../screens/homeScreen/HomeScreen';
 
 import ScheduleScreen from '../screens/ScheduleScreen/ScheduleScreen';
-import SettingScreen from '../screens/SettingScreen';
+import SettingScreen from '../screens/Setting/SettingScreen';
 import SubjectScreen from '../screens/SubjectScreen';
 import ConfigHeader from './header/configHeader';
 const Tab = createMaterialBottomTabNavigator();
@@ -44,7 +44,7 @@ function NavBottom() {
       />
       
       <Tab.Screen
-        name="Subject"
+        name="Bảng điểm"
         component={SubjectScreen}
         options={{
           tabBarIcon: ({ color }) => (

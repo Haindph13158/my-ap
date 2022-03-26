@@ -26,6 +26,34 @@ const routers = [
     {
         name: "FormInfo",
         title: "Hồ sơ cá nhân"
+    },
+    {
+        name: "Fee",
+        title: "Gia hạn học phí"
+    },
+    {
+        name: "Exam",
+        title: "Đăng ký thi lại"
+    },
+    {
+        name: "Study",
+        title: "Đăng ký học lại"
+    },
+    {
+        name: "Industry",
+        title: "Đăng ký chuyển ngành"
+    },
+    {
+        name: "Semester",
+        title: "Đăng ký bảo lưu"
+    },
+    {
+        name: "Listservices",
+        title: "Dịch vụ trực tuyến"
+    },
+    {
+        name:'viewContent',
+        title: 'Thông báo ...'
     }
 ]
 

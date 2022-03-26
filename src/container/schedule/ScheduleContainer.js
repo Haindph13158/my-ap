@@ -17,6 +17,7 @@ import { fetchSchedules, } from '../../features/scheduleSlide/scheduleSlide';
 import ScheduleComponent from '../../components/ScheduleComponent/scheduleComponent';
 import ContentOption from '../../components/ScheduleComponent/ContentOption';
 import { fetchAttendace } from '../../features/scheduleSlide/AttendanceSlide';
+import TableITem from '../../components/TableItem/TableITem';
 export const optionTabar = {
   lich_hoc: 'Lịch học',
   lich_thi: 'Lịch thi',
@@ -77,7 +78,7 @@ const attendance = 'attendance'
 function ScheduleContainer({ colums }) {
   const { schedules } = useSelector(state => state.schedules);
   const { users } = useSelector(state => state.auths);
-
+  console.log(users);
   const { attendances } = useSelector(state => state.attendances)
   const [option, setOption] = useState(optionTabar.lich_hoc);
   const dispatch = useDispatch();
@@ -109,7 +110,7 @@ function ScheduleContainer({ colums }) {
           <TouchableOpacity activeOpacity={1} style={styles.container}>
             { attendances && Array.isArray(attendances) && attendances.map((item, index) =>
             (
-              <ContentOption keyIndex={attendance} key={index} content={item} />
+              <TableITem attendance={true}  key={index} content={item} />
             )
             )}
           </TouchableOpacity>

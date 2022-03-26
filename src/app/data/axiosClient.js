@@ -7,7 +7,7 @@ const axiosClient = axios.create({
     }
 })
  export const axiosClinetMobile = axios.create({
-  baseURL: "https://api.poly.edu.vn/app-mobile/fu/",
+  baseURL: "https://api.poly.edu.vn/app-mobile/",
   headers: {
     "Content-Type": "application/json",
   }

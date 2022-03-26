@@ -27,6 +27,7 @@ import StudyScreen from './src/screens/servicesOnline/StudyScreen';
 import ChangeIndustryScreen from './src/screens/servicesOnline/ChangeIndustryScreen';
 import SemesterScreen from './src/screens/servicesOnline/SemesterScreen';
 import ViewContent from './src/screens/ScheduleScreen/ViewContent';
+import ListServicesScreen from './src/screens/servicesOnline/ListServicesScreen';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -81,22 +82,22 @@ const App = () => {
               />
               <Stack.Screen
                 options={{headerShown: false}}
-                name="Đăng ký thi lại"
+                name="Exam"
                 component={ExamScreen}
               />
               <Stack.Screen
                 options={{headerShown: false}}
-                name="Đăng ký học lại"
+                name="Study"
                 component={StudyScreen}
               />
                <Stack.Screen
                 options={{headerShown: false}}
-                name="Đăng ký chuyển ngành"
+                name="Industry"
                 component={ChangeIndustryScreen}
               />
                <Stack.Screen
                 options={{headerShown: false}}
-                name="Đăng ký bảo lưu"
+                name="Semester"
                 component={SemesterScreen}
               />
 
@@ -119,6 +120,11 @@ const App = () => {
                 options={{headerShown: false}}
                 name="FormInfo"
                 component={FormInfoMember}
+              />
+               <Stack.Screen
+                options={{headerShown: false}}
+                name="Listservices"
+                component={ListServicesScreen}
               />
             </Stack.Navigator>
           </NavigationContainer>

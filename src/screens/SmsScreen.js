@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   SafeAreaView,
   View,
@@ -8,7 +8,9 @@ import {
   StatusBar,
   TouchableOpacity,
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import TopBar from '../container/header/TopBar';
+import { fetchSms } from '../features/reducer/sms';
 
 const data = [
   {
@@ -30,32 +32,38 @@ const data = [
 ];
 
 const SmsScreen = () => {
+    const {sms} = useSelector(item => item.smsUser)
+    const {users} = useSelector(item => item.auths)
+    const dispatch = useDispatch()
+    useEffect(()=> {
+        dispatch(fetchSms(users))
+    },[dispatch])
   const renderItem = ({item}) => (
     <>
       
       <TouchableOpacity activeOpacity={0.8} style={styles.item}>
         <View>
-          <Text style={styles.textItemLeft}>{item.kihoc}</Text>
+          <Text style={styles.textItemLeft}>{item.is_active === 1 ? 'Kích hoạt' : null}</Text>
         </View>
         <View>
-          <Text style={styles.textItem}>Ngày tháng: {item.ngaynhanthuong}</Text>
-          <Text style={styles.textItem}>Nội dung: {item.noidung}</Text>
-          <Text style={styles.textItem}>Người ký: {item.nguoiky}</Text>
-          <Text style={styles.textItem}>Số quyết định: {item.soquyetdinh}</Text>
+          <Text style={styles.textItem}>{item.owner_type}</Text>
+          <Text style={styles.textItem}>Số điện thoại: {item.phone}</Text>
+          <Text style={styles.textItem}>Họ và Tên: {item.owner_name}</Text>
+          <Text style={styles.textItem}>Ngày tạo: {item.created_on}</Text>
         </View>
       </TouchableOpacity>
     </>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <>
       <TopBar />
       <FlatList
-        data={data}
+        data={sms}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-    </SafeAreaView>
+      </>
   );
 };
 

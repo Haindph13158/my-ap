@@ -2,72 +2,70 @@ import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
 import React from 'react';
 import {
   Text,
-  ListItem,
-  Avatar,
-  Icon,
-  Badge,
-  ListItemProps,
-  Button,
-  Switch,
-  colors,
+
 } from "react-native-elements";
-import IconView from "../common/IconView";
-import ConfigHeader from "../container/header/configHeader";
+import ConfigHeader from "../../container/header/configHeader";
+import IconView from "../../common/IconView";
+import { useNavigation } from "@react-navigation/native";
 const data = [
   {
     icon: 'heart-half',
     link: 'Ionicons',
     content: 'Khen thưởng & Kỷ luật',
     intro: 'Xem thông tin khen thưởng và kỷ luật',
+    route: 'Reward'
   },
   {
     icon: 'planet-outline',
     link: 'Ionicons',
     content: 'Dịch vụ trực tuyến',
     intro: 'Sử dụng các dịch trực tuyến',
+    route: 'Listservices'
   },
   {
     icon: 'phone-call',
     link: 'Feather',
     content: 'SMS',
     intro: 'Danh sách số điện thoại nhận SMS',
+    route: 'Sms'
   },
 ];
 
-function SettingScreen(props) {
+function SettingScreen() {
+  const navigation = useNavigation();
+
   return (
     <>
       <ConfigHeader />
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.content}>
-          <Text style={styles.title}>Thông tin thêm</Text>
-        </View>
-        {data.map((item, idex) => (
-          <View style={styles.container}>
-            <TouchableOpacity>
-              <View style={styles.touchable}>
-                <View style={styles.icon}>
-                <IconView component={item.link} name={item.icon} size={35}  />
-                
-                </View>
-                <View>
-                  <Text style={styles.text}>{item.content}</Text>
-                  <Text style={styles.text2}>{item.intro}</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
+      <ScrollView>
+        <View style={styles.container}>
+          <View style={styles.content}>
+            <Text style={styles.title}>Thông tin thêm</Text>
           </View>
-        ))}
-      </View>
-    </ScrollView>
+          {data.map((item, index) => (
+            <View key={index} style={styles.container}>
+              <TouchableOpacity onPress={() => navigation.navigate(item.route)} >
+                <View style={styles.touchable}>
+                  <View style={styles.icon}>
+                    <IconView component={item.link} name={item.icon} size={35} />
+                  </View>
+                  <View>
+                    <Text style={styles.text}>{item.content}</Text>
+                    <Text style={styles.text2}>{item.intro}</Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  
+
     padding: 10,
   },
   title: {
@@ -81,9 +79,10 @@ const styles = StyleSheet.create({
     padding: 25,
     borderColor: "rgba(158, 150, 150, .5)",
     borderRadius: 15,
+    backgroundColor: 'white'
   },
   icon: {
-    
+
     marginRight: 35,
     paddingTop: 15,
   },
@@ -94,7 +93,7 @@ const styles = StyleSheet.create({
   },
   text2: {
     color: "gray",
-  },
+  }
 });
 
 SettingScreen.propTypes = {};
