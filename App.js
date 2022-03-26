@@ -19,15 +19,14 @@ import FirstLoginScreen from './src/screens/authScreen/firstLoginScreen';
 import LoginScreen from './src/screens/authScreen/loginScreen';
 import StartApp from './src/screens/homeScreen/StartApp';
 import Notification from './src/screens/Notification';
-import ViewContent from './src/screens/ScheduleScreen/ViewContent';
 import RewardScreen from './src/screens/RewardScreen';
-import ExamScreen from './src/screens/ExamScreen';
-import StudyScreen from './src/screens/StudyScreen';
-import ChangeIndustryScreen from './src/screens/ChangeIndustryScreen';
-import SemesterScreen from './src/screens/SemesterScreen';
+import ExamScreen from './src/screens/servicesOnline/ExamScreen';
 import FormInfoMember from './src/screens/member/FormInfoMember'
 import Atendance from './src/screens/homeScreen/Atendance';
-
+import StudyScreen from './src/screens/servicesOnline/StudyScreen';
+import ChangeIndustryScreen from './src/screens/servicesOnline/ChangeIndustryScreen';
+import SemesterScreen from './src/screens/servicesOnline/SemesterScreen';
+import ViewContent from './src/screens/ScheduleScreen/ViewContent';
 const styles = StyleSheet.create({
   container: {
     flex: 1,

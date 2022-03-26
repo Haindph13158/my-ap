@@ -60,9 +60,7 @@ const styles = StyleSheet.create({
     paddingTop: 60,
   },
 });
-function ViewContent(props) {
-  const navigation = useNavigation();
-  const {route} = props;
+function ViewContent({route}) {
   const activeRoute = useRoute();
   let headerTitle = activeRoute.name;
   
