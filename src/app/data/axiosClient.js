@@ -6,5 +6,17 @@ const axiosClient = axios.create({
         // 'Authorization': `Token ${token}`,
     }
 })
+ export const axiosClinetMobile = axios.create({
+  baseURL: "https://api.poly.edu.vn/app-mobile/fu/",
+  headers: {
+    "Content-Type": "application/json",
+  }
+})
+export const axiosClientMyap = axios.create({
+    baseURL: "https://api.poly.edu.vn/myap/fu/",
+    headers: {
+        "Content-Type": "application/json",
+      }
+})
 
 export default axiosClient;
