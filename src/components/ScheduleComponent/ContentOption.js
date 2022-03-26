@@ -1,43 +1,16 @@
 import React, { memo, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, View, StyleSheet, Text, StatusBar } from 'react-native';
+import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
 
 function ContentOption({ keyIndex, content }) {
   const navigation = useNavigation();
-  const navigate = (id, name, code) => {
-    navigation.navigate('Atendance', {
-      id: id,
-      headerTitle: name + '-' + code
-    })
+  const navigate = () => {
+    navigation.navigate('viewContent')
   };
-  const listAttendance = useMemo(() => {
-    return (
-      <TouchableOpacity
-        onPress={() => navigate(content.subject_id, content.subject_name, content.group_name)}
-        activeOpacity={0.8}
-        style={styles.item}>
-        <View>
-          <Text style={styles.titleAttendace}>{content.subject_name}</Text>
-          <Text style={styles.text}>
-            Vắng: <Text
-              style={styles.total_absent}
-            >{content.total_absent}/{content.total_to_now}</Text> cho tới hiện tại
-          </Text>
-          <Text style={styles.text}>
-            Vắng: <Text
-              style={styles.total_absent}
-            >{content.total_absent}/{content.total_session}</Text> trên tổng số
-          </Text>
-        </View>
-      </TouchableOpacity>
-    )
 
-
-  }, [])
-
-  const contentOption = useMemo(() => {
-    return (
+  return (
+    <View key={content.id}>
       <TouchableOpacity
         onPress={() => navigate()}
         activeOpacity={0.8}
@@ -52,16 +25,6 @@ function ContentOption({ keyIndex, content }) {
           </Text>
         </View>
       </TouchableOpacity>
-    )
-
-  })
-
-
-  return (
-    <View key={content.id}>
-      {
-        keyIndex === 'attendance' ? listAttendance : contentOption
-      }
     </View>
   );
 }
@@ -78,7 +41,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    // marginTop: StatusBar.currentHeight || 0,
   },
   item: {
     backgroundColor: '#fff',

@@ -138,4 +138,4 @@ function ViewContent({route}) {
 }
 ViewContent.propTypes = {};
 
-export default memo(ViewContent);
+export default ViewContent
