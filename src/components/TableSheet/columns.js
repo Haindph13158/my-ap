@@ -17,7 +17,8 @@ export const columnAttendance = [
             width: 180,
             alignItems: 'center',
             justifyContent: 'center',
-            padding: 5,
+            paddingTop: 10,
+            paddingBottom: 10
         }
     },
     {
@@ -37,7 +38,8 @@ export const columnAttendance = [
             borderLeftWidth: 1,
             width: 50,
             justifyContent: 'center',
-            padding: 5,
+            paddingTop: 10,
+            paddingBottom: 10
         }
     },
     {
@@ -57,7 +59,8 @@ export const columnAttendance = [
             borderLeftWidth: 1,
             width: 100,
             justifyContent: 'center',
-            padding: 5,
+            paddingTop: 10,
+            paddingBottom: 10
         }
     }
 ]
