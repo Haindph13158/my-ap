@@ -36,6 +36,7 @@ export const scheduleSlice = createSlice({
 
     builder.addCase(fetchSchedules.rejected, (state, action) => {
       state.error = 'Không thể truy xuất dữ liệu';
+      state.listSchedule = dataSchedule
     });
 
     // trường hợp 2: Trang thai call api chua thanh cong

@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import StudentsApi from '../../app/data/student';
+import { infoUser } from '../fakeData';
 
 export const fetchInfoUser = createAsyncThunk(
   'infoUser/fetchInfoUser',
@@ -23,6 +24,7 @@ export const infoUserSlice = createSlice({
     });
     builder.addCase(fetchInfoUser.rejected, (state, action) => {
       state.error = action.payload;
+      state.info = infoUser
     });
     builder.addCase(fetchInfoUser.pending, state => {
       state.loading = true;

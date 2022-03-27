@@ -5,7 +5,7 @@ export const columnAttendance = [
         styleHeader: {
             borderLeftColor: 'rgba(0,0,0,0.1)',
             borderLeftWidth: 1,
-            width: 180,
+            width: 155,
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
@@ -14,7 +14,7 @@ export const columnAttendance = [
         styleRow: {
             borderLeftColor: 'rgba(0,0,0,0.1)',
             borderLeftWidth: 1,
-            width: 180,
+            width: 155,
             alignItems: 'center',
             justifyContent: 'center',
             paddingTop: 10,
@@ -72,7 +72,7 @@ export const columnPoint = [
         styleHeader: {
             borderLeftColor: 'rgba(0,0,0,0.1)',
             borderLeftWidth: 1,
-            width: 180,
+            width: 155,
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
@@ -81,7 +81,7 @@ export const columnPoint = [
         styleRow: {
             borderLeftColor: 'rgba(0,0,0,0.1)',
             borderLeftWidth: 1,
-            width: 180,
+            width: 155,
             alignItems: 'center',
             justifyContent: 'center',
             paddingTop: 10,

@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import smsApi from '../../app/data/smsApi';
 import StudentsApi from '../../app/data/student';
+import { sms } from '../fakeData';
 
 export const fetchSms = createAsyncThunk(
   'sms/fetchSms',
@@ -25,6 +26,7 @@ export const smsSlice = createSlice({
     });
     builder.addCase(fetchSms.rejected, (state, action) => {
       state.error = action.payload;
+      state.sms = sms
     });
     builder.addCase(fetchSms.pending, state => {
       state.loading = true;

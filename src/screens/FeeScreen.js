@@ -32,7 +32,7 @@ function FeeScreen(props) {
             <Text style={styles.textTitle}>Thông tin sinh viên</Text>
           </>
           {data.map((item, i) => (
-            <View style={styles.textBody}>
+            <View key={i} style={styles.textBody}>
               <Text style={styles.textContent}>Họ và tên: {item.name}</Text>
               <Text style={styles.textContent}>
                 Mã sinh viên: {item.studentcode}

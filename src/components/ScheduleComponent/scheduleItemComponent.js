@@ -53,7 +53,7 @@ const ScheduleItem = ({schedule}) => {
             <Text>
               <Text style={styles.text_note_content}>Thời gian: </Text>
               <Text style={styles.data_text_note_content}>
-                {formatTimeSchool(schedule.slot)}
+                {schedule.slot_time}
               </Text>
             </Text>
           </View>
@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
   box_left_title: {
+    width: 120,
     fontSize: 14,
     padding: 10,
     borderRadius: 10,
