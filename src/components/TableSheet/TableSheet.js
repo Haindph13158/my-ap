@@ -58,31 +58,28 @@ export default function TableSheet({
             })}
           </View>
         </View>
-        {absent && session && now && (
+        {absent ? (
           <View style={styles.bottomCell}>
             <View style={styles.borderBotLeft}>
               <Text style={{fontSize: 13, fontWeight: 'bold'}}>
                 Vắng:
                 <Text style={styles.colorAbsent}>
-                  {' '}
-                  {absent}/{session} {percentSession.toFixed()}%{' '}
-                </Text>{' '}
-                trên tổng số{' '}
+                  
+                  {absent}/{session} {percentSession.toFixed()}%
+                </Text>
+                trên tổng số
               </Text>
             </View>
             <View style={styles.borderBotRight}>
-              <Text style={{fontSize: 13, fontWeight: 'bold'}}>
-                Vắng:{' '}
-                <Text style={styles.colorAbsent}>
-                  {' '}
-                  {absent}/{now} {percentNow.toFixed()} %{' '}
-                </Text>{' '}
+              <Text style={{fontSize: 13, fontWeight: 'bold'}}>Vắng:
+                <Text style={styles.colorAbsent}>{absent}/{now} {percentNow.toFixed()} %
+                </Text>
                 tới hiện tại
               </Text>
             </View>
           </View>
-        )}
-        {status && (
+        ): null}
+        {status ? (
           <View style={styles.bottomCell}>
             <View style={styles.borderBotLeftPoint}>
               <Text style={{fontSize: 13, fontWeight: 'bold'}}>
@@ -93,10 +90,10 @@ export default function TableSheet({
               <Text style={styles.colorAbsent}> {status} </Text>
             </View>
           </View>
-        )}
+        ) : null }
       </ScrollView>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
