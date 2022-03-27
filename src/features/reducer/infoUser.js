@@ -4,7 +4,7 @@ import StudentsApi from '../../app/data/student';
 export const fetchInfoUser = createAsyncThunk(
   'infoUser/fetchInfoUser',
   async (action) => {
-    const {data: data} = await StudentsApi.getDetailStudent(action)
+    const {data} = await StudentsApi.getDetailStudent(action)
     return data.data
   }
 )
