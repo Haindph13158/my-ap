@@ -23,6 +23,10 @@ const columns = [
     {
         title: 'Đăng ký bảo lưu',
         route: 'Semester'
+    },
+    {
+        title: 'Dịch vụ đã đăng ký',
+        route: 'RegisterService'
     }
 ]
 export default function ListServicesScreen() {
