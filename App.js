@@ -28,6 +28,7 @@ import ChangeIndustryScreen from './src/screens/servicesOnline/ChangeIndustryScr
 import SemesterScreen from './src/screens/servicesOnline/SemesterScreen';
 import ViewContent from './src/screens/ScheduleScreen/ViewContent';
 import ListServicesScreen from './src/screens/servicesOnline/ListServicesScreen';
+import RegisteredServiceScreen from './src/screens/servicesOnline/RegisteredServiceScreen';
 import PointSubject from './src/screens/subject/PointSubject';
 const styles = StyleSheet.create({
   container: {
@@ -100,6 +101,11 @@ const App = () => {
                 options={{headerShown: false}}
                 name="Semester"
                 component={SemesterScreen}
+              />
+                <Stack.Screen
+                options={{headerShown: false}}
+                name="RegisterService"
+                component={RegisteredServiceScreen}
               />
 
               <Stack.Screen

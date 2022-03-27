@@ -54,6 +54,10 @@ const routers = [
     {
         name:'viewContent',
         title: 'Thông báo ...'
+    },
+    {
+        name: 'RegisterService',
+        title: 'Dịch vụ'
     }
 ]
 

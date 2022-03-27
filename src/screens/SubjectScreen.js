@@ -29,12 +29,12 @@ export default function SubjectScreen() {
             <TouchableOpacity
             onPress={() => navigate(item.id, item.subject_name)}
             activeOpacity={0.8}
+            key={index}
             >
-            <TableITem
-              point={true}
-              content={item}
-              key={index}
-            />
+              <TableITem
+                point={true}
+                content={item}
+              />
             </TouchableOpacity>
           ))
         }

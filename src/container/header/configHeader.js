@@ -113,12 +113,15 @@ function ConfigHeader(props) {
   return (
     <SafeAreaView style={styles.safe}>
       <View style={styles.header}>
-        <View style={styles.image}>
-          <TouchableOpacity onPress={onShowModal}>
-            <Avatar width={40} height={40} uri="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"/>
-          </TouchableOpacity>
+        <TouchableOpacity style={styles.image} onPress={onShowModal}>
+          <Avatar
+            width={40}
+            height={40}
+            uri="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+          />
+
           <Text style={styles.textUser}>Xin chào, {users.full_name}</Text>
-        </View>
+        </TouchableOpacity>
         <View style={styles.flexRow}>
           <TouchableOpacity
             onPress={() => navigation.navigate('notification')}
@@ -131,7 +134,7 @@ function ConfigHeader(props) {
               color="white"
             />
           </TouchableOpacity>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={() => navigation.navigate('Search')}
             activeOpacity={0.8}>
             <IconView
@@ -140,7 +143,7 @@ function ConfigHeader(props) {
               size={24}
               color="white"
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </View>
       {isShowModal && (
@@ -159,7 +162,11 @@ function ConfigHeader(props) {
           hasBackdrop={true}>
           <View style={styles.modal}>
             <View style={styles.modalUser}>
-              <Avatar width={60} height={60} uri="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png" />
+              <Avatar
+                width={60}
+                height={60}
+                uri="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
+              />
               <View style={styles.marginTop}>
                 <Text style={styles.textEmail}>{users.full_name}</Text>
                 <Text style={styles.textEmail}>{users.user_email}</Text>

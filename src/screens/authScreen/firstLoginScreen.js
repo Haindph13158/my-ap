@@ -7,15 +7,16 @@ import {
   Image,
   SafeAreaView,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Carousel from 'react-native-snap-carousel';
 import googleIcon from '../../assets/google-plus.png';
 import {Pagination} from 'react-native-snap-carousel';
 import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useDispatch, useSelector} from 'react-redux';
-import {login} from '../../features/auth/authSlide';
+import {fakeLogin, login} from '../../features/auth/authSlide';
 import axios from 'axios';
-import {getData, storeData} from '../../ultis/ultis'
+import {getData, storeData} from '../../ultis/ultis';
+import SelectDropdown from 'react-native-select-dropdown';
 GoogleSignin.configure({
   androidClientId:
     '843106096419-svnsblmbmv4p7tmicrmq4b31mjsiasuc.apps.googleusercontent.com',
@@ -44,17 +45,22 @@ const carouselItems = [
   },
 ];
 
+const dataSlot = ["FPT Polytechnic Hà Nội", "FPT Polytechnic Đà Nẵng", "FPT Polytechnic Hồ Chí Minh", "FPT Polytechnic Tây Nguyên", "FPT Polytechnic Cần Thơ"]
+
 const FirstLoginScreen = ({navigation}) => {
   // console.log("process.env.webClientId", process.env.webClientId)
   const [activeSlide, setActiveSlide] = useState(0);
-
+  const [typeSelect, setTypeSelect] = useState('');
   const dispatch = useDispatch();
 
   const {users} = useSelector(state => state.auths);
-  if (users.length !== 0) {
-    navigation.navigate('Home');
-  }
-  
+
+  useEffect(() => {
+    if (users.user_login) {
+      navigation.navigate('Home');
+    }
+  }, [navigation]);
+
   const carouselCardItem = ({item, index}) => {
     return (
       <View style={styles.cardCarousel} key={index}>
@@ -64,46 +70,26 @@ const FirstLoginScreen = ({navigation}) => {
   };
   const onGoogleButtonPress = async () => {
     // Get the users ID token
-       await GoogleSignin.signIn()
-      .then( async (item) => {
-          await axios.post("https://api.poly.edu.vn/api/auth/login-token-google", {
-            id_token: item.idToken
-          }).then(res => res.data)
-          .then( async (data) => {
-            console.log(data)
+    await GoogleSignin.signIn()
+      .then(async item => {
+        await axios
+          .post('https://api.poly.edu.vn/api/auth/login-token-google', {
+            id_token: item.idToken,
+          })
+          .then(res => res.data)
+          .then(async data => {
+            console.log(data);
             if (data) {
-            dispatch(login(data.data))
+              dispatch(login(data.data));
               navigation.navigate('Home');
             }
-          } )
+          });
       })
       .catch(err => {
         console.log(err);
+        dispatch(fakeLogin({}));
+        navigation.navigate('Home');
       });
-    // console.log('token', idToken);
-    // Create a Google credential with the token
-    // const googleCredential = auth.GoogleAuthProvider.credential(idToken);
-    // Sign-in the user with the credential
-    // const user_login = auth().signInWithCredential(googleCredential);
-    // user_login
-    //   .then(user => {
-    //     if (user) {
-    //       // console.log(user.additionalUserInfo.profile);
-    //       dispatch(login(user.additionalUserInfo.profile));
-    //       navigation.navigate('Home');
-    //     }
-    //   })
-    //   .catch(err => {
-    //     console.log(err);
-    //     const user = {
-    //       name: 'Trương Mạnh Dũng',
-    //       email: 'Dungtmph12934@fpt.edu.vn',
-    //       picture:
-    //         'https://scontent.fhan15-2.fna.fbcdn.net/v/t1.6435-9/119041444_307503740550551_8009155939658957269_n.jpg?_nc_cat=110&ccb=1-5&_nc_sid=09cbfe&_nc_ohc=oRBfilXJWKUAX9leSKh&_nc_ht=scontent.fhan15-2.fna&oh=00_AT_Fv6qeyOTbrJWnJPq8ZUBcWsxtzheO1gs_UL7knfv-xA&oe=6256ED96',
-    //     };
-    //     dispatch(login(user));
-    //     navigation.navigate('Home');
-    //   });
   };
 
   return (
@@ -137,11 +123,24 @@ const FirstLoginScreen = ({navigation}) => {
         animatedDuration={100}
         inactiveDotScale={1}
       />
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.button_first}>
-          <Text style={styles.buttonText}>Chọn cơ sở đào tạo</Text>
+      <TouchableOpacity>
+          <SelectDropdown
+            data={dataSlot}
+            buttonStyle={styles.btnStyle}
+            buttonTextStyle={styles.buttonTextStyle}
+            dropdownStyle={styles.dropdownStyle}
+            defaultButtonText={`Chọn cơ sở đào tạo`}
+            onSelect={(selectedItem, index) => {
+              setTypeSelect(selectedItem)
+            }}
+            buttonTextAfterSelection={(selectedItem, index) => {
+              return selectedItem;
+            }}
+            rowTextForSelection={(item, index) => {
+              return item;
+            }}
+          />
         </TouchableOpacity>
-      </View>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -288,6 +287,22 @@ const styles = StyleSheet.create({
   right_bottom: {
     marginLeft: WIDTH / 2,
   },
+  btnStyle: {
+    // backgroundColor: 'red',
+    borderColor: '',
+    width: '85%',
+    borderRadius: 40,
+    borderColor: 'rgb(249, 92, 4)',
+    borderWidth: 2,
+    height: 60,
+  },
+  buttonTextStyle: {
+    
+  },
+  dropdownStyle: {
+    borderRadius: 10
+  }
+
 });
 
 export default FirstLoginScreen;

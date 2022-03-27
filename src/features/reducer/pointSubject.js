@@ -23,6 +23,7 @@ export const pointSlice = createSlice({
     });
     builder.addCase(fetchPoint.rejected, (state, action) => {
       state.error = action.payload;
+      state.point = point
     });
     builder.addCase(fetchPoint.pending, state => {
       state.loading = true;

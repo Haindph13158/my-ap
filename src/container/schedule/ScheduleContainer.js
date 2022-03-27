@@ -1,24 +1,17 @@
-import React, { memo, useCallback, useState, useMemo, useEffect } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import PropTypes from 'prop-types';
+import React, { memo, useCallback, useEffect, useState } from 'react';
+import {
+  ScrollView, StatusBar, StyleSheet, TouchableOpacity, View
+} from 'react-native';
 import ScrollableTabView, {
-  ScrollableTabBar,
+  ScrollableTabBar
 } from 'react-native-scrollable-tab-view';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  ScrollView,
-  View,
-  StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  TouchableOpacity,
-} from 'react-native';
 import ScheduleItem from '../../components/ScheduleComponent/scheduleItemComponent';
-import { fetchSchedules, } from '../../features/scheduleSlide/scheduleSlide';
-import ScheduleComponent from '../../components/ScheduleComponent/scheduleComponent';
-import ContentOption from '../../components/ScheduleComponent/ContentOption';
-import { fetchAttendace } from '../../features/scheduleSlide/AttendanceSlide';
 import TableITem from '../../components/TableItem/TableITem';
-import { useNavigation } from '@react-navigation/native';
+import { fetchAttendace } from '../../features/scheduleSlide/AttendanceSlide';
+import { fetchSchedules } from '../../features/scheduleSlide/scheduleSlide';
 export const optionTabar = {
   lich_hoc: 'Lịch học',
   lich_thi: 'Lịch thi',
@@ -110,11 +103,11 @@ function ScheduleContainer({ colums }) {
           <TouchableOpacity activeOpacity={1} style={styles.container}>
             {attendances && Array.isArray(attendances) && attendances.map((item, index) =>
             (
-              <TouchableOpacity onPress={() => navigation.navigate('Atendance', {
+              <TouchableOpacity  key={index} onPress={() => navigation.navigate('Atendance', {
                 id: item.subject_id,
                 headerTitle: item.subject_name
               }) } >
-              <TableITem attendance={true} key={index} content={item} />
+              <TableITem attendance={true} content={item} />
               </TouchableOpacity>
             )
             )}
