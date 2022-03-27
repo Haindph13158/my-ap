@@ -35,7 +35,7 @@ function SemesterScreen(props) {
       type ='Đăng kí bảo lưu'
       number={true}
       reason='Bảo lưu'
-      titleSelect1="Chọn ngành"
+      titleSelect1="Trạng thái"
       />
     </ScrollView>
   );
