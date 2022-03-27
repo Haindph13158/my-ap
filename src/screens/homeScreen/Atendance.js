@@ -2,9 +2,7 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {View, Text, ScrollView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import TableSheet from '../../components/TableSheet/TableSheet';
-import ConfigHeader from '../../container/header/configHeader';
 import TopBar from '../../container/header/TopBar';
-import {fetchAttendace} from '../../features/scheduleSlide/AttendanceSlide';
 import {columnAttendance} from '../../components/TableSheet/columns';
 export default function Atendance({route}) {
   const {id, headerTitle} = route.params;
