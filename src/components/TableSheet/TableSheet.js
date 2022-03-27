@@ -1,99 +1,115 @@
-import React, { useMemo } from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
-import { DataTable } from 'react-native-paper';
+import React, { useMemo } from 'react';
+import {
+    Dimensions, ScrollView, StyleSheet, Text, View
+} from 'react-native';
 import { useTable } from 'react-table/dist/react-table.development';
-import { columnAttendance } from './columns';
+const HEIGHT = Dimensions.get('window').height;
 export default function TableSheet({
     absent,
     session,
     now,
-    item
+    item,
+    column,
+    status
 }) {
-    const percentSession = absent / session * 100
-    const percentNow = absent / now * 100
-    const columns = useMemo(() => columnAttendance, [])
-    const data = useMemo(() => item, [])
+    const percentSession = (absent / session) * 100;
+    const percentNow = (absent / now) * 100;
+    const columns = useMemo(() => column, []);
+    const data = useMemo(() => item, []);
     const tableIntance = useTable({
         columns,
-        data
-    })
-    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableIntance
+        data,
+    });
+    const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+        tableIntance;
     return (
-        <View style={styles.container}>
-            <View style={styles.table}  {...getTableProps} >
-                <View style={styles.header}>
-                    <View style={styles.border1}>
-                        <Text style={styles.textHeader}>STT</Text>
-                    </View>
-                    {headerGroups.map(item => (
-                        item.headers.map(columzz => (
-                            <View style={columzz.styleHeader}>
-                                <Text style={styles.textHeader}>
-                                    {columzz.render('title')}
-                                </Text>
-                            </View>
-                        ))))}
+        <View style={styles.table} {...getTableProps}>
+            <View style={styles.header}>
+                <View style={styles.border1}>
+                    <Text style={styles.textHeader}>STT</Text>
                 </View>
-                <ScrollView  >
-                    <View {...getTableBodyProps()}  >
+                {headerGroups.map(item =>
+                    item.headers.map(columzz => (
+                        <View style={columzz.styleHeader}>
+                            <Text style={styles.textHeader}>{columzz.render('title')}</Text>
+                        </View>
+                    )),
+                )}
+            </View>
+            <ScrollView keyboardShouldPersistTaps="always">
+                <View>
+                    <View {...getTableBodyProps()}>
                         {rows.map((row, index) => {
-                            prepareRow(row)
+                            prepareRow(row);
                             return (
                                 <View style={styles.rowTable}>
-
                                     <View key={item.id} style={styles.row1}>
                                         <Text style={styles.textHeader}>{index + 1}</Text>
-                                        <Text></Text>
                                     </View>
                                     {row.cells.map(cell => (
                                         <View {...cell.getCellProps()}>
-                                            <View style={cell.column.styleRow} >
+                                            <View style={cell.column.styleRow}>
                                                 <Text style={styles.textHeader}>
                                                     {cell.render('Cell')}
                                                 </Text>
                                             </View>
                                         </View>
-
                                     ))}
                                 </View>
-                            )
+                            );
                         })}
                     </View>
-                    <View
-                        style={styles.bottomCell}
-                    >
-                        <Text>Vắng: <Text style={styles.colorAbsent} >  {absent}/{session} {percentSession.toFixed()}% </Text> trên tổng số </Text>
-                        <Text>Vắng: <Text style={styles.colorAbsent} > {absent}/{now} {percentNow.toFixed()} % </Text> tới hiện tại</Text>
-
+                </View>
+                {
+                    absent && session && now && (
+                        <View style={styles.bottomCell}>
+                            <View style={styles.borderBotLeft}>
+                                <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
+                                    Vắng:
+                                    <Text style={styles.colorAbsent}>
+                                        {' '}
+                                        {absent}/{session} {percentSession.toFixed()}%{' '}
+                                    </Text>{' '}
+                                    trên tổng số{' '}
+                                </Text>
+                            </View>
+                            <View style={styles.borderBotRight}>
+                                <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
+                                    Vắng:{' '}
+                                    <Text style={styles.colorAbsent}>
+                                        {' '}
+                                        {absent}/{now} {percentNow.toFixed()} %{' '}
+                                    </Text>{' '}
+                                    tới hiện tại
+                                </Text>
+                            </View>
+                        </View>
+                    )
+                }
+                {status && (
+                    <View style={styles.bottomCell}>
+                        <View style={styles.borderBotLeftPoint}>
+                            <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
+                                Trạng thái:
+                            </Text>
+                        </View>
+                        <View style={styles.borderBotRight}>
+                                <Text style={styles.colorAbsent}> {status} </Text>
+                        </View>
                     </View>
-
-                </ScrollView>
-
-            </View>
-
-            {/* <DataTable>
-      <DataTable.Pagination
-        page={page}
-        numberOfPages={Math.ceil(items.length / numberOfItemsPerPage)}
-        onPageChange={page => setPage(page)}
-        label={`${from + 1}-${to} of ${items.length}`}
-        showFastPaginationControls
-        numberOfItemsPerPageList={numberOfItemsPerPageList}
-        numberOfItemsPerPage={numberOfItemsPerPage}
-        onItemsPerPageChange={onItemsPerPageChange}
-        selectPageDropdownLabel={'Rows per page'}
-      />
-    </DataTable> */}
+                )}
+            </ScrollView>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
-    container: {
-    },
+    container: {},
     table: {
         padding: 10,
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        flexDirection: 'column',
+        height: HEIGHT,
     },
     header: {
         borderTopColor: 'rgba(0,0,0,0.1)',
@@ -130,7 +146,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: 50,
         justifyContent: 'center',
-        padding: 5,
+        // padding: 10,
         paddingTop: 10,
         paddingBottom: 10,
     },
@@ -152,10 +168,33 @@ const styles = StyleSheet.create({
     },
 
     bottomCell: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        borderBottomColor: 'rgba(0,0,0,0.1)',
+        borderBottomWidth: 1,
+        // backgroundColor: 'red',
+        marginBottom: 100,
+        justifyContent: 'space-around',
+        borderLeftWidth: 1,
+        borderRightColor: 'rgba(0,0,0,0.1)',
+        borderLeftColor: 'rgba(0,0,0,0.1)',
+        borderRightWidth: 1,
     },
     colorAbsent: {
         color: 'red',
-        fontWeight: 'bold'
-    }
+        fontWeight: 'bold',
+    },
+    borderBotLeft: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        borderRightColor: 'rgba(0,0,0,0.1)',
+        borderRightWidth: 1
+    },
+    borderBotRight: {
+        paddingTop: 10,
+        paddingBottom: 10,
+    },
+    borderBotLeftPoint: {
+        paddingTop: 10,
+        paddingBottom: 10,
+    },
 });

@@ -70,8 +70,9 @@ const FirstLoginScreen = ({navigation}) => {
             id_token: item.idToken
           }).then(res => res.data)
           .then( async (data) => {
+            console.log(data)
             if (data) {
-             await dispatch(login(data.data))
+            dispatch(login(data.data))
               navigation.navigate('Home');
             }
           } )
