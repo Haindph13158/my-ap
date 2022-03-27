@@ -17,7 +17,8 @@ export const columnAttendance = [
             width: 180,
             alignItems: 'center',
             justifyContent: 'center',
-            padding: 5,
+            paddingTop: 10,
+            paddingBottom: 10
         }
     },
     {
@@ -37,7 +38,8 @@ export const columnAttendance = [
             borderLeftWidth: 1,
             width: 50,
             justifyContent: 'center',
-            padding: 5,
+            paddingTop: 10,
+            paddingBottom: 10
         }
     },
     {
@@ -57,7 +59,8 @@ export const columnAttendance = [
             borderLeftWidth: 1,
             width: 100,
             justifyContent: 'center',
-            padding: 5,
+            paddingTop: 10,
+            paddingBottom: 10
         }
     }
 ]
@@ -65,7 +68,7 @@ export const columnAttendance = [
 export const columnPoint = [
     {
         title: 'Tên đầu điểm',
-        accessor: 'name_point',
+        accessor: 'title',
         styleHeader: {
             borderLeftColor: 'rgba(0,0,0,0.1)',
             borderLeftWidth: 1,
@@ -81,12 +84,13 @@ export const columnPoint = [
             width: 180,
             alignItems: 'center',
             justifyContent: 'center',
-            padding: 5,
+            paddingTop: 10,
+            paddingBottom: 10
         }
     },
     {
         title: 'Trọng số',
-        accessor: 'number',
+        accessor: 'weight',
         styleHeader: {
             borderLeftColor: 'rgba(0,0,0,0.1)',
             borderLeftWidth: 1,
@@ -101,12 +105,13 @@ export const columnPoint = [
             borderLeftWidth: 1,
             width: 50,
             justifyContent: 'center',
-            padding: 5,
+            paddingTop: 10,
+            paddingBottom: 10
         }
     },
     {
         title: 'Điểm',
-        accessor: 'point',
+        accessor: 'pointItem',
         styleHeader: {
             borderLeftColor: 'rgba(0,0,0,0.1)',
             borderLeftWidth: 1,
@@ -121,7 +126,8 @@ export const columnPoint = [
             borderLeftWidth: 1,
             width: 100,
             justifyContent: 'center',
-            padding: 5,
+            paddingTop: 10,
+            paddingBottom: 10
         }
     }
 ]

@@ -5,12 +5,14 @@ import scheduleReducer from "../features/scheduleSlide/scheduleSlide"
 import attendaceReducer from "../features/scheduleSlide/AttendanceSlide"
 import infoUserReducer from "../features/reducer/infoUser"
 import smsReducer from '../features/reducer/sms'
+import pointReducer from '../features/reducer/pointSubject'
 const rootReducer = combineReducers({
     books: bookReducer,
     auths: authReducer,
     schedules: scheduleReducer,
     attendances:  attendaceReducer,
     infoUser : infoUserReducer,
-    smsUser: smsReducer
+    smsUser: smsReducer,
+    point: pointReducer
 });
 export default rootReducer;

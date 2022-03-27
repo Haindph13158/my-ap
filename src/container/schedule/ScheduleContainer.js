@@ -18,6 +18,7 @@ import ScheduleComponent from '../../components/ScheduleComponent/scheduleCompon
 import ContentOption from '../../components/ScheduleComponent/ContentOption';
 import { fetchAttendace } from '../../features/scheduleSlide/AttendanceSlide';
 import TableITem from '../../components/TableItem/TableITem';
+import { useNavigation } from '@react-navigation/native';
 export const optionTabar = {
   lich_hoc: 'Lịch học',
   lich_thi: 'Lịch thi',
@@ -74,11 +75,9 @@ const styles = StyleSheet.create({
     paddingRight: 7,
   },
 });
-const attendance = 'attendance'
 function ScheduleContainer({ colums }) {
   const { schedules } = useSelector(state => state.schedules);
   const { users } = useSelector(state => state.auths);
-  console.log(users);
   const { attendances } = useSelector(state => state.attendances)
   const [option, setOption] = useState(optionTabar.lich_hoc);
   const dispatch = useDispatch();
@@ -92,6 +91,7 @@ function ScheduleContainer({ colums }) {
     dispatch(fetchSchedules(users))
     dispatch(fetchAttendace(users))
   }, [users]);
+  const navigation = useNavigation()
   const renderData = () => {
     switch (option) {
       case optionTabar.lich_hoc:
@@ -108,9 +108,14 @@ function ScheduleContainer({ colums }) {
 
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            { attendances && Array.isArray(attendances) && attendances.map((item, index) =>
+            {attendances && Array.isArray(attendances) && attendances.map((item, index) =>
             (
-              <TableITem attendance={true}  key={index} content={item} />
+              <TouchableOpacity onPress={() => navigation.navigate('Atendance', {
+                id: item.subject_id,
+                headerTitle: item.subject_name
+              }) } >
+              <TableITem attendance={true} key={index} content={item} />
+              </TouchableOpacity>
             )
             )}
           </TouchableOpacity>
@@ -119,10 +124,10 @@ function ScheduleContainer({ colums }) {
       case optionTabar.lich_thi:
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-          {listSchedule.map((schedule, index) => (
-            <ScheduleItem key={index} schedule={schedule} />
-          ))}
-        </TouchableOpacity>
+            {listSchedule.map((schedule, index) => (
+              <ScheduleItem key={index} schedule={schedule} />
+            ))}
+          </TouchableOpacity>
         );
         break;
       default:

@@ -6,7 +6,7 @@ import {dataAttendance, dataSchedule, fakeData} from '../fakeData';
 export const fetchAttendace = createAsyncThunk(
   'schedules/fetchAttendace',
   async (action) => {
-    const {data: data} = await SchedulesApi.getListAttendance(action)
+    const {data} = await SchedulesApi.getListAttendance(action)
     return data.data
   }
 )

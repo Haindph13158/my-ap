@@ -29,6 +29,7 @@ import SemesterScreen from './src/screens/servicesOnline/SemesterScreen';
 import ViewContent from './src/screens/ScheduleScreen/ViewContent';
 import ListServicesScreen from './src/screens/servicesOnline/ListServicesScreen';
 import RegisteredServiceScreen from './src/screens/servicesOnline/RegisteredServiceScreen';
+import PointSubject from './src/screens/subject/PointSubject';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -131,6 +132,11 @@ const App = () => {
                 options={{headerShown: false}}
                 name="Listservices"
                 component={ListServicesScreen}
+              />
+               <Stack.Screen
+                options={{headerShown: false}}
+                name="PointSubject"
+                component={PointSubject}
               />
             </Stack.Navigator>
           </NavigationContainer>

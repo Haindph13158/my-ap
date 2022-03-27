@@ -6,6 +6,7 @@ export const fetchSms = createAsyncThunk(
   'sms/fetchSms',
   async (action) => {
     const {data} = await smsApi(action)
+
     return data.data
   }
 )
