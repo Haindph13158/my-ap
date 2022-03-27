@@ -1,7 +1,8 @@
-import React, {useMemo} from 'react';
-import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {useTable} from 'react-table/dist/react-table.development';
+import React, { useMemo } from 'react';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useTable } from 'react-table/dist/react-table.development';
 const HEIGHT = Dimensions.get('window').height;
+const defaultPropGetter = () => ({});
 export default function TableSheet({
   absent,
   session,
@@ -9,6 +10,7 @@ export default function TableSheet({
   item,
   column,
   status,
+  getCellProps = defaultPropGetter
 }) {
   const percentSession = (absent / session) * 100;
   const percentNow = (absent / now) * 100;
@@ -18,7 +20,7 @@ export default function TableSheet({
     columns,
     data,
   });
-  const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} =
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableIntance;
   return (
     <View style={styles.table} {...getTableProps}>
@@ -45,12 +47,17 @@ export default function TableSheet({
                     <Text style={styles.textHeader}>{index + 1}</Text>
                   </View>
                   {row.cells.map(cell => (
-                    <View key={index} {...cell.getCellProps()}>
-                      <View style={cell.column.styleRow}>
-                        <Text style={styles.textHeader}>
-                          {cell.render('Cell')}
-                        </Text>
-                      </View>
+                    <View key={index} {...cell.getCellProps([
+                      {
+                        style: cell.column.styleRow,
+                      }
+                    ])}>
+                      <Text  style={{
+                        color: getCellProps(cell),
+                        ...styles.textHeader
+                      }}>
+                        {cell.render('Cell')}
+                      </Text>
                     </View>
                   ))}
                 </View>
@@ -61,28 +68,28 @@ export default function TableSheet({
         {absent ? (
           <View style={styles.bottomCell}>
             <View style={styles.borderBotLeft}>
-              <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+              <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
                 Vắng:
                 <Text style={styles.colorAbsent}>
-                  
+
                   {absent}/{session} {percentSession.toFixed()}%
                 </Text>
                 trên tổng số
               </Text>
             </View>
             <View style={styles.borderBotRight}>
-              <Text style={{fontSize: 13, fontWeight: 'bold'}}>Vắng:
+              <Text style={{ fontSize: 13, fontWeight: 'bold' }}>Vắng:
                 <Text style={styles.colorAbsent}>{absent}/{now} {percentNow.toFixed()} %
                 </Text>
                 tới hiện tại
               </Text>
             </View>
           </View>
-        ): null}
+        ) : null}
         {status ? (
           <View style={styles.bottomCell}>
             <View style={styles.borderBotLeftPoint}>
-              <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+              <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
                 Trạng thái:
               </Text>
             </View>
@@ -90,7 +97,7 @@ export default function TableSheet({
               <Text style={styles.colorAbsent}> {status} </Text>
             </View>
           </View>
-        ) : null }
+        ) : null}
       </ScrollView>
     </View>
   )
@@ -144,7 +151,6 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   textHeader: {
-    color: 'rgba(0, 0 ,0 ,0.8)',
     fontSize: 13,
     textAlign: 'center',
   },
