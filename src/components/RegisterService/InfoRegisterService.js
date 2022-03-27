@@ -25,7 +25,7 @@ function InfoRegisterService(props) {
         <Text style={{color: '#646c9a', fontSize: 24}}>Dịch vụ đã đăng ký</Text>
       </>
       {data.map((item, index) => (
-        <View style={styles.zz}>
+        <View style={styles.zz} key={index}>
           <>
             <Text style={styles.text}>Mã đơn: {item.code}</Text>
             <Text style={styles.text}>Loại dịnh vụ: {item.listService}</Text>
@@ -88,6 +88,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 5,
     paddingLeft: 10,
+    borderRadius: 8
   },
 });
 

@@ -65,26 +65,24 @@ function SettingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
     padding: 10,
   },
   title: {
     fontWeight: "bold",
-    padding: 15,
+    paddingBottom: 10,
     fontSize: 32,
   },
   touchable: {
     flexDirection: "row",
+    alignItems: 'center',
     borderWidth: 2,
-    padding: 25,
+    padding: 20,
     borderColor: "rgba(158, 150, 150, .5)",
     borderRadius: 15,
     backgroundColor: 'white'
   },
   icon: {
-
-    marginRight: 35,
-    paddingTop: 15,
+    marginRight: 20,
   },
   text: {
     fontWeight: "bold",
