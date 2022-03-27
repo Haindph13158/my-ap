@@ -18,6 +18,20 @@ export default function Atendance({route}) {
           session={item.total_session}
           key={index}
           column={columnAttendance}
+          getCellProps={(cellInfo) => {
+                  switch (cellInfo.value) {
+                    case "Absent":
+                      return 'red'
+                      break;
+                    case "Present":
+                      return 'green'
+                      break;
+                    default:
+                      break;
+                  }
+          }
+
+           }
         />
       );
     });

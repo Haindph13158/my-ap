@@ -25,7 +25,8 @@ const ScheduleItem = ({schedule}) => {
             <View style={styles.box_right_title}>
               <Text style={styles.text_top}>{schedule.day}</Text>
               <Text numberOfLines={2} style={styles.text_bottom}>
-                {schedule.subject_name}
+                {schedule.subject_name} - {schedule.subject_code}
+
               </Text>
             </View>
           </ListItem.Content>
@@ -35,7 +36,10 @@ const ScheduleItem = ({schedule}) => {
       onPress={() => {
         setExpanded(!expanded);
       }}>
-      <ListItem style={styles.bottomDivider}>
+      <ListItem >
+        <View>
+        {schedule.url_room_online ?  <Text  >Link Online: <Text>{schedule.url_room_online}</Text> </Text> : null}
+
         <ListItem.Content style={styles.box_content_item}>
           <View style={styles.box_left_dropdown}>
             <Text>
@@ -44,12 +48,12 @@ const ScheduleItem = ({schedule}) => {
                 {schedule.area_name}
               </Text>
             </Text>
-            <Text>
+            {/* <Text>
               <Text style={styles.text_note_content}>Mã môn: </Text>
               <Text style={styles.data_text_note_content}>
                 {schedule.subject_code}
               </Text>
-            </Text>
+            </Text> */}
             <Text>
               <Text style={styles.text_note_content}>Thời gian: </Text>
               <Text style={styles.data_text_note_content}>
@@ -72,7 +76,10 @@ const ScheduleItem = ({schedule}) => {
             </Text>
           </View>
         </ListItem.Content>
+        </View>
+    
       </ListItem>
+   
     </ListItem.Accordion>
   );
 };
