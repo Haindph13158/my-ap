@@ -33,7 +33,6 @@ const data = [
 
 const SmsScreen = () => {
     const {sms} = useSelector(item => item.smsUser)
-    console.log(sms);
     const {users} = useSelector(item => item.auths)
     const dispatch = useDispatch()
     useEffect(()=> {

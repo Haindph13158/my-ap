@@ -35,7 +35,6 @@ export const authSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsers.fulfilled, (state, action) => {
-            console.log("fullfilled action", action.payload);
             state.users = action.payload;
             state.loading = false;
         });

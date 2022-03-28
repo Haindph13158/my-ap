@@ -70,7 +70,6 @@ function ViewContent({route}) {
     }
   })
   if(route && route?.params){
-    console.log("route.params.headerTitle", route.params.headerTitle);
     headerTitle = route.params.headerTitle
   }
   return (
