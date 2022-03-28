@@ -14,8 +14,8 @@ const date = {
 
 function SemesterScreen(props) {
   const handleSubmit = useCallback((value, info) => {
-    console.log(value);
-    console.log(info);
+    // console.log(value);
+    // console.log(info);
   });
   return (
     <>

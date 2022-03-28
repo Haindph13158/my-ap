@@ -107,7 +107,6 @@ function ScheduleContainer({ colums }) {
   const dispatch = useDispatch();
   const [typeSelect, setTypeSelect] = useState('');
   const { listSchedule } = useSelector(state => state.schedules)
-  console.log(listSchedule);
   const setOptionSchedule = useCallback(opt => {
     setOption(opt);
   },

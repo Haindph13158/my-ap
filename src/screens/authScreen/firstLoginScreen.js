@@ -78,7 +78,6 @@ const FirstLoginScreen = ({navigation}) => {
           })
           .then(res => res.data)
           .then(async data => {
-            console.log(data);
             if (data) {
               dispatch(login(data.data));
               navigation.navigate('Home');

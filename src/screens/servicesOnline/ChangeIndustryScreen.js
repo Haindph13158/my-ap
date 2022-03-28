@@ -19,7 +19,7 @@ const date = {
 
 function ChangeIndustryScreen(props) {
   const handleSubmit = useCallback((value, type) => {
-    console.log(value, type);
+    
   });
   return (
     <>

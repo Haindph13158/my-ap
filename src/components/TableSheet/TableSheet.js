@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
-import { useTable } from 'react-table/dist/react-table.development';
+import React, {useMemo} from 'react';
+import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {useTable} from 'react-table/dist/react-table.development';
 const HEIGHT = Dimensions.get('window').height;
 const defaultPropGetter = () => ({});
 export default function TableSheet({
@@ -10,7 +10,7 @@ export default function TableSheet({
   item,
   column,
   status,
-  getCellProps = defaultPropGetter
+  getCellProps = defaultPropGetter,
 }) {
   const percentSession = (absent / session) * 100;
   const percentNow = (absent / now) * 100;
@@ -20,87 +20,93 @@ export default function TableSheet({
     columns,
     data,
   });
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+  const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} =
     tableIntance;
   return (
-    <View style={styles.table} {...getTableProps}>
-      <View style={styles.header}>
-        <View style={styles.border1}>
-          <Text style={styles.textHeader}>STT</Text>
+    <>
+      {absent ? (
+        <View style={styles.bottomCell}>
+          <View style={styles.borderBotLeft}>
+            <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+              Vắng:
+              <Text style={styles.colorAbsent}>
+                {absent}/{session} {percentSession.toFixed()}%
+              </Text>
+              trên tổng số
+            </Text>
+          </View>
+          <View style={styles.borderBotRight}>
+            <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+              Vắng:
+              <Text style={styles.colorAbsent}>
+                {absent}/{now} {percentNow.toFixed()}%
+              </Text>
+              tới hiện tại
+            </Text>
+          </View>
         </View>
-        {headerGroups.map((item, i) =>
-          item.headers.map((columzz, index) => (
-            <View key={index} style={columzz.styleHeader}>
-              <Text style={styles.textHeader}>{columzz.render('title')}</Text>
-            </View>
-          )),
-        )}
-      </View>
-      <ScrollView keyboardShouldPersistTaps="always">
-        <View>
-          <View {...getTableBodyProps()}>
-            {rows.map((row, index) => {
-              prepareRow(row);
-              return (
-                <View key={index} style={styles.rowTable}>
-                  <View key={item.id} style={styles.row1}>
-                    <Text style={styles.textHeader}>{index + 1}</Text>
-                  </View>
-                  {row.cells.map(cell => (
-                    <View key={index} {...cell.getCellProps([
-                      {
-                        style: cell.column.styleRow,
-                      }
-                    ])}>
-                      <Text  style={{
-                        color: getCellProps(cell),
-                        ...styles.textHeader
-                      }}>
-                        {cell.render('Cell')}
-                      </Text>
+      ): null}
+      <View style={styles.table} {...getTableProps}>
+        <View style={styles.header}>
+          <View style={styles.border1}>
+            <Text style={styles.textHeader}>STT</Text>
+          </View>
+          {headerGroups.map((item, i) =>
+            item.headers.map((columzz, index) => (
+              <View key={index} style={columzz.styleHeader}>
+                <Text style={styles.textHeader}>{columzz.render('title')}</Text>
+              </View>
+            )),
+          )}
+        </View>
+        <ScrollView keyboardShouldPersistTaps="always" style={{marginBottom: 80}}>
+          <View style={{marginBottom: 80}}>
+            <View {...getTableBodyProps()}>
+              {rows.map((row, index) => {
+                prepareRow(row);
+                return (
+                  <View key={index} style={styles.rowTable}>
+                    <View key={item.id} style={styles.row1}>
+                      <Text style={styles.textHeader}>{index + 1}</Text>
                     </View>
-                  ))}
+                    {row.cells.map(cell => (
+                      <View
+                        key={index}
+                        {...cell.getCellProps([
+                          {
+                            style: cell.column.styleRow,
+                          },
+                        ])}>
+                        <Text
+                          style={{
+                            color: getCellProps(cell),
+                            ...styles.textHeader,
+                          }}>
+                          {cell.render('Cell')}
+                        </Text>
+                      </View>
+                    ))}
+                  </View>
+                );
+              })}
+            </View>
+            {status && (
+              <View style={styles.bottomCell}>
+                <View style={styles.borderBotLeftPoint}>
+                  <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+                    Trạng thái:
+                  </Text>
                 </View>
-              );
-            })}
+                <View style={styles.borderBotRight}>
+                  <Text style={styles.colorAbsent}> {status} </Text>
+                </View>
+              </View>
+            )}
           </View>
-        </View>
-        {absent ? (
-          <View style={styles.bottomCell}>
-            <View style={styles.borderBotLeft}>
-              <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
-                Vắng:
-                <Text style={styles.colorAbsent}>
-
-                  {absent}/{session} {percentSession.toFixed()}%
-                </Text>
-                trên tổng số
-              </Text>
-            </View>
-            <View style={styles.borderBotRight}>
-              <Text style={{ fontSize: 13, fontWeight: 'bold' }}>Vắng:
-                <Text style={styles.colorAbsent}>{absent}/{now} {percentNow.toFixed()} %
-                </Text>
-                tới hiện tại
-              </Text>
-            </View>
-          </View>
-        ) : null}
-        {status ? (
-          <View style={styles.bottomCell}>
-            <View style={styles.borderBotLeftPoint}>
-              <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
-                Trạng thái:
-              </Text>
-            </View>
-            <View style={styles.borderBotRight}>
-              <Text style={styles.colorAbsent}> {status} </Text>
-            </View>
-          </View>
-        ) : null}
-      </ScrollView>
-    </View>
-  )
+        </ScrollView>
+      </View>
+    </>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -170,8 +176,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     borderBottomColor: 'rgba(0,0,0,0.1)',
     borderBottomWidth: 1,
-    // backgroundColor: 'red',
-    marginBottom: 100,
     justifyContent: 'space-around',
     borderLeftWidth: 1,
     borderRightColor: 'rgba(0,0,0,0.1)',
@@ -181,12 +185,14 @@ const styles = StyleSheet.create({
   colorAbsent: {
     color: 'red',
     fontWeight: 'bold',
+    marginLeft: 5,
+    marginRight: 5,
   },
   borderBotLeft: {
     paddingTop: 10,
     paddingBottom: 10,
-    borderRightColor: 'rgba(0,0,0,0.1)',
-    borderRightWidth: 1,
+    // borderRightColor: 'rgba(0,0,0,0.1)',
+    // borderRightWidth: 1,
   },
   borderBotRight: {
     paddingTop: 10,
