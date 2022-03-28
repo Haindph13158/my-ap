@@ -59,7 +59,7 @@ export default function SubjectScreen() {
       <SelectTime
         dataSlot={data}
         renderDataSelect={renderDataSelect}
-        onSelectOption={term}
+        value={term}
       />
       <ScrollView keyboardShouldPersistTaps="always" style={{marginBottom: 120}}>
         <View style={{marginBottom: 120}}>

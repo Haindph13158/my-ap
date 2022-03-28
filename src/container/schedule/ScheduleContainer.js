@@ -7,6 +7,7 @@ import ScrollableTabView, {
 } from 'react-native-scrollable-tab-view';
 import {useDispatch, useSelector} from 'react-redux';
 import ScheduleItem from '../../components/ScheduleComponent/scheduleItemComponent';
+import TextApp from '../../components/ScheduleComponent/TextApp';
 import SelectTime from '../../components/SelectTime/SelectTime';
 import TableITem from '../../components/TableItem/TableITem';
 import {fetchAttendace} from '../../features/scheduleSlide/AttendanceSlide';
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1
     marginTop: 20,
+    marginBottom: 20
     // marginTop: StatusBar.currentHeight || 0,
   },
   item: {
@@ -133,6 +135,7 @@ function ScheduleContainer({colums}) {
     switch (option) {
       case optionTabar.lich_hoc:
         return (
+          // <TextApp />
           <TouchableOpacity activeOpacity={1} style={styles.container}>
             <SelectTime
               dataSlot={dataSlot}

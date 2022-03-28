@@ -63,8 +63,8 @@ export default function TableSheet({
         </View>
         <ScrollView
           keyboardShouldPersistTaps="always"
-          style={{marginBottom: 80}}>
-          <View style={{marginBottom: 80}}>
+          style={{marginBottom: 60}}>
+          <View style={{marginBottom: 60}}>
             <View {...getTableBodyProps()}>
               {rows.map((row, index) => {
                 prepareRow(row);
