@@ -24,21 +24,23 @@ const ScheduleItem = ({schedule}) => {
                 {schedule.subject_name} - {schedule.subject_code}
               </Text>
             </View>
-            {expanded ? (
-              <IconView
-                name="right"
-                component="AntDesign"
-                size={20}
-                color="rgba(0,0,0,0.5)"
-              />
-            ) : (
-              <IconView
-                name="down"
-                component="AntDesign"
-                size={20}
-                color="rgba(0,0,0,0.5)"
-              />
-            )}
+            <View style={styles.viewIcon}>
+              {expanded ? (
+                <IconView
+                  name="right"
+                  component="AntDesign"
+                  size={20}
+                  color="rgba(0,0,0,0.5)"
+                />
+              ) : (
+                <IconView
+                  name="down"
+                  component="AntDesign"
+                  size={20}
+                  color="rgba(0,0,0,0.5)"
+                />
+              )}
+            </View>
           </View>
         </TouchableOpacity>
         <Collapsible duration={200} collapsed={expanded} align="center">
@@ -120,7 +122,7 @@ const styles = StyleSheet.create({
   },
   box_content_item: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   box_left_title: {
@@ -156,6 +158,10 @@ const styles = StyleSheet.create({
   box_left_dropdown: {
     marginTop: 10,
   },
+  viewIcon: {
+    position: 'absolute',
+    right: 0
+  }
 });
 
 export default memo(ScheduleItem);
