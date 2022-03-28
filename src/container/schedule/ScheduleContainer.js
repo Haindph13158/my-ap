@@ -33,8 +33,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    // flex: 1
+    marginTop: 20
+    // marginTop: StatusBar.currentHeight || 0,
   },
   item: {
     backgroundColor: '#fff',
@@ -122,7 +123,7 @@ dispatch(fetchSchedules(users))
       case optionTabar.lich_hoc:
 
         return (
-          <TouchableOpacity activeOpacity={1} style={styles.container}>
+          <View activeOpacity={1} style={styles.container}>
             <View style={styles.selectSlide}>
               <Text>Thời gian</Text>
               <SelectDropdown
@@ -146,7 +147,7 @@ dispatch(fetchSchedules(users))
             {listSchedule.map((schedule, index) => (
               <ScheduleItem key={index} schedule={schedule} />
             ))}
-          </TouchableOpacity>
+          </View>
         );
         break;
       case optionTabar.diem_danh:
