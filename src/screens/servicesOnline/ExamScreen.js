@@ -11,8 +11,8 @@ const date = {
 };
 function ExamScreen() {
   const handleSubmit = useCallback((value, info) => {
-    console.log(value, 'value');
-    console.log(info, 'info');
+    // console.log(value, 'value');
+    // console.log(info, 'info');
   }, []);
   return (
     <>

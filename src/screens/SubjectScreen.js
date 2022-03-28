@@ -61,7 +61,8 @@ export default function SubjectScreen() {
         renderDataSelect={renderDataSelect}
         value={term}
       />
-      <ScrollView keyboardShouldPersistTaps="always" >
+      <ScrollView keyboardShouldPersistTaps="always" style={{marginBottom: 120}}>
+        <View style={{marginBottom: 120}}>
         {
           point && Array.isArray(point) && point.filter(item => item.subject_name.length !== 0 ).map((item, index) => (
             <TouchableOpacity
@@ -76,6 +77,7 @@ export default function SubjectScreen() {
             </TouchableOpacity>
           ))
         }
+        </View>
         </ScrollView>
     </View>
   )

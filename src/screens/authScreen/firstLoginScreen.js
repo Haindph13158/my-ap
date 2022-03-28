@@ -71,18 +71,22 @@ const FirstLoginScreen = ({navigation}) => {
   const onGoogleButtonPress = async () => {
     // Get the users ID token
     await GoogleSignin.signIn()
-      .then(async item => {
-        await axios
+      .then(item => {
+        console.log(item.idToken);
+        axios
           .post('https://api.poly.edu.vn/api/auth/login-token-google', {
             id_token: item.idToken,
           })
           .then(res => res.data)
-          .then(async data => {
+          .then(data => {
             if (data) {
               dispatch(login(data.data));
               navigation.navigate('Home');
             }
-          });
+          }).catch(err => {
+            dispatch(fakeLogin({}));
+            navigation.navigate('Home');
+          });;
       })
       .catch(err => {
         dispatch(fakeLogin({}));

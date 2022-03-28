@@ -1,20 +1,17 @@
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import PropTypes from 'prop-types';
-import React, { memo, useCallback, useEffect, useState } from 'react';
-import {
-  ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View
-} from 'react-native';
+import React, {memo, useCallback, useEffect, useState} from 'react';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import ScrollableTabView, {
-  ScrollableTabBar
+  ScrollableTabBar,
 } from 'react-native-scrollable-tab-view';
-import SelectDropdown from 'react-native-select-dropdown';
-import { useDispatch, useSelector } from 'react-redux';
-import IconView from '../../common/IconView';
+import {useDispatch, useSelector} from 'react-redux';
 import ScheduleItem from '../../components/ScheduleComponent/scheduleItemComponent';
+import TextApp from '../../components/ScheduleComponent/TextApp';
 import SelectTime from '../../components/SelectTime/SelectTime';
 import TableITem from '../../components/TableItem/TableITem';
-import { fetchAttendace } from '../../features/scheduleSlide/AttendanceSlide';
-import { fetchSchedules } from '../../features/scheduleSlide/scheduleSlide';
+import {fetchAttendace} from '../../features/scheduleSlide/AttendanceSlide';
+import {fetchSchedules} from '../../features/scheduleSlide/scheduleSlide';
 export const optionTabar = {
   lich_hoc: 'Lịch học',
   lich_thi: 'Lịch thi',
@@ -34,8 +31,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'black',
   },
   container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    // flex: 1
+    marginTop: 20,
+    marginBottom: 20
+    // marginTop: StatusBar.currentHeight || 0,
   },
   item: {
     backgroundColor: '#fff',
@@ -73,7 +72,7 @@ const styles = StyleSheet.create({
   selectSlide: {
     borderRadius: 8,
     backgroundColor: 'white',
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
@@ -82,7 +81,7 @@ const styles = StyleSheet.create({
     shadowRadius: 3.84,
 
     elevation: 5,
-    padding: 10
+    padding: 10,
   },
   btnStyle: {
     width: '100%',
@@ -91,51 +90,58 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(0,0,0,0.1)',
     borderWidth: 1,
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
   },
   dropdownStyle: {
     borderRadius: 8,
-
-  }
+  },
 });
 
-const dataSlot = ["7 ngày tới", "30 ngày tới", "90 ngày tới", "7 ngày trước",  "30 ngày trước","90 ngày trước", ]
-function ScheduleContainer({ colums }) {
-  const { schedules } = useSelector(state => state.schedules);
-  const { users } = useSelector(state => state.auths);
-  const { attendances } = useSelector(state => state.attendances)
+const dataSlot = [
+  '7 ngày tới',
+  '30 ngày tới',
+  '90 ngày tới',
+  '7 ngày trước',
+  '30 ngày trước',
+  '90 ngày trước',
+];
+function ScheduleContainer({colums}) {
+  const {schedules} = useSelector(state => state.schedules);
+  const {users} = useSelector(state => state.auths);
+  const {attendances} = useSelector(state => state.attendances);
   const [option, setOption] = useState(optionTabar.lich_hoc);
   const dispatch = useDispatch();
-  const { listSchedule } = useSelector(state => state.schedules)
+  const {listSchedule} = useSelector(state => state.schedules);
   const [typeSelect, setTypeSelect] = useState('');
-  const setOptionSchedule = useCallback(opt => {
-    setOption(opt);
-  },
+  const setOptionSchedule = useCallback(
+    opt => {
+      setOption(opt);
+    },
     [option],
   );
   useEffect(() => {
-dispatch(fetchSchedules(users))
-    dispatch(fetchAttendace(users))
+    dispatch(fetchSchedules(users));
+    dispatch(fetchAttendace(users));
   }, [users]);
-  const navigation = useNavigation()
+  const navigation = useNavigation();
 
-  const renderDataSelect = useCallback((value) => {
-    return value
-  },[])
-  const valueSelect = useCallback((value) => {
-        setTypeSelect(value)
-  },[])
+  const renderDataSelect = useCallback(value => {
+    return value;
+  }, []);
+  const valueSelect = useCallback(value => {
+    setTypeSelect(value);
+  }, []);
   const renderData = () => {
     switch (option) {
       case optionTabar.lich_hoc:
-
         return (
+          // <TextApp />
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-           <SelectTime
-           dataSlot={dataSlot} 
-           renderDataSelect={renderDataSelect} 
-           value={valueSelect}
-           />
+            <SelectTime
+              dataSlot={dataSlot}
+              renderDataSelect={renderDataSelect}
+              value={valueSelect}
+            />
             {listSchedule.map((schedule, index) => (
               <ScheduleItem key={index} schedule={schedule} />
             ))}
@@ -143,34 +149,36 @@ dispatch(fetchSchedules(users))
         );
         break;
       case optionTabar.diem_danh:
-
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            {attendances && Array.isArray(attendances) && attendances.map((item, index) =>
-            (
-              <TouchableOpacity  key={index} onPress={() => navigation.navigate('Atendance', {
-                id: item.subject_id,
-                headerTitle: item.subject_name
-              }) } >
-              <TableITem attendance={true} content={item} />
-              </TouchableOpacity>
-            )
-            )}
+            {attendances &&
+              Array.isArray(attendances) &&
+              attendances.map((item, index) => (
+                <TouchableOpacity
+                  key={index}
+                  onPress={() =>
+                    navigation.navigate('Atendance', {
+                      id: item.subject_id,
+                      headerTitle: item.subject_name,
+                    })
+                  }>
+                  <TableITem attendance={true} content={item} />
+                </TouchableOpacity>
+              ))}
           </TouchableOpacity>
         );
         break;
       case optionTabar.lich_thi:
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-                      <SelectTime 
-                      dataSlot={dataSlot}  
-                      renderDataSelect={renderDataSelect} 
-                      value={valueSelect}
-                      
-                      />
+            <SelectTime
+              dataSlot={dataSlot}
+              renderDataSelect={renderDataSelect}
+              value={valueSelect}
+            />
             {listSchedule.map((schedule, index) => (
               <ScheduleItem key={index} schedule={schedule} />
-))}
+            ))}
           </TouchableOpacity>
         );
         break;
@@ -184,7 +192,7 @@ dispatch(fetchSchedules(users))
         );
         break;
     }
-  }
+  };
 
   return (
     <ScrollableTabView
@@ -202,7 +210,7 @@ dispatch(fetchSchedules(users))
       }}
       tabBarBackgroundColor={'white'}
       tabBarActiveTextColor={'red'}
-      tabBarTextStyle={{ fontSize: 14 }}>
+      tabBarTextStyle={{fontSize: 14}}>
       {colums.map((item, index) => (
         <View key={index} tabLabel={item.title}>
           <ScrollView keyboardShouldPersistTaps="always">

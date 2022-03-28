@@ -22,7 +22,7 @@ function NavBottom() {
       }}
     >
       <Tab.Screen
-        name="Home"
+        name="Trang chủ"
         component={HomeScreen}
         barStyle={{backgroundColor: 'white', borderColor: 'red', borderWidth: 2}}
         options={{
@@ -33,7 +33,7 @@ function NavBottom() {
         }}
       />
       <Tab.Screen
-        name="Schedule"
+        name="Lịch học"
         component={ScheduleScreen}
         options={{
           tabBarIcon: ({ color }) => (
@@ -53,7 +53,7 @@ function NavBottom() {
         }}
       />
       <Tab.Screen
-        name="Setting"
+        name="Cài đặt"
         component={SettingScreen}
         options={{
           tabBarIcon: ({ color }) => (

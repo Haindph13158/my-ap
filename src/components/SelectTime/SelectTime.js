@@ -18,7 +18,6 @@ function SelectTime({
         defaultButtonText={renderDataSelect(dataSlot[0])}
         onSelect={(selectedItem, index) => {
           value(selectedItem);
-          return selectedItem
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           value(selectedItem);

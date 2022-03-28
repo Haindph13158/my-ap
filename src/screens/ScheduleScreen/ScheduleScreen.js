@@ -134,7 +134,7 @@ function ScheduleScreen() {
             <ScrollView>
               <TouchableOpacity activeOpacity={1} style={styles.container}>
                 {schedules.map((item, index) => (
-                  <ContentOption keyIndex ='schedule'  content={item} key={index} />
+                  <ContentOption keyIndex ='schedule' content={item} key={index} />
                 ))}
               </TouchableOpacity>
             </ScrollView>

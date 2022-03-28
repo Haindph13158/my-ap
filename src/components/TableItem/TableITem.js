@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     textPoint: {
-        color: 'red'
+        color: 'green'
     }
 });
 TableITem.propsTypes = {

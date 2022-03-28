@@ -15,7 +15,7 @@ const date = {
 const dataSlot = ['Ca 1 (07:15:00 - 9:15:00)', 'Ca 2 (09:15:00 - 9:15:00)'];
 function StudyScreen(props) {
   const handleSubmit = useCallback((value, type) => {
-    console.log(value, type);
+    // console.log(value, type);
   }, []);
   return (
     <>

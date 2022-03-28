@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import pointApi from '../../app/data/pointApi';
+import { point } from '../fakeData';
 
 export const fetchPoint = createAsyncThunk(
   'point/fetchPoint',
@@ -23,6 +24,7 @@ export const pointSlice = createSlice({
     });
     builder.addCase(fetchPoint.rejected, (state, action) => {
       state.error = action.payload;
+      state.point = point
     });
     builder.addCase(fetchPoint.pending, state => {
       state.loading = true;
