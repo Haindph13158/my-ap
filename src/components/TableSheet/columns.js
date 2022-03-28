@@ -69,7 +69,7 @@ export const columnAttendance = [
 export const columnPoint = [
     {
         title: 'Tên đầu điểm',
-        accessor: 'title',
+        accessor: 'grade_name',
         styleHeader: {
             borderLeftColor: 'rgba(0,0,0,0.1)',
             borderLeftWidth: 1,
@@ -91,7 +91,7 @@ export const columnPoint = [
     },
     {
         title: 'Trọng số',
-        accessor: 'weight',
+        accessor: 'grade_weight',
         styleHeader: {
             borderLeftColor: 'rgba(0,0,0,0.1)',
             borderLeftWidth: 1,
@@ -112,7 +112,7 @@ export const columnPoint = [
     },
     {
         title: 'Điểm',
-        accessor: 'pointItem',
+        accessor: 'grade_result',
         styleHeader: {
             borderLeftColor: 'rgba(0,0,0,0.1)',
             borderLeftWidth: 1,
