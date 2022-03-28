@@ -10,7 +10,8 @@ export default function TableSheet({
   item,
   column,
   status,
-  getCellProps = defaultPropGetter
+  getCellProps = defaultPropGetter,
+  medium_score
 }) {
   const percentSession = (absent / session) * 100;
   const percentNow = (absent / now) * 100;
@@ -22,6 +23,7 @@ export default function TableSheet({
   });
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableIntance;
+    
   return (
     <View style={styles.table} {...getTableProps}>
       <View style={styles.header}>
@@ -87,16 +89,20 @@ export default function TableSheet({
           </View>
         ) : null}
         {status ? (
-          <View style={styles.bottomCell}>
-            <View style={styles.borderBotLeftPoint}>
-              <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
-                Trạng thái:
-              </Text>
-            </View>
-            <View style={styles.borderBotRight}>
-              <Text style={styles.colorAbsent}> {status} </Text>
-            </View>
-          </View>
+           <View style={styles.bottomCell}>
+           <View style={styles.borderBotLeft}>
+             <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
+               Trung bình:
+               <Text style={styles.colorAbsent}>{medium_score}  </Text>
+             </Text>
+           </View>
+           <View style={styles.borderBotRight}>
+             <Text style={{ fontSize: 13, fontWeight: 'bold' }}>
+               Trạng thái:
+               <Text style={styles.colorAbsent}>{status} </Text>
+             </Text>
+           </View>
+         </View>
         ) : null}
       </ScrollView>
     </View>
@@ -187,6 +193,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
     borderRightColor: 'rgba(0,0,0,0.1)',
     borderRightWidth: 1,
+    
   },
   borderBotRight: {
     paddingTop: 10,

@@ -11,6 +11,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import IconView from '../../common/IconView';
 import ScheduleItem from '../../components/ScheduleComponent/scheduleItemComponent';
+import SelectTime from '../../components/SelectTime/SelectTime';
 import TableITem from '../../components/TableItem/TableITem';
 import { fetchAttendace } from '../../features/scheduleSlide/AttendanceSlide';
 import { fetchSchedules } from '../../features/scheduleSlide/scheduleSlide';
@@ -98,15 +99,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const dataSlot = ["90 ngày trước", "30 ngày trước", "7 ngày trước", "7 ngày tới", "30 ngày tới", "90 ngày tới"]
+const dataSlot = ["7 ngày tới", "30 ngày tới", "90 ngày tới", "7 ngày trước",  "30 ngày trước","90 ngày trước", ]
 function ScheduleContainer({ colums }) {
   const { schedules } = useSelector(state => state.schedules);
   const { users } = useSelector(state => state.auths);
   const { attendances } = useSelector(state => state.attendances)
   const [option, setOption] = useState(optionTabar.lich_hoc);
   const dispatch = useDispatch();
-  const [typeSelect, setTypeSelect] = useState('');
   const { listSchedule } = useSelector(state => state.schedules)
+  const [typeSelect, setTypeSelect] = useState('');
   const setOptionSchedule = useCallback(opt => {
     setOption(opt);
   },
@@ -117,32 +118,24 @@ dispatch(fetchSchedules(users))
     dispatch(fetchAttendace(users))
   }, [users]);
   const navigation = useNavigation()
+
+  const renderDataSelect = useCallback((value) => {
+    return value
+  },[])
+  const valueSelect = useCallback((value) => {
+        setTypeSelect(value)
+  },[])
   const renderData = () => {
     switch (option) {
       case optionTabar.lich_hoc:
 
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            <View style={styles.selectSlide}>
-              <Text>Thời gian</Text>
-              <SelectDropdown
-                data={dataSlot}
-                buttonStyle={styles.btnStyle}
-                buttonTextStyle={styles.buttonTextStyle}
-                dropdownStyle={styles.dropdownStyle}
-                defaultButtonText={"7 ngày tới"}
-                onSelect={(selectedItem, index) => {
-                  setTypeSelect(selectedItem)
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  return selectedItem;
-                }}
-                rowTextForSelection={(item, index) => {
-                  return item;
-                }}
-              />
-              <Text>Lựa chọn thời gian để hiển thị chi tiết lịch học</Text>
-            </View>
+           <SelectTime
+           dataSlot={dataSlot} 
+           renderDataSelect={renderDataSelect} 
+           value={valueSelect}
+           />
             {listSchedule.map((schedule, index) => (
               <ScheduleItem key={index} schedule={schedule} />
             ))}
@@ -169,26 +162,12 @@ dispatch(fetchSchedules(users))
       case optionTabar.lich_thi:
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            <View style={styles.selectSlide}>
-              <Text>Thời gian</Text>
-              <SelectDropdown
-                data={dataSlot}
-                buttonStyle={styles.btnStyle}
-                buttonTextStyle={styles.buttonTextStyle}
-                dropdownStyle={styles.dropdownStyle}
-                defaultButtonText={"7 ngày tới"}
-                onSelect={(selectedItem, index) => {
-                  setTypeSelect(selectedItem)
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  return selectedItem;
-                }}
-                rowTextForSelection={(item, index) => {
-                  return item;
-                }}
-              />
-              <Text>Lựa chọn thời gian để hiển thị chi tiết lịch thi</Text>
-            </View>
+                      <SelectTime 
+                      dataSlot={dataSlot}  
+                      renderDataSelect={renderDataSelect} 
+                      value={valueSelect}
+                      
+                      />
             {listSchedule.map((schedule, index) => (
               <ScheduleItem key={index} schedule={schedule} />
 ))}
