@@ -85,7 +85,6 @@ const FirstLoginScreen = ({navigation}) => {
           });
       })
       .catch(err => {
-        console.log(err);
         dispatch(fakeLogin({}));
         navigation.navigate('Home');
       });
