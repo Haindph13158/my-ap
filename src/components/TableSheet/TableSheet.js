@@ -11,6 +11,7 @@ export default function TableSheet({
   column,
   status,
   getCellProps = defaultPropGetter,
+  medium_score,
 }) {
   const percentSession = (absent / session) * 100;
   const percentNow = (absent / now) * 100;
@@ -22,6 +23,7 @@ export default function TableSheet({
   });
   const {getTableProps, getTableBodyProps, headerGroups, rows, prepareRow} =
     tableIntance;
+
   return (
     <>
       {absent ? (
@@ -45,7 +47,7 @@ export default function TableSheet({
             </Text>
           </View>
         </View>
-      ): null}
+      ) : null}
       <View style={styles.table} {...getTableProps}>
         <View style={styles.header}>
           <View style={styles.border1}>
@@ -59,7 +61,9 @@ export default function TableSheet({
             )),
           )}
         </View>
-        <ScrollView keyboardShouldPersistTaps="always" style={{marginBottom: 80}}>
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          style={{marginBottom: 80}}>
           <View style={{marginBottom: 80}}>
             <View {...getTableBodyProps()}>
               {rows.map((row, index) => {
@@ -90,18 +94,22 @@ export default function TableSheet({
                 );
               })}
             </View>
-            {status && (
+            {status ? (
               <View style={styles.bottomCell}>
-                <View style={styles.borderBotLeftPoint}>
+                <View style={styles.borderBotLeft}>
                   <Text style={{fontSize: 13, fontWeight: 'bold'}}>
-                    Trạng thái:
+                    Trung bình:
+                    <Text style={styles.colorAbsent}>{medium_score} </Text>
                   </Text>
                 </View>
                 <View style={styles.borderBotRight}>
-                  <Text style={styles.colorAbsent}> {status} </Text>
+                  <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+                    Trạng thái:
+                    <Text style={styles.colorAbsent}>{status} </Text>
+                  </Text>
                 </View>
               </View>
-            )}
+            ) : null}
           </View>
         </ScrollView>
       </View>
@@ -183,7 +191,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 1,
   },
   colorAbsent: {
-    color: 'red',
+    color: 'green',
     fontWeight: 'bold',
     marginLeft: 5,
     marginRight: 5,

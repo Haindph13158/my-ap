@@ -11,7 +11,7 @@ function TableITem({
 
         <View style={styles.item}>
             <View>
-                <Text style={styles.titleAttendace}>{content.subject_name}</Text>
+                <Text style={styles.titleAttendace}>{content.subject_name} - {content.subject_code}</Text>
                 {
                     attendance && (
                         <>
@@ -32,7 +32,7 @@ function TableITem({
                     point && (
                         <>
                             <Text style={styles.text} >
-                                Trạng thái: <Text style={styles.textPoint} > {content.status}</Text>
+                                Trạng thái: <Text style={styles.textPoint} > {content.status_name}</Text>
                             </Text>
                         </>
                     )
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     textPoint: {
-        color: 'red'
+        color: 'green'
     }
 });
 TableITem.propsTypes = {

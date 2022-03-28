@@ -1,11 +1,12 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import pointApi from '../../app/data/pointApi';
 import { point } from '../fakeData';
 
 export const fetchPoint = createAsyncThunk(
   'point/fetchPoint',
   async (action) => {
-    const data = point
-    return data
+    const {data} = await pointApi(action)
+    return data.data
   }
 )
 const initialState = {
