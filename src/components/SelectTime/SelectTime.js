@@ -9,7 +9,6 @@ function SelectTime({
 }) {
   return (
     <View style={styles.selectSlide}>
-      <Text>Thời gian</Text>
       <SelectDropdown
         data={dataSlot}
         buttonStyle={styles.btnStyle}
@@ -43,17 +42,19 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
-    padding: 10
+    padding: 10,
+    marginLeft: 10,
+    marginRight: 10
   },
   btnStyle: {
+    height: 40,
     width: '100%',
     borderRadius: 8,
     backgroundColor: 'white',
     borderColor: 'rgba(0,0,0,0.1)',
     borderWidth: 1,
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 10
   },
   dropdownStyle: {
