@@ -46,7 +46,6 @@ function TableITem({
 const styles = StyleSheet.create({
     header: {
         height: 100,
-        backgroundColor: 'red',
         flexDirection: 'row',
     },
     tab: {
@@ -61,7 +60,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
         padding: 20,
         marginVertical: 8,
-        marginHorizontal: 16,
+        marginLeft: 10,
+        marginRight: 10,
         borderRadius: 10,
         flexDirection: 'row',
     },

@@ -56,11 +56,13 @@ export default function SubjectScreen() {
   return (
     <View>
       <ConfigHeader />
-      <SelectTime
-        dataSlot={data}
-        renderDataSelect={renderDataSelect}
-        value={term}
-      />
+      <View style={{marginTop: 10}}>
+        <SelectTime
+          dataSlot={data}
+          renderDataSelect={renderDataSelect}
+          value={term}
+        />
+      </View>
       <ScrollView keyboardShouldPersistTaps="always" style={{marginBottom: 120}}>
         <View style={{marginBottom: 120}}>
         {
