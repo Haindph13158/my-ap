@@ -29,7 +29,8 @@ export const attendanceSlice = createSlice({
     });
 
     builder.addCase(fetchAttendace.rejected, (state, action) => {
-      state.attendances = dataAttendance;
+      state.error = action.payload;
+      // state.attendances = dataAttendance;
     });
 
     // trường hợp 2: Trang thai call api chua thanh cong

@@ -1,6 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import PropTypes from 'prop-types';
-import React, {memo, useCallback, useEffect, useState} from 'react';
+import React, {memo, useCallback, useEffect, useRef, useState} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import ScrollableTabView, {
   ScrollableTabBar,
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1
     marginTop: 10,
-    marginBottom: 20
+    marginBottom: 20,
     // marginTop: StatusBar.currentHeight || 0,
   },
   item: {
@@ -110,6 +110,7 @@ function ScheduleContainer({colums}) {
   const {users} = useSelector(state => state.auths);
   const {attendances} = useSelector(state => state.attendances);
   const [option, setOption] = useState(optionTabar.lich_hoc);
+  const [day, setDay] = useState(7);
   const dispatch = useDispatch();
   const {listSchedule} = useSelector(state => state.schedules);
   const [typeSelect, setTypeSelect] = useState('');
@@ -120,9 +121,15 @@ function ScheduleContainer({colums}) {
     [option],
   );
   useEffect(() => {
-    dispatch(fetchSchedules(users));
+    const optionSchedule = {
+      token: users.token,
+      campus_code: users.campus_code,
+      day: day,
+      user_code: users.user_code,
+    };
+    dispatch(fetchSchedules(optionSchedule));
     dispatch(fetchAttendace(users));
-  }, [users]);
+  }, [users, day]);
   const navigation = useNavigation();
 
   const renderDataSelect = useCallback(value => {
@@ -130,6 +137,29 @@ function ScheduleContainer({colums}) {
   }, []);
   const valueSelect = useCallback(value => {
     setTypeSelect(value);
+    switch (value) {
+      case '7 ngày tới':
+        setDay(7);
+        break;
+      case '30 ngày tới':
+        setDay(30);
+        break;
+      case '90 ngày tới':
+        setDay(90);
+        break;
+      case '7 ngày trước':
+        setDay(-7);
+        break;
+      case '30 ngày trước':
+        setDay(-30);
+        break;
+      case '90 ngày trước':
+        setDay(-90);
+        break;
+      default:
+        setDay(7);
+        break;
+    }
   }, []);
   const renderData = () => {
     switch (option) {

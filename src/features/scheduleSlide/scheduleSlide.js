@@ -7,7 +7,8 @@ export const fetchSchedules = createAsyncThunk(
   // type action
   'schedules/fetchSchedules',
   async (action) => {
-      const {data} = await SchedulesApi.getSchedule(action)
+    console.log(action);
+    const {data} = await SchedulesApi.getSchedule(action)
      return data.data;
    }
 );
@@ -36,7 +37,7 @@ export const scheduleSlice = createSlice({
 
     builder.addCase(fetchSchedules.rejected, (state, action) => {
       state.error = 'Không thể truy xuất dữ liệu';
-      state.listSchedule = dataSchedule
+      // state.listSchedule = dataSchedule
     });
 
     // trường hợp 2: Trang thai call api chua thanh cong

@@ -2,12 +2,13 @@ import { useSelector } from "react-redux";
 import axiosClient, { axiosClinetMobile } from "./axiosClient";
 const SchedulesApi = {
     getSchedule(action) {
-        const url = `fu/schedule/get-schedule?campus_id=${action.campus_code}&days=30&user_code=${action.user_code}`
+        const {token, campus_code, day, user_code} = action;
+        const url = `fu/schedule/get-schedule?campus_id=${campus_code}&days=${day}&user_code=${user_code}`
         return axiosClinetMobile.get(url,
             {
                 headers: {
                     "Content-Type": "application/json",
-                    "Authorization": "Bearer " + action.token
+                    "Authorization": "Bearer " + token
                 }
             }
         )
