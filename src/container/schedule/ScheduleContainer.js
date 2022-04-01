@@ -7,11 +7,11 @@ import ScrollableTabView, {
 } from 'react-native-scrollable-tab-view';
 import {useDispatch, useSelector} from 'react-redux';
 import ScheduleItem from '../../components/ScheduleComponent/scheduleItemComponent';
-import TextApp from '../../components/ScheduleComponent/TextApp';
 import SelectTime from '../../components/SelectTime/SelectTime';
 import TableITem from '../../components/TableItem/TableITem';
 import {fetchAttendace} from '../../features/scheduleSlide/AttendanceSlide';
 import {fetchSchedules} from '../../features/scheduleSlide/scheduleSlide';
+import { fetchTest } from '../../features/scheduleSlide/TestSlide';
 export const optionTabar = {
   lich_hoc: 'Lịch học',
   lich_thi: 'Lịch thi',
@@ -112,6 +112,8 @@ function ScheduleContainer({colums}) {
   const [option, setOption] = useState(optionTabar.lich_hoc);
   const dispatch = useDispatch();
   const {listSchedule} = useSelector(state => state.schedules);
+  const {listTest} = useSelector(state => state.test)
+  console.log(listTest);
   const [typeSelect, setTypeSelect] = useState('');
   const setOptionSchedule = useCallback(
     opt => {
@@ -122,9 +124,9 @@ function ScheduleContainer({colums}) {
   useEffect(() => {
     dispatch(fetchSchedules(users));
     dispatch(fetchAttendace(users));
+    dispatch(fetchTest(users))
   }, [users]);
   const navigation = useNavigation();
-
   const renderDataSelect = useCallback(value => {
     return value;
   }, []);
@@ -171,12 +173,7 @@ function ScheduleContainer({colums}) {
       case optionTabar.lich_thi:
         return (
           <TouchableOpacity activeOpacity={1} style={styles.container}>
-            <SelectTime
-              dataSlot={dataSlot}
-              renderDataSelect={renderDataSelect}
-              value={valueSelect}
-            />
-            {listSchedule.map((schedule, index) => (
+            {listTest.map((schedule, index) => (
               <ScheduleItem key={index} schedule={schedule} />
             ))}
           </TouchableOpacity>
