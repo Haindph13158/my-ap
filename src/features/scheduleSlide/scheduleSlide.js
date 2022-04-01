@@ -11,11 +11,13 @@ export const fetchSchedules = createAsyncThunk(
      return data.data;
    }
 );
+
 const initialState = {
   error: '',
   loading: false,
   schedules: fakeData[4].data,
   listSchedule: [],
+  listTest: []
 };
 
 export const scheduleSlice = createSlice({
@@ -29,25 +31,19 @@ export const scheduleSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    // trường hợp 1: gọi đến action fetchProduct và thành công
     builder.addCase(fetchSchedules.fulfilled, (state, action) => {
       state.listSchedule = action.payload
     });
 
     builder.addCase(fetchSchedules.rejected, (state, action) => {
       state.error = 'Không thể truy xuất dữ liệu';
-      state.listSchedule = dataSchedule
     });
 
-    // trường hợp 2: Trang thai call api chua thanh cong
     builder.addCase(fetchSchedules.pending, state => {
       state.loading = true;
     });
-    // fullfillmed, rejected, pending
-  
   },
 });
 
-// Action creators are generated for each case reducer function
 export const {onSetSchedule} = scheduleSlice.actions;
 export default scheduleSlice.reducer;

@@ -47,14 +47,14 @@ const RewardScreen = () => {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <>
      <TopBar/>
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-    </SafeAreaView>
+      </>
   );
 };
 

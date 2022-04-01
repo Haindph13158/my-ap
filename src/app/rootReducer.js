@@ -6,6 +6,7 @@ import attendaceReducer from "../features/scheduleSlide/AttendanceSlide"
 import infoUserReducer from "../features/reducer/infoUser"
 import smsReducer from '../features/reducer/sms'
 import pointReducer from '../features/reducer/pointSubject'
+import testReducer from '../features/scheduleSlide/TestSlide'
 const rootReducer = combineReducers({
     books: bookReducer,
     auths: authReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     attendances:  attendaceReducer,
     infoUser : infoUserReducer,
     smsUser: smsReducer,
-    point: pointReducer
+    point: pointReducer,
+    test: testReducer
 });
 export default rootReducer;
