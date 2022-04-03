@@ -8,7 +8,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import persistor, {store} from './src/app/store';
@@ -21,7 +21,7 @@ import StartApp from './src/screens/homeScreen/StartApp';
 import Notification from './src/screens/Notification';
 import RewardScreen from './src/screens/RewardScreen';
 import ExamScreen from './src/screens/servicesOnline/ExamScreen';
-import FormInfoMember from './src/screens/member/FormInfoMember'
+import FormInfoMember from './src/screens/member/FormInfoMember';
 import Atendance from './src/screens/homeScreen/Atendance';
 import StudyScreen from './src/screens/servicesOnline/StudyScreen';
 import ChangeIndustryScreen from './src/screens/servicesOnline/ChangeIndustryScreen';
@@ -30,11 +30,13 @@ import ViewContent from './src/screens/ScheduleScreen/ViewContent';
 import ListServicesScreen from './src/screens/servicesOnline/ListServicesScreen';
 import RegisteredServiceScreen from './src/screens/servicesOnline/RegisteredServiceScreen';
 import PointSubject from './src/screens/subject/PointSubject';
+import TuitionScreen from './src/screens/Setting/TuitionScreen';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
 });
+
 const Stack = createNativeStackNavigator();
 const App = () => {
   const MainScreen = () => {
@@ -43,6 +45,7 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        {console.log('ssđsadsa')}
         <View style={styles.container}>
           <NavigationContainer>
             <Stack.Navigator initialRouteName="App">
@@ -56,7 +59,7 @@ const App = () => {
                 component={MainScreen}
                 options={{headerShown: false}}
               />
-               <Stack.Screen
+              <Stack.Screen
                 options={{headerShown: false}}
                 name="Atendance"
                 component={Atendance}
@@ -92,17 +95,17 @@ const App = () => {
                 name="Study"
                 component={StudyScreen}
               />
-               <Stack.Screen
+              <Stack.Screen
                 options={{headerShown: false}}
                 name="Industry"
                 component={ChangeIndustryScreen}
               />
-               <Stack.Screen
+              <Stack.Screen
                 options={{headerShown: false}}
                 name="Semester"
                 component={SemesterScreen}
               />
-                <Stack.Screen
+              <Stack.Screen
                 options={{headerShown: false}}
                 name="RegisterService"
                 component={RegisteredServiceScreen}
@@ -123,20 +126,25 @@ const App = () => {
                 name="notification"
                 component={Notification}
               />
-                 <Stack.Screen
+              <Stack.Screen
                 options={{headerShown: false}}
                 name="FormInfo"
                 component={FormInfoMember}
               />
-               <Stack.Screen
+              <Stack.Screen
                 options={{headerShown: false}}
                 name="Listservices"
                 component={ListServicesScreen}
               />
-               <Stack.Screen
+              <Stack.Screen
                 options={{headerShown: false}}
                 name="PointSubject"
                 component={PointSubject}
+              />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="Tuition"
+                component={TuitionScreen}
               />
             </Stack.Navigator>
           </NavigationContainer>

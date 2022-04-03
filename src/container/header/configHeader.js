@@ -134,16 +134,6 @@ function ConfigHeader(props) {
               color="white"
             />
           </TouchableOpacity>
-          {/* <TouchableOpacity
-            onPress={() => navigation.navigate('Search')}
-            activeOpacity={0.8}>
-            <IconView
-              component="AntDesign"
-              name="search1"
-              size={24}
-              color="white"
-            />
-          </TouchableOpacity> */}
         </View>
       </View>
       {isShowModal && (

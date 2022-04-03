@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios';
-import { infoUser } from '../fakeData';
 
 export const fetchUsers = createAsyncThunk(
     // type action
@@ -29,9 +28,6 @@ export const authSlice = createSlice({
         logout: (state, action) => {
             state.users = {}
         },
-        fakeLogin: (state, action) => {
-            state.users = infoUser
-        }
     },
     extraReducers: (builder) => {
         builder.addCase(fetchUsers.fulfilled, (state, action) => {

@@ -58,6 +58,10 @@ const routers = [
     {
         name: 'RegisterService',
         title: 'Dịch vụ'
+    },
+    {
+        name: 'Tuition',
+        title: 'Học phí'
     }
 ]
 

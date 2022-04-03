@@ -1,22 +1,21 @@
-import React, {useEffect, useState} from 'react';
-import PropTypes from 'prop-types';
-import {
-  View,
-  StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  TouchableOpacity,
-} from 'react-native';
-import {Text} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
-import ConfigHeader from '../../container/header/configHeader';
+import React, {useCallback, useEffect, useState} from 'react';
+import {
+  RefreshControl,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import ContentOption from '../../components/ScheduleComponent/ContentOption';
+import {ScrollView} from 'react-native-gesture-handler';
 import ScrollableTabView, {
   ScrollableTabBar,
 } from 'react-native-scrollable-tab-view';
-import {ScrollView} from 'react-native-gesture-handler';
 import {useDispatch, useSelector} from 'react-redux';
-import {onSetSchedule} from '../../features/scheduleSlide/scheduleSlide';
-import ContentOption from '../../components/ScheduleComponent/ContentOption';
+import ConfigHeader from '../../container/header/configHeader';
+import {fetchPosts} from '../../features/reducer/postSlide';
+import axios from 'axios';
 
 const colums = [
   {
@@ -47,6 +46,7 @@ const colums = [
     keyIndex: 'hoc',
   },
 ];
+
 const styles = StyleSheet.create({
   header: {
     height: 100,
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    marginTop: 10,
   },
   item: {
     backgroundColor: '#fff',
@@ -96,16 +96,39 @@ const styles = StyleSheet.create({
 function ScheduleScreen() {
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {schedules} = useSelector(state => state.schedules);
+  // const {schedules} = useSelector(state => state.schedules);
+  const {users} = useSelector(state => state.auths);
+  const {posts, loading, error} = useSelector(state => state.posts);
   const navigate = () => {
     navigation.navigate('viewContent', {
       headerTitle: 'THÔNG BÁO NHẬN BẰNG TỐT NGHIỆP ĐỢT 3.2020',
     });
   };
+  const [option, setOption] = useState(1);
+  const setOptionSchedule = useCallback(
+    opt => {
+      setOption(opt.i + 1);
+    },
+    [option],
+  );
 
-  const setOptionSchedule = keyIndex => {
-    dispatch(onSetSchedule(keyIndex.ref.props));
-  };
+  const getApiData = useCallback(() => {
+    const optionPost = {
+      campus_id: users.campus_code,
+      type: option,
+      page: 1,
+      limit: 10,
+      token: users.token,
+    };
+    dispatch(fetchPosts(optionPost));
+  }, [users, option]);
+  useEffect(() => {
+    getApiData();
+  }, [getApiData]);
+
+  const _onRefresh = useCallback(() => {
+    getApiData();
+  }, [getApiData]);
 
   return (
     <>
@@ -125,16 +148,20 @@ function ScheduleScreen() {
         }}
         tabBarBackgroundColor={'white'}
         tabBarActiveTextColor={'red'}
-        tabBarTextStyle={{fontSize: 14}}
-
-        // scrollWithoutAnimation={true}
-      >
+        tabBarTextStyle={{fontSize: 14}}>
         {colums.map((item, index) => (
           <View key={index} tabLabel={item.title}>
-            <ScrollView>
+            <ScrollView
+              refreshControl={
+                <RefreshControl refreshing={loading} onRefresh={_onRefresh} />
+              }>
               <TouchableOpacity activeOpacity={1} style={styles.container}>
-                {schedules.map((item, index) => (
-                  <ContentOption keyIndex ='schedule' content={item} key={index} />
+                {posts.map((item, index) => (
+                  <ContentOption
+                    keyIndex="schedule"
+                    content={item}
+                    key={index}
+                  />
                 ))}
               </TouchableOpacity>
             </ScrollView>

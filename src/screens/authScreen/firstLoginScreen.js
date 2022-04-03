@@ -42,7 +42,6 @@ const FirstLoginScreen = ({navigation}) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [typeSelect, setTypeSelect] = useState('');
   const dispatch = useDispatch();
-
   const {users} = useSelector(state => state.auths);
 
   useEffect(() => {

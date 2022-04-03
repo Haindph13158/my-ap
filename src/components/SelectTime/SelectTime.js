@@ -4,7 +4,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 
 function SelectTime({
   dataSlot,
-  renderDataSelect,
+  defaultValue,
   value
 }) {
   return (
@@ -14,19 +14,14 @@ function SelectTime({
         buttonStyle={styles.btnStyle}
         buttonTextStyle={styles.buttonTextStyle}
         dropdownStyle={styles.dropdownStyle}
-        defaultButtonText={renderDataSelect(dataSlot[0])}
+        defaultButtonText={defaultValue}
         onSelect={(selectedItem, index) => {
           value(selectedItem);
         }}
-        buttonTextAfterSelection={(selectedItem, index) => {
-          value(selectedItem);
-          return renderDataSelect(selectedItem)
-        }}
-        rowTextForSelection={(item, index) => {
-          return renderDataSelect(item);
+        buttonTextAfterSelection={(selectedItem) => {
+          return selectedItem
         }}
       />
-      <Text>Lựa chọn thời gian để hiển thị chi tiết lịch học</Text>
     </View>
   )
 }
@@ -54,8 +49,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderColor: 'rgba(0,0,0,0.1)',
     borderWidth: 1,
-    marginTop: 5,
-    marginBottom: 10
   },
   dropdownStyle: {
     borderRadius: 8,

@@ -22,7 +22,8 @@ export const smsSlice = createSlice({
   initialState,
   extraReducers: builder => {
     builder.addCase(fetchSms.fulfilled, (state, action) => {
-      state.sms = action.payload
+      state.sms = action.payload;
+      state.loading = false;
     });
     builder.addCase(fetchSms.rejected, (state, action) => {
       state.error = action.payload;
