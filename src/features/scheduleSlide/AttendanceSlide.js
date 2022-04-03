@@ -1,7 +1,5 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import SchedulesApi from '../../app/data/schedules';
-import {dataAttendance, dataSchedule, fakeData} from '../fakeData';
 
 export const fetchAttendace = createAsyncThunk(
   'schedules/fetchAttendace',
@@ -25,11 +23,13 @@ export const attendanceSlice = createSlice({
   extraReducers: builder => {
     // trường hợp 1: gọi đến action fetchProduct và thành công
     builder.addCase(fetchAttendace.fulfilled, (state, action) => {
-      state.attendances = action.payload
+      state.attendances = action.payload;
+      state.loading = false;
     });
 
     builder.addCase(fetchAttendace.rejected, (state, action) => {
-      state.attendances = dataAttendance;
+      state.error = action.payload;
+      // state.attendances = dataAttendance;
     });
 
     // trường hợp 2: Trang thai call api chua thanh cong

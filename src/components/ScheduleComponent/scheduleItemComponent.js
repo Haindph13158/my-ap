@@ -5,6 +5,7 @@ import IconView from '../../common/IconView';
 
 const ScheduleItem = ({schedule}) => {
   const [expanded, setExpanded] = React.useState(true);
+  
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };

@@ -20,11 +20,12 @@ export const pointSlice = createSlice({
   initialState,
   extraReducers: builder => {
     builder.addCase(fetchPoint.fulfilled, (state, action) => {
-      state.point = action.payload
+      state.point = action.payload;
+      state.loading = false;
     });
     builder.addCase(fetchPoint.rejected, (state, action) => {
       state.error = action.payload;
-      state.point = point
+      // state.point = point
     });
     builder.addCase(fetchPoint.pending, state => {
       state.loading = true;

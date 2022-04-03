@@ -1,7 +1,7 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import ConfigHeader from '../../container/header/configHeader';
 import ScheduleContainer from '../../container/schedule/ScheduleContainer';
-import { getData } from '../../ultis/ultis';
 const colums = [
   {
     id: 4,
@@ -32,7 +32,7 @@ const colums = [
   },
 ];
 function HomeScreen(props) {
-
+  const {error} = useSelector(state => state.auths);
   return (
     <>
       <ConfigHeader />

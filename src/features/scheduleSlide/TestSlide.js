@@ -4,7 +4,6 @@ export const fetchTest = createAsyncThunk(
   'test/fetchTest',
   async (action) => {
     const {data} = await SchedulesApi.getListTest(action)
-    console.log(data);
     return data.data
   }
 )
@@ -20,7 +19,8 @@ export const testSlice = createSlice({
   extraReducers: builder => {
     // List Test
     builder.addCase(fetchTest.fulfilled, (state, action) => {
-      state.listTest = action.payload
+      state.listTest = action.payload;
+      state.loading = false;
     });
 
     builder.addCase(fetchTest.rejected, (state, action) => {

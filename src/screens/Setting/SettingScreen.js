@@ -1,5 +1,5 @@
 import { StyleSheet, View, TouchableOpacity, ScrollView } from "react-native";
-import React from 'react';
+import React, { memo } from 'react';
 import {
   Text,
 
@@ -28,6 +28,13 @@ const data = [
     content: 'SMS',
     intro: 'Danh sách số điện thoại nhận SMS',
     route: 'Sms'
+  },
+  {
+    icon: 'creditcard',
+    link: 'AntDesign',
+    content: 'Học phí',
+    intro: 'Thông tin giao dịch, hoá đơn',
+    route: 'Tuition'
   },
 ];
 
@@ -96,4 +103,4 @@ const styles = StyleSheet.create({
 
 SettingScreen.propTypes = {};
 
-export default SettingScreen;
+export default memo(SettingScreen);

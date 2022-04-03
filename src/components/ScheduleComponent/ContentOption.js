@@ -1,12 +1,13 @@
-import React, { memo, useMemo } from 'react';
+import React, {memo, useMemo} from 'react';
 import PropTypes from 'prop-types';
-import { useNavigation } from '@react-navigation/native';
-import { TouchableOpacity, View, StyleSheet, Text } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import {TouchableOpacity, View, StyleSheet, Text} from 'react-native';
 
-function ContentOption({ keyIndex, content }) {
+function ContentOption(props) {
+  const {content} = props;
   const navigation = useNavigation();
   const navigate = () => {
-    navigation.navigate('viewContent')
+    navigation.navigate('viewContent');
   };
 
   return (
@@ -17,12 +18,8 @@ function ContentOption({ keyIndex, content }) {
         style={styles.item}>
         <View>
           <Text style={styles.title}>{content.title}</Text>
-          <Text style={styles.text}>
-            {content.authorTitle}: {content.author}{' '}
-          </Text>
-          <Text style={styles.text}>
-            {content.timeTitle}:{content.time}{' '}
-          </Text>
+          <Text style={styles.text}>Người đăng: {content.last_modifier}</Text>
+          <Text style={styles.text}>Thời gian: {content.modified}</Text>
         </View>
       </TouchableOpacity>
     </View>
@@ -53,12 +50,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
+    fontWeight: 'bold',
+    color: '#373535'
   },
   text: {
     color: '#888',
     fontSize: 13,
     paddingBottom: 5,
-    paddingTop: 5
+    paddingTop: 5,
   },
   icon: {
     marginLeft: 350,
@@ -82,12 +81,12 @@ const styles = StyleSheet.create({
   },
   total_absent: {
     color: 'orange',
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
 ContentOption.propTypes = {
-  content: PropTypes.object
+  content: PropTypes.object,
 };
 
 export default memo(ContentOption);

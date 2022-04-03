@@ -1,32 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import {
-  TouchableOpacity,
-  View,
-  StyleSheet,
-  ScrollView,
-  TextInput,
-  Text,
-  Button,
   Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import ConfigHeader from '../../container/header/configHeader';
 import TopBar from '../../container/header/TopBar';
 import { fetchInfoUser } from '../../features/reducer/infoUser';
-// import RNPickerSelect from "react-native-picker-select";
 const HEIGHT = Dimensions.get('window').height;
-const FormInfoMember = ({ navigation }) => {
+const FormInfoMember = ({navigation}) => {
   const [passportCode, setPassportCode] = useState('');
   const [addressIssued, setAddressIssued] = useState('');
   const [course, setCourse] = useState('');
   const [higtSchoolCode, setHigtSchoolCode] = useState('');
-  const dispatch = useDispatch()
-  const { users } = useSelector(state => state.auths);
-  const { info } = useSelector(state => state.infoUser)
-  const handleSubmit = () => { };
+  const dispatch = useDispatch();
+  const {users} = useSelector(state => state.auths);
+  const {info} = useSelector(state => state.infoUser);
+  const handleSubmit = () => {};
   useEffect(() => {
-    dispatch(fetchInfoUser(users.user_login))
-  }, [users])
+    dispatch(fetchInfoUser(users.user_login));
+  }, [users]);
   return (
     <View style={styles.swapper}>
       <TopBar />
@@ -34,6 +31,7 @@ const FormInfoMember = ({ navigation }) => {
         <View style={styles.container}>
           <Text style={styles.wrapperInputs_title}>Thông tin cá nhân</Text>
           <View style={styles.wrapperInputs}>
+            <Text style={styles.marginBottom}>Họ tên: </Text>
             <TextInput
               placeholder="Họ tên"
               value={info.full_name}
@@ -42,6 +40,7 @@ const FormInfoMember = ({ navigation }) => {
               editable={false}
               selectTextOnFocus={false}
             />
+            <Text style={styles.marginBottom}>Mã sinh viên: </Text>
             <TextInput
               placeholder="Mã sinh viên"
               value={info.user_code}
@@ -49,49 +48,41 @@ const FormInfoMember = ({ navigation }) => {
               style={styles.input}
               editable={false}
               selectTextOnFocus={false}
-
             />
-            {/* <View style={styles.wrapperInput}>
-              <RNPickerSelect
-              style={styles.genderPicker}
-              placeholder={{ label: "Giới tính", value: null }}
-              onValueChange={(value) => setGender(value)}
-              items={[
-                { label: "Nam", value: 1 },
-                { label: "Nữ", value: 2 },
-                { label: "Khác", value: 3 },
-              ]}
-            />
-            </View> */}
-
-            {/* <View style={styles.wrapperInput}>
-            <DatePicker date={date} onDateChange={setDate} mode={'date'} />
-          </View> */}
-            {/* <TextInput
-              placeholder="Địa chỉ"
-              value={info.user_address}
-              style={styles.input}
-            /> */}
+            <Text style={styles.marginBottom}>Số điện thoại: </Text>
             <TextInput
+              placeholder="Mã sinh viên"
+              value={info.user_telephone}
+              onChangeText={text => setStudentCode(text)}
+              style={styles.input}
+              editable={false}
+              selectTextOnFocus={false}
+            />
+            <Text style={styles.marginBottom}>Giới tính: </Text>
+            <TextInput
+              placeholder="Mã sinh viên"
+              value={'Nam'}
+              onChangeText={text => setStudentCode(text)}
+              style={styles.input}
+              editable={false}
+              selectTextOnFocus={false}
+            />
+            <Text style={styles.marginBottom}>Địa chỉ: </Text>
+            <TextInput
+              editable={false}
               placeholder="Địa chỉ"
               value={info.user_address}
               style={styles.input}
             />
           </View>
-          <Text style={styles.wrapperInputs_title}>
-            CMND/Căn cước/Hộ chiếu
-          </Text>
+          <Text style={styles.wrapperInputs_title}>CMND/Căn cước/Hộ chiếu</Text>
           <View style={styles.wrapperInputs}>
-
             <TextInput
               placeholder="Số CMND | CCCD | Hộ chiếu"
               value={passportCode}
               onChangeText={text => setPassportCode(text)}
               style={styles.input}
             />
-            {/* <View style={styles.wrapperInput}>
-            <DatePicker date={date} onDateChange={setDate} mode={'date'} />
-          </View> */}
             <TextInput
               placeholder="Nơi cấp"
               value={addressIssued}
@@ -99,11 +90,9 @@ const FormInfoMember = ({ navigation }) => {
               style={styles.input}
             />
           </View>
-          <Text style={styles.wrapperInputs_title}>
-            Thông tin học tập
-          </Text>
+          <Text style={styles.wrapperInputs_title}>Thông tin học tập</Text>
           <View style={styles.wrapperInputs}>
-
+            <Text style={styles.marginBottom}>Mã tài khoản: </Text>
             <TextInput
               placeholder="Mã tài khoản"
               value={users.user_login}
@@ -111,23 +100,22 @@ const FormInfoMember = ({ navigation }) => {
               style={styles.input}
               editable={false}
               selectTextOnFocus={false}
-
             />
+            <Text style={styles.marginBottom}>Khoá học: </Text>
             <TextInput
               placeholder="Khoá học"
               value={course}
               onChangeText={text => setCourse(text)}
               style={styles.input}
             />
+            <Text style={styles.marginBottom}>Chuyên ngành: </Text>
             <TextInput
+              editable={false}
               placeholder="Chuyên ngành"
               value={info.chuyen_nganh}
               onChangeText={text => setCourse(text)}
               style={styles.input}
-            />  
-            {/* <View style={styles.wrapperInput}>
-            <DatePicker date={date} onDateChange={setDate} mode={'date'} />
-          </View> */}
+            />
           </View>
           <View style={styles.wrapperInputs}>
             <Text style={styles.wrapperInputs_title}>Tích hợp</Text>
@@ -166,7 +154,7 @@ const styles = StyleSheet.create({
   },
   wrapperInputs: {
     margin: 5,
-    padding: 5,
+    padding: 10,
     paddingBottom: 20,
     width: '95%',
     borderRadius: 5,
@@ -178,7 +166,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 50,
     paddingLeft: 20,
-    marginTop: 20,
+    marginBottom: 20,
   },
   wrapperInput: {
     justifyContent: 'center',
@@ -197,8 +185,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
     fontSize: 16,
-    fontWeight: "bold",
-    paddingBottom: 10
+    fontWeight: 'bold',
+    paddingBottom: 10,
   },
   button: {
     backgroundColor: 'transparent',
@@ -224,8 +212,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    marginBottom: 10
+    marginBottom: 10,
+  },
+  marginBottom: {
+    marginBottom: 5,
+    fontSize: 13,
+    fontWeight: 'bold',
+    color: 'black',
   },
 });
 
-export default FormInfoMember;
+export default memo(FormInfoMember);
