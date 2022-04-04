@@ -3,6 +3,7 @@ import { axiosClinetMobile } from "./axiosClient";
 const TuitionsApi = {
     getDetailFee(value){
         const url = `fee/detail?campus_id=${value.campus_code}&user_code=${value.user_code}`;
+        console.log(url);
         return axiosClinetMobile.get(url,{
             headers: {
                 "Content-Type": "application/json",

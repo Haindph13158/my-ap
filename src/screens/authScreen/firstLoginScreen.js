@@ -1,17 +1,20 @@
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Dimensions,
   Image,
-  SafeAreaView, StyleSheet,
-  Text, TouchableOpacity, View
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { useDispatch, useSelector } from 'react-redux';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
+import {useDispatch, useSelector} from 'react-redux';
 import googleIcon from '../../assets/google-plus.png';
-import { login } from '../../features/auth/authSlide';
+import {login} from '../../features/auth/authSlide';
 GoogleSignin.configure({
   offlineAccess: true,
   forceCodeForRefreshToken: true,
@@ -36,7 +39,13 @@ const carouselItems = [
   },
 ];
 
-const dataSlot = ["FPT Polytechnic Hà Nội", "FPT Polytechnic Đà Nẵng", "FPT Polytechnic Hồ Chí Minh", "FPT Polytechnic Tây Nguyên", "FPT Polytechnic Cần Thơ"]
+const dataSlot = [
+  'FPT Polytechnic Hà Nội',
+  'FPT Polytechnic Đà Nẵng',
+  'FPT Polytechnic Hồ Chí Minh',
+  'FPT Polytechnic Tây Nguyên',
+  'FPT Polytechnic Cần Thơ',
+];
 
 const FirstLoginScreen = ({navigation}) => {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -59,14 +68,18 @@ const FirstLoginScreen = ({navigation}) => {
   };
   const onGoogleButtonPress = async () => {
     // Get the users ID token
-    let { idToken } = await GoogleSignin.signIn();
-    if(idToken){
-      try{
-        let { data } = await axios.post('https://api.poly.edu.vn/api/auth/login-token-google', { id_token: idToken });
-        // console.log(data);
+    let {idToken} = await GoogleSignin.signIn();
+    if (idToken) {
+      try {
+        let {data} = await axios.post(
+          'https://api.poly.edu.vn/api/auth/login-token-google',
+          {id_token: idToken},
+        );
+        console.log(data);
+
         dispatch(login(data.data));
         navigation.navigate('Home');
-      }catch(err){
+      } catch (err) {
         console.log(err);
       }
     }
@@ -104,23 +117,23 @@ const FirstLoginScreen = ({navigation}) => {
         inactiveDotScale={1}
       />
       <TouchableOpacity>
-          <SelectDropdown
-            data={dataSlot}
-            buttonStyle={styles.btnStyle}
-            buttonTextStyle={styles.buttonTextStyle}
-            dropdownStyle={styles.dropdownStyle}
-            defaultButtonText={`Chọn cơ sở đào tạo`}
-            onSelect={(selectedItem, index) => {
-              setTypeSelect(selectedItem)
-            }}
-            buttonTextAfterSelection={(selectedItem, index) => {
-              return selectedItem;
-            }}
-            rowTextForSelection={(item, index) => {
-              return item;
-            }}
-          />
-        </TouchableOpacity>
+        <SelectDropdown
+          data={dataSlot}
+          buttonStyle={styles.btnStyle}
+          buttonTextStyle={styles.buttonTextStyle}
+          dropdownStyle={styles.dropdownStyle}
+          defaultButtonText={`Chọn cơ sở đào tạo`}
+          onSelect={(selectedItem, index) => {
+            setTypeSelect(selectedItem);
+          }}
+          buttonTextAfterSelection={(selectedItem, index) => {
+            return selectedItem;
+          }}
+          rowTextForSelection={(item, index) => {
+            return item;
+          }}
+        />
+      </TouchableOpacity>
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
@@ -276,13 +289,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     height: 60,
   },
-  buttonTextStyle: {
-    
-  },
+  buttonTextStyle: {},
   dropdownStyle: {
-    borderRadius: 10
-  }
-
+    borderRadius: 10,
+  },
 });
 
 export default FirstLoginScreen;

@@ -3,7 +3,6 @@ import axiosClient, { axiosClientMyap, axiosClinetMobile } from "./axiosClient";
 const SchedulesApi = {
     getSchedule(action) {
         const {token, campus_code, day, user_code} = action;
-        // console.log(action);
         const url = `fu/schedule/get-schedule?campus_id=${campus_code}&days=${day}&user_code=${user_code}`;
         return axiosClinetMobile.get(url,
             {

@@ -1,17 +1,17 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import TuitionsApi from '../../app/data/tuitionApi';
 
 export const fetchTuiTion = createAsyncThunk(
   'tuitions/fetchTuiTion',
-  async (action) => {
-    const {data} = await TuitionsApi.getDetailFee(action)
-    return data.data
-  }
-)
+  async action => {
+    const {data} = await TuitionsApi.getDetailFee(action);
+    return data.data;
+  },
+);
 const initialState = {
   error: '',
   loading: false,
-  tuitions:{}
+  tuitions: {},
 };
 
 export const tuitionSlice = createSlice({
