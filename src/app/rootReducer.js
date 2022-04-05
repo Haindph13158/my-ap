@@ -10,7 +10,7 @@ import testReducer from '../features/scheduleSlide/TestSlide';
 import tuitionReducer from '../features/reducer/TuitionSlide';
 import transactionReducer from '../features/reducer/transaction';
 import postsReducer from '../features/reducer/postSlide';
-
+import campusReducer from '../features/reducer/campusSlide';
 const rootReducer = combineReducers({
   books: bookReducer,
   auths: authReducer,
@@ -23,5 +23,6 @@ const rootReducer = combineReducers({
   tuitions: tuitionReducer,
   transaction: transactionReducer,
   posts: postsReducer,
+  campus: campusReducer,
 });
 export default rootReducer;

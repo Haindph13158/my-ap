@@ -1,6 +1,6 @@
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import axios from 'axios';
-import React, {useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Dimensions,
   Image,
@@ -8,13 +8,14 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import Carousel, {Pagination} from 'react-native-snap-carousel';
-import {useDispatch, useSelector} from 'react-redux';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
+import { useDispatch, useSelector } from 'react-redux';
 import googleIcon from '../../assets/google-plus.png';
-import {login} from '../../features/auth/authSlide';
+import { login } from '../../features/auth/authSlide';
+import { fetchCampus } from '../../features/reducer/campusSlide';
 GoogleSignin.configure({
   offlineAccess: true,
   forceCodeForRefreshToken: true,
@@ -39,25 +40,26 @@ const carouselItems = [
   },
 ];
 
-const dataSlot = [
-  'FPT Polytechnic Hà Nội',
-  'FPT Polytechnic Đà Nẵng',
-  'FPT Polytechnic Hồ Chí Minh',
-  'FPT Polytechnic Tây Nguyên',
-  'FPT Polytechnic Cần Thơ',
-];
-
 const FirstLoginScreen = ({navigation}) => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const [typeSelect, setTypeSelect] = useState('');
   const dispatch = useDispatch();
   const {users} = useSelector(state => state.auths);
-
+  const {campus} = useSelector(state => state.campus);
+  const [dataSlot, setDataSlot] = useState([]);
+  const campusId = useRef('ph');
   useEffect(() => {
+    dispatch(fetchCampus());
+    if (campus.length > 0) {
+      const arr = [];
+      campus.forEach(item => {
+        arr.push(item.campus_name);
+      });
+      setDataSlot(arr);
+    }
     if (users.user_login) {
       navigation.navigate('Home');
     }
-  }, [navigation]);
+  }, [navigation, users]);
 
   const carouselCardItem = ({item, index}) => {
     return (
@@ -66,6 +68,12 @@ const FirstLoginScreen = ({navigation}) => {
       </View>
     );
   };
+
+  const valueSelect = useCallback(value => {
+    const checkCampus = campus.find(item => item.campus_name === value);
+    campusId.current = checkCampus.campus_code
+  }, []);
+
   const onGoogleButtonPress = async () => {
     // Get the users ID token
     let {idToken} = await GoogleSignin.signIn();
@@ -73,9 +81,9 @@ const FirstLoginScreen = ({navigation}) => {
       try {
         let {data} = await axios.post(
           'https://api.poly.edu.vn/api/auth/login-token-google',
-          {id_token: idToken},
+          {id_token: idToken, campus_code: campusId.current},
         );
-        console.log(data);
+        console.log(campusId.current);
 
         dispatch(login(data.data));
         navigation.navigate('Home');
@@ -116,32 +124,29 @@ const FirstLoginScreen = ({navigation}) => {
         animatedDuration={100}
         inactiveDotScale={1}
       />
-      <TouchableOpacity>
-        <SelectDropdown
-          data={dataSlot}
-          buttonStyle={styles.btnStyle}
-          buttonTextStyle={styles.buttonTextStyle}
-          dropdownStyle={styles.dropdownStyle}
-          defaultButtonText={`Chọn cơ sở đào tạo`}
-          onSelect={(selectedItem, index) => {
-            setTypeSelect(selectedItem);
-          }}
-          buttonTextAfterSelection={(selectedItem, index) => {
-            return selectedItem;
-          }}
-          rowTextForSelection={(item, index) => {
-            return item;
-          }}
-        />
-      </TouchableOpacity>
+      <SelectDropdown
+        data={dataSlot}
+        buttonStyle={styles.btnStyle}
+        buttonTextStyle={styles.buttonTextStyle}
+        dropdownStyle={styles.dropdownStyle}
+        defaultButtonText={`Chọn cơ sở đào tạo`}
+        onSelect={(selectedItem, index) => {
+          valueSelect(selectedItem);
+        }}
+        buttonTextAfterSelection={selectedItem => {
+          return selectedItem;
+        }}
+      />
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.button_second}
-          onPress={() =>
-            onGoogleButtonPress().then(() =>
-              console.log('Signed in with Google!'),
-            )
+          onPress={
+            () =>
+              onGoogleButtonPress().then(() =>
+                console.log('Signed in with Google!'),
+              )
+            // () => handelNoti()
           }>
           <Image style={styles.googleIcon} source={googleIcon} />
           <Text style={styles.buttonText}>Đăng nhập bằng tài khoản google</Text>

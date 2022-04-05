@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   text_bottom: {
     fontSize: 14,
-    maxWidth: 185,
+    maxWidth: '75%',
   },
   text_top: {
     fontSize: 14,
