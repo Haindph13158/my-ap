@@ -12,24 +12,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import TopBar from '../container/header/TopBar';
 import { fetchSms } from '../features/reducer/sms';
 
-const data = [
-  {
-    id: 1,
-    kihoc: 'Spring 2019',
-    ngaynhanthuong: '30/5/2019',
-    noidung: 'Sinh viên giỏi',
-    nguoiky: 'Vũ Chí Thành',
-    soquyetdinh: '737/QĐ-ĐHFPT',
-  },
-  {
-    id: 2,
-    kihoc: 'Summer 2021',
-    ngaynhanthuong: '30/5/2021',
-    noidung: 'Sinh viên giỏi',
-    nguoiky: 'Vũ Chí Thành',
-    soquyetdinh: '739/QĐ-ĐHFPT',
-  },
-];
 
 const SmsScreen = () => {
     const {sms} = useSelector(item => item.smsUser)

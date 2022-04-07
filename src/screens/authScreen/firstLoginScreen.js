@@ -1,6 +1,6 @@
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import axios from 'axios';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   Dimensions,
   Image,
@@ -8,14 +8,15 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { useDispatch, useSelector } from 'react-redux';
+import Carousel, {Pagination} from 'react-native-snap-carousel';
+import {useDispatch, useSelector} from 'react-redux';
 import googleIcon from '../../assets/google-plus.png';
-import { login } from '../../features/auth/authSlide';
-import { fetchCampus } from '../../features/reducer/campusSlide';
+import ConfirmMessage from '../../components/confirmMessage/confirmMessage';
+import {login} from '../../features/auth/authSlide';
+import {fetchCampus} from '../../features/reducer/campusSlide';
 GoogleSignin.configure({
   offlineAccess: true,
   forceCodeForRefreshToken: true,
@@ -40,8 +41,14 @@ const carouselItems = [
   },
 ];
 
+const messgageError = "Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại !"
+
 const FirstLoginScreen = ({navigation}) => {
   const [activeSlide, setActiveSlide] = useState(0);
+  const [isShowModal, setIsShowModal] = useState(false);
+  const onShowModal = () => {
+    setIsShowModal(prev => !prev);
+  };
   const dispatch = useDispatch();
   const {users} = useSelector(state => state.auths);
   const {campus} = useSelector(state => state.campus);
@@ -71,7 +78,7 @@ const FirstLoginScreen = ({navigation}) => {
 
   const valueSelect = useCallback(value => {
     const checkCampus = campus.find(item => item.campus_name === value);
-    campusId.current = checkCampus.campus_code
+    campusId.current = checkCampus.campus_code;
   }, []);
 
   const onGoogleButtonPress = async () => {
@@ -83,12 +90,10 @@ const FirstLoginScreen = ({navigation}) => {
           'https://api.poly.edu.vn/api/auth/login-token-google',
           {id_token: idToken, campus_code: campusId.current},
         );
-        console.log(campusId.current);
-
         dispatch(login(data.data));
         navigation.navigate('Home');
       } catch (err) {
-        console.log(err);
+        onShowModal();
       }
     }
   };
@@ -107,6 +112,9 @@ const FirstLoginScreen = ({navigation}) => {
           />
         </View>
       </SafeAreaView>
+      {isShowModal && (
+        <ConfirmMessage message={messgageError} onShowModal={onShowModal} type="error" />
+      )}
       <Pagination
         dotsLength={carouselItems.length}
         activeDotIndex={activeSlide}

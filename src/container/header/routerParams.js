@@ -62,6 +62,18 @@ const routers = [
     {
         name: 'Tuition',
         title: 'Học phí'
+    },
+    {
+        name: 'SettingDetail',
+        title: 'Cài đặt'
+    },
+    {
+        name: 'PrivateScreen',
+        title: 'Quyền riêng tư'
+    },
+    {
+        name: 'Login',
+        title: 'Đăng nhập phụ huynh'
     }
 ]
 

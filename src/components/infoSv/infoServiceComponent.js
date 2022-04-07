@@ -77,7 +77,7 @@ function InfoServiceComponent({
                     dropdownStyle={styles.dropdownStyle}
                     defaultButtonText={`${titleSelect2} học`}
                     onSelect={(selectedItem, index) => {
-                      console.log(selectedItem, index);
+                      
                     }}
                     buttonTextAfterSelection={(selectedItem, index) => {
                       return selectedItem;

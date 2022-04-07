@@ -1,14 +1,19 @@
-import React, {memo} from 'react';
+import React, {memo, useState} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Collapsible from 'react-native-collapsible';
 import IconView from '../../common/IconView';
+import SelectTime from '../SelectTime/SelectTime';
+
+const dataSlot = [15, 20, 30];
+
 
 const ScheduleItem = ({schedule}) => {
   const [expanded, setExpanded] = React.useState(true);
-  
+  const [timeDay, setTimeDay] = useState(15)
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
+  
   return (
     <View style={styles.accordion}>
       <View style={styles.container}>
@@ -16,7 +21,7 @@ const ScheduleItem = ({schedule}) => {
           <View style={styles.box_content_item}>
             <View style={styles.box_left_title}>
               <Text style={{fontSize: 14}}>
-                {schedule.room_name}-Ca {schedule.slot}
+                {schedule.room_name} - Ca {schedule.slot}
               </Text>
             </View>
             <View style={styles.box_right_title}>
@@ -30,14 +35,14 @@ const ScheduleItem = ({schedule}) => {
                 <IconView
                   name="right"
                   component="AntDesign"
-                  size={20}
+                  size={14}
                   color="rgba(0,0,0,0.5)"
                 />
               ) : (
                 <IconView
                   name="down"
                   component="AntDesign"
-                  size={20}
+                  size={14}
                   color="rgba(0,0,0,0.5)"
                 />
               )}
@@ -80,6 +85,9 @@ const ScheduleItem = ({schedule}) => {
                     {schedule.slot_time}
                   </Text>
                 </Text>
+                <View>
+                  
+                </View>
               </View>
               <View style={styles.box_right_dropdown}>
                 <Text>
@@ -162,6 +170,11 @@ const styles = StyleSheet.create({
   viewIcon: {
     position: 'absolute',
     right: 0
+  },
+  notifications: {
+    position: 'absolute',
+    right: -10,
+    top: -15
   }
 });
 

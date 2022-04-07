@@ -8,7 +8,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import React from 'react';
-import {RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import persistor, {store} from './src/app/store';
@@ -31,6 +31,8 @@ import ListServicesScreen from './src/screens/servicesOnline/ListServicesScreen'
 import RegisteredServiceScreen from './src/screens/servicesOnline/RegisteredServiceScreen';
 import PointSubject from './src/screens/subject/PointSubject';
 import TuitionScreen from './src/screens/Setting/TuitionScreen';
+import SettingDetail from './src/screens/Setting/settingDetail';
+import PrivateScreen from './src/screens/Setting/PrivateScreen';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -45,7 +47,6 @@ const App = () => {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        {console.log('ssđsadsa')}
         <View style={styles.container}>
           <NavigationContainer>
             <Stack.Navigator initialRouteName="App">
@@ -145,6 +146,16 @@ const App = () => {
                 options={{headerShown: false}}
                 name="Tuition"
                 component={TuitionScreen}
+              />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="SettingDetail"
+                component={SettingDetail}
+              />
+              <Stack.Screen
+                options={{headerShown: false}}
+                name="PrivateScreen"
+                component={PrivateScreen}
               />
             </Stack.Navigator>
           </NavigationContainer>

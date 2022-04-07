@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import {
   ActivityIndicator,
@@ -10,8 +11,10 @@ import {
 import PushNotification from 'react-native-push-notification';
 import {useDispatch, useSelector} from 'react-redux';
 import VirtualizedScrollView from '../../common/VirtualizedScrollView';
+import ConfirmMessage from '../../components/confirmMessage/confirmMessage';
 import ScheduleItem from '../../components/ScheduleComponent/scheduleItemComponent';
 import SelectTime from '../../components/SelectTime/SelectTime';
+import { logout } from '../../features/auth/authSlide';
 import {fetchSchedules} from '../../features/scheduleSlide/scheduleSlide';
 const dataSlot = [
   '7 ngày tới',
@@ -33,14 +36,21 @@ const styles = StyleSheet.create({
     marginBottom: 90,
   },
 });
-
+const messgageError =
+  'Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại !';
 function ScheduleList(props) {
-  const {schedules, loading} = useSelector(state => state.schedules);
-  const error = true;
+  const {schedules, loading, error} = useSelector(state => state.schedules);
   const dispatch = useDispatch();
   const [day, setDay] = useState(7);
   const [timeDay, setTimeDay] = useState(dataSlot[0]);
   const {users} = useSelector(state => state.auths);
+  const navigation = useNavigation();
+  const [isShowModal, setIsShowModal] = useState(false);
+  const onShowModal = () => {
+    setIsShowModal(prev => !prev);
+    navigation.navigate('FirstLogin');
+    dispatch(logout({}))
+  };
   const getApiData = useCallback(() => {
     const optionSchedule = {
       token: users.token,
@@ -142,6 +152,13 @@ function ScheduleList(props) {
               <ScheduleItem key={index} schedule={schedule} />
             ))}
           </View>
+          {error !=='' && (
+            <ConfirmMessage
+              message={messgageError}
+              onShowModal={onShowModal}
+              type="error"
+            />
+          )}
         </ScrollView>
       </View>
     </>

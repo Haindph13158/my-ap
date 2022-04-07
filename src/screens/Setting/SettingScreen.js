@@ -36,6 +36,13 @@ const data = [
     intro: 'Thông tin giao dịch, hoá đơn',
     route: 'Tuition'
   },
+  {
+    icon: 'setting',
+    link: 'AntDesign',
+    content: 'Cài đặt',
+    intro: 'Cài đặt tính năng cho app',
+    route: 'SettingDetail'
+  },
 ];
 
 function SettingScreen() {
@@ -46,9 +53,6 @@ function SettingScreen() {
       <ConfigHeader />
       <ScrollView>
         <View style={styles.container}>
-          <View style={styles.content}>
-            <Text style={styles.title}>Thông tin thêm</Text>
-          </View>
           {data.map((item, index) => (
             <View key={index} style={styles.container}>
               <TouchableOpacity onPress={() => navigation.navigate(item.route)} >
