@@ -45,12 +45,12 @@ function ScheduleList(props) {
   const [timeDay, setTimeDay] = useState(dataSlot[0]);
   const {users} = useSelector(state => state.auths);
   const navigation = useNavigation();
-  const [isShowModal, setIsShowModal] = useState(false);
-  const onShowModal = () => {
-    setIsShowModal(prev => !prev);
-    navigation.navigate('FirstLogin');
-    dispatch(logout({}))
-  };
+  // const [isShowModal, setIsShowModal] = useState(false);
+  // const onShowModal = () => {
+  //   setIsShowModal(prev => !prev);
+  //   navigation.navigate('FirstLogin');
+  //   dispatch(logout({}))
+  // };
   const getApiData = useCallback(() => {
     const optionSchedule = {
       token: users.token,
@@ -152,13 +152,13 @@ function ScheduleList(props) {
               <ScheduleItem key={index} schedule={schedule} />
             ))}
           </View>
-          {error !=='' && (
+          {/* {isShowModal !=='' && users?.token && (
             <ConfirmMessage
               message={messgageError}
               onShowModal={onShowModal}
               type="error"
             />
-          )}
+          )} */}
         </ScrollView>
       </View>
     </>

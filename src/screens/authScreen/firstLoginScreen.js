@@ -50,7 +50,6 @@ const FirstLoginScreen = ({navigation}) => {
     setIsShowModal(prev => !prev);
   };
   const dispatch = useDispatch();
-  const {users} = useSelector(state => state.auths);
   const {campus} = useSelector(state => state.campus);
   const [dataSlot, setDataSlot] = useState([]);
   const campusId = useRef('ph');
@@ -63,10 +62,7 @@ const FirstLoginScreen = ({navigation}) => {
       });
       setDataSlot(arr);
     }
-    if (users.user_login) {
-      navigation.navigate('Home');
-    }
-  }, [navigation, users]);
+  }, [navigation]);
 
   const carouselCardItem = ({item, index}) => {
     return (
