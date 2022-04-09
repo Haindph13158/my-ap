@@ -6,6 +6,7 @@ import IconView from '../../common/IconView';
 import {useNavigation} from '@react-navigation/native';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { logout } from '../../features/auth/authSlide';
+import { useDispatch } from 'react-redux';
 const styles = StyleSheet.create({
   box: {
     backgroundColor: 'white',
@@ -28,6 +29,7 @@ const styles = StyleSheet.create({
 });
 const SettingDetail = props => {
   const navigation = useNavigation();
+  const dispatch = useDispatch();
   const Logout = async () => {
     await GoogleSignin.signOut();
     dispatch(logout({}));
@@ -62,7 +64,7 @@ const SettingDetail = props => {
         </TouchableOpacity>
       </View>
       <View style={styles.box}>
-        <TouchableOpacity activeOpacity={0.5} style={styles.boxItem}>
+        <TouchableOpacity onPress={() => navigation.navigate('notification')} activeOpacity={0.5} style={styles.boxItem}>
           <IconView
             component="Ionicons"
             name="notifications-outline"
@@ -71,7 +73,7 @@ const SettingDetail = props => {
           />
           <Text style={styles.text}>Thông báo</Text>
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} style={styles.boxItem}>
+        <TouchableOpacity onPress={Logout} activeOpacity={0.5} style={styles.boxItem}>
           <IconView
             component="Feather"
             name="user-check"

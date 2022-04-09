@@ -11,7 +11,8 @@ PushNotification.configure({
   onNotification: function (notification) {
     console.log("NOTIFICATION:", notification);
   },
-  requestPermissions: Platform.OS === 'ios'
+  popInitialNotification: true,
+  requestPermissions: true,
 })
 LogBox.ignoreLogs([
     "[react-native-gesture-handler] Seems like you\'re using an old API with gesture components, check out new Gestures system!",
