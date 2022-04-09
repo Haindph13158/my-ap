@@ -1,59 +1,99 @@
+import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 import React, {useState} from 'react';
 import {
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Button,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
+import ConfirmMessage from '../../components/confirmMessage/confirmMessage';
+import TopBar from '../../container/header/TopBar';
+import {login} from '../../features/auth/authSlide';
 
-const LoginScreen = ({navigation}) => {
-  const [email, setEmail] = useState('');
+const messgageError = 'Tài khoản hoặc mật khẩu không đúng !';
+
+const LoginScreen = () => {
+  const navigation = useNavigation();
+  const [sđt, setSđt] = useState('');
+  const [isShowModal, setIsShowModal] = useState(false);
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  
+  const onShowModal = () => {
+    setIsShowModal(prev => !prev);
+  };
+  const handleLogin = () => {
+    const user = {
+      phone_number: sđt,
+      password: password,
+    };
 
-  const handleLogin = () => {};
+    axios
+      .post('https://api.poly.edu.vn/api/auth/login-parent', user)
+      .then(res => {
+        res.data.data.campus_code = res.data.data.campus_code
+          ? res.data.data.campus_code
+          : 'ph';
+        dispatch(login(res.data.data));
+        navigation.navigate('Home');
+      })
+      .catch(err => {
+        onShowModal();
+      });
+  };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Đăng nhập</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Username: Số điện thoại phụ huynh"
-          value={email}
-          onChangeText={text => setEmail(text)}
-          style={styles.input}
-        />
-        <TextInput
-          placeholder="Password"
-          value={password}
-          onChangeText={text => setPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
-      </View>
+    <>
+      <TopBar />
+      <ScrollView>
+        <View style={styles.container}>
+          <Text style={styles.title}>Đăng nhập tài khoản phụ huynh</Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Username: Số điện thoại phụ huynh"
+              value={sđt}
+              onChangeText={text => setSđt(text)}
+              style={styles.input}
+            />
+            <TextInput
+              placeholder="Password"
+              value={password}
+              onChangeText={text => setPassword(text)}
+              style={styles.input}
+              secureTextEntry
+            />
+          </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Đăng nhập</Text>
-        </TouchableOpacity>
-      </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={handleLogin} style={styles.button}>
+              <Text style={styles.buttonText}>Đăng nhập</Text>
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.noteContainer}>
-        <Text style={styles.noteText}>
-          - Phụ huynh sử dụng số điện thoại đăng ký với nhà trường để đăng nhập
-        </Text>
-        <Text style={styles.noteText}>
-          - Để lấy mật khẩu truy cập phụ huynh soạn tin nhắn cú pháp{' '}
-          <Text style={{fontWeight: 'bold'}}>POLY MK </Text>
-          gửi về đầu số <Text style={{fontWeight: 'bold'}}>8100</Text>
-        </Text>
-      </View>
-      <Button
-        title="FirstLoginScreen"
-        onPress={() => navigation.navigate('FirstLogin')}
-      />
-    </View>
+          <View style={styles.noteContainer}>
+            <Text style={styles.noteText}>
+              - Phụ huynh sử dụng số điện thoại đăng ký với nhà trường để đăng
+              nhập
+            </Text>
+            <Text style={styles.noteText}>
+              - Để lấy mật khẩu truy cập phụ huynh soạn tin nhắn cú pháp{' '}
+              <Text style={{fontWeight: 'bold'}}>POLY MK </Text>
+              gửi về đầu số <Text style={{fontWeight: 'bold'}}>8100</Text>
+            </Text>
+          </View>
+          {isShowModal && (
+            <ConfirmMessage
+              message={messgageError}
+              onShowModal={onShowModal}
+            />
+          )}
+        </View>
+      </ScrollView>
+    </>
   );
 };
 
@@ -62,6 +102,8 @@ export default LoginScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 40,
+    paddingBottom: 40,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
@@ -122,7 +164,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   title: {
-    fontSize: 40,
+    fontSize: 20,
     fontWeight: '700',
     marginBottom: 20,
   },

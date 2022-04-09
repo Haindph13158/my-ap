@@ -2,7 +2,6 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 import SchedulesApi from '../../app/data/schedules';
 
-
 export const fetchSchedules = createAsyncThunk(
   // type action
   'schedules/fetchSchedules',
@@ -21,9 +20,7 @@ const initialState = {
 export const scheduleSlice = createSlice({
   name: 'schedules',
   initialState,
-  reducers: {
-    
-  },
+  reducers: {},
   extraReducers: builder => {
     builder.addCase(fetchSchedules.fulfilled, (state, action) => {
       state.schedules = action.payload;

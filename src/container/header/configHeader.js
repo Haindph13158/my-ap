@@ -108,6 +108,7 @@ function ConfigHeader(props) {
   const Logout = async () => {
     await GoogleSignin.signOut();
     dispatch(logout({}));
+    setIsShowModal(false);
     navigation.navigate('FirstLogin');
   };
   return (
