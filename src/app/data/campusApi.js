@@ -1,9 +1,9 @@
-import { axiosClinetMobile } from "./axiosClient";
+import { axiosClientMyap } from "./axiosClient";
 
 const CampusApi = {
     getCampus(){
         const url = `fu/campus/get-list`;
-        return axiosClinetMobile.get(url)
+        return axiosClientMyap.get(url)
     },
 }
 export default CampusApi;

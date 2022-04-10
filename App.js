@@ -7,117 +7,63 @@
  */
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
-import {Alert, StyleSheet, View, TextInput} from 'react-native';
+import axios from 'axios';
+import React, {useEffect} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import persistor, {store} from './src/app/store';
 import NavBottom from './src/container/navBottom';
-import FeeScreen from './src/screens/FeeScreen';
-import SmsScreen from './src/screens/SmsScreen';
 import FirstLoginScreen from './src/screens/authScreen/firstLoginScreen';
 import LoginScreen from './src/screens/authScreen/loginScreen';
+import FeeScreen from './src/screens/FeeScreen';
+import Atendance from './src/screens/homeScreen/Atendance';
 import StartApp from './src/screens/homeScreen/StartApp';
+import FormInfoMember from './src/screens/member/FormInfoMember';
 import Notification from './src/screens/Notification';
 import RewardScreen from './src/screens/RewardScreen';
-import ExamScreen from './src/screens/servicesOnline/ExamScreen';
-import FormInfoMember from './src/screens/member/FormInfoMember';
-import Atendance from './src/screens/homeScreen/Atendance';
-import StudyScreen from './src/screens/servicesOnline/StudyScreen';
-import ChangeIndustryScreen from './src/screens/servicesOnline/ChangeIndustryScreen';
-import SemesterScreen from './src/screens/servicesOnline/SemesterScreen';
 import ViewContent from './src/screens/ScheduleScreen/ViewContent';
+import ChangeIndustryScreen from './src/screens/servicesOnline/ChangeIndustryScreen';
+import ExamScreen from './src/screens/servicesOnline/ExamScreen';
 import ListServicesScreen from './src/screens/servicesOnline/ListServicesScreen';
 import RegisteredServiceScreen from './src/screens/servicesOnline/RegisteredServiceScreen';
-import PointSubject from './src/screens/subject/PointSubject';
-import TuitionScreen from './src/screens/Setting/TuitionScreen';
-import SettingDetail from './src/screens/Setting/settingDetail';
+import SemesterScreen from './src/screens/servicesOnline/SemesterScreen';
+import StudyScreen from './src/screens/servicesOnline/StudyScreen';
 import PrivateScreen from './src/screens/Setting/PrivateScreen';
-import messaging from '@react-native-firebase/messaging';
-import auth from '@react-native-firebase/auth';
-import firestore from '@react-native-firebase/firestore';
+import SettingDetail from './src/screens/Setting/settingDetail';
+import TuitionScreen from './src/screens/Setting/TuitionScreen';
+import SmsScreen from './src/screens/SmsScreen';
+import PointSubject from './src/screens/subject/PointSubject';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
 });
 
-async function saveTokenToDatabase(token) {
-  // Assume user is already signed in
-  const userId = auth().currentUser.uid;
-
-  // Add the token to the users datastore
-  await firestore()
-    .collection('users')
-    .doc(userId)
-    .update({
-      tokens: firestore.FieldValue.arrayUnion(token),
-    });
-}
-
 const Stack = createNativeStackNavigator();
 const App = () => {
   const MainScreen = () => {
     return <NavBottom />;
   };
-  const requestUserPermission = async () => {
-    const authStatus = await messaging().requestPermission();
-    const enabled =
-      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
-      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
-    if (enabled) {
-      console.log('Authorization status:', authStatus);
-    }
+  const fetchTokenList = async () => {
+    const listToken = await (
+      await axios.get(
+        'https://6132c0c8ab7b1e001799b5bc.mockapi.io/token-device',
+      )
+    ).data;
+    console.log(listToken);
   };
 
-  const [tokenApp, setTokenApp] = useState('');
-
   useEffect(() => {
-    requestUserPermission();
-    messaging()
-      .getToken()
-      .then(token => {
-        console.log('token', token);
-        setTokenApp(token)
-        // return saveTokenToDatabase(token);
-      });
-    if (Platform.OS == 'ios') {
-      messaging()
-        .getAPNSToken()
-        .then(token => {
-          console.log('token', token);
-          // return saveTokenToDatabase(token);
-        });
-    }
-    // messaging().onNotificationOpenedApp(remoteMessage => {
-    //   console.log(
-    //     'Notification caused app to open from background state:',
-    //     remoteMessage.notification,
-    //   );
-    //   // navigation.navigate(remoteMessage.data.type);
-    // });
-
-    // // Check whether an initial notification is available
-    // messaging()
-    //   .getInitialNotification()
-    //   .then(remoteMessage => {
-    //     if (remoteMessage) {
-    //       console.log(
-    //         'Notification caused app to open from quit state:',
-    //         remoteMessage.notification,
-    //       );
-    //       setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-    //     }
-    //     setLoading(false);
-    //   });
+    fetchTokenList();
   }, []);
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <View style={styles.container}>
-          <TextInput value={tokenApp} />
           <NavigationContainer>
             <Stack.Navigator initialRouteName="App">
               <Stack.Screen
