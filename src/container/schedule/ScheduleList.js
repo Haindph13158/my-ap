@@ -1,20 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
+import messaging from '@react-native-firebase/messaging';
+import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 import React, {memo, useCallback, useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import {RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import {useDispatch, useSelector} from 'react-redux';
-import VirtualizedScrollView from '../../common/VirtualizedScrollView';
-import ConfirmMessage from '../../components/confirmMessage/confirmMessage';
 import ScheduleItem from '../../components/ScheduleComponent/scheduleItemComponent';
 import SelectTime from '../../components/SelectTime/SelectTime';
-import { logout } from '../../features/auth/authSlide';
 import {fetchSchedules} from '../../features/scheduleSlide/scheduleSlide';
 const dataSlot = [
   '7 ngày tới',
@@ -45,12 +37,91 @@ function ScheduleList(props) {
   const [timeDay, setTimeDay] = useState(dataSlot[0]);
   const {users} = useSelector(state => state.auths);
   const navigation = useNavigation();
-  // const [isShowModal, setIsShowModal] = useState(false);
-  // const onShowModal = () => {
-  //   setIsShowModal(prev => !prev);
-  //   navigation.navigate('FirstLogin');
-  //   dispatch(logout({}))
-  // };
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  };
+
+  const pushTokenServer = async token => {
+    const data = {token, name: users.user_code};
+    const listToken = await (
+      await axios.get(
+        'https://6132c0c8ab7b1e001799b5bc.mockapi.io/token-device',
+      )
+    ).data;
+    const checkToken = listToken.find(item => item.name === users.user_code);
+    if (checkToken) {
+      axios
+        .put(
+          `https://6132c0c8ab7b1e001799b5bc.mockapi.io/token-device/${checkToken.id}`,
+          data,
+        )
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+    } else {
+      axios
+        .post('https://6132c0c8ab7b1e001799b5bc.mockapi.io/token-device', data)
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+    }
+  };
+
+  useEffect(() => {
+    if (users?.user_code) {
+      requestUserPermission();
+      messaging()
+        .getToken()
+        .then(token => {
+          console.log('token', token);
+          pushTokenServer(token);
+          // return saveTokenToDatabase(token);
+        });
+      if (Platform.OS == 'ios') {
+        messaging()
+          .getAPNSToken()
+          .then(token => {
+            console.log('token', token);
+            pushTokenServer(token);
+            // return saveTokenToDatabase(token);
+          });
+      }
+      const unsubscribe = messaging().onMessage(async remoteMessage => {
+        Alert.alert(
+          'A new FCM message arrived!',
+          JSON.stringify(remoteMessage),
+        );
+      });
+
+      return unsubscribe;
+    }
+    // messaging().onNotificationOpenedApp(remoteMessage => {
+    //   console.log(
+    //     'Notification caused app to open from background state:',
+    //     remoteMessage.notification,
+    //   );
+    //   // navigation.navigate(remoteMessage.data.type);
+    // });
+
+    // // Check whether an initial notification is available
+    // messaging()
+    //   .getInitialNotification()
+    //   .then(remoteMessage => {
+    //     if (remoteMessage) {
+    //       console.log(
+    //         'Notification caused app to open from quit state:',
+    //         remoteMessage.notification,
+    //       );
+    //       setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+    //     }
+    //     setLoading(false);
+    //   });
+  }, [users]);
   const getApiData = useCallback(() => {
     const optionSchedule = {
       token: users.token,

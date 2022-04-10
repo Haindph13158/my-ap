@@ -41,7 +41,8 @@ const carouselItems = [
   },
 ];
 
-const messgageError = "Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại !"
+const messgageError =
+  'Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại !';
 
 const FirstLoginScreen = ({navigation}) => {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -52,7 +53,7 @@ const FirstLoginScreen = ({navigation}) => {
   const dispatch = useDispatch();
   const {campus} = useSelector(state => state.campus);
   const [dataSlot, setDataSlot] = useState([]);
-  const campusId = useRef('ph');
+  const [campusId, setCampusId] = useState('');
   useEffect(() => {
     dispatch(fetchCampus());
     if (campus.length > 0) {
@@ -74,7 +75,7 @@ const FirstLoginScreen = ({navigation}) => {
 
   const valueSelect = useCallback(value => {
     const checkCampus = campus.find(item => item.campus_name === value);
-    campusId.current = checkCampus.campus_code;
+    setCampusId(checkCampus.campus_code);
   }, []);
 
   const onGoogleButtonPress = async () => {
@@ -84,7 +85,7 @@ const FirstLoginScreen = ({navigation}) => {
       try {
         let {data} = await axios.post(
           'https://api.poly.edu.vn/api/auth/login-token-google',
-          {id_token: idToken, campus_code: campusId.current},
+          {id_token: idToken, campus_code: campusId},
         );
         dispatch(login(data.data));
         navigation.navigate('Home');
@@ -109,7 +110,11 @@ const FirstLoginScreen = ({navigation}) => {
         </View>
       </SafeAreaView>
       {isShowModal && (
-        <ConfirmMessage message={messgageError} onShowModal={onShowModal} type="error" />
+        <ConfirmMessage
+          message={messgageError}
+          onShowModal={onShowModal}
+          type="error"
+        />
       )}
       <Pagination
         dotsLength={carouselItems.length}
@@ -144,6 +149,7 @@ const FirstLoginScreen = ({navigation}) => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
+          disabled={campusId === ''}
           style={styles.button_second}
           onPress={
             () =>
