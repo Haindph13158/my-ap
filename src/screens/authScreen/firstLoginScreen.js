@@ -51,19 +51,23 @@ const FirstLoginScreen = ({navigation}) => {
     setIsShowModal(prev => !prev);
   };
   const dispatch = useDispatch();
-  const {campus} = useSelector(state => state.campus);
+  // const {campus} = useSelector(state => state.campus);
+  const [campus, setCampus] = useState([]);
   const [dataSlot, setDataSlot] = useState([]);
   const [campusId, setCampusId] = useState('');
   useEffect(() => {
-    dispatch(fetchCampus());
-    if (campus.length > 0) {
-      const arr = [];
-      campus.forEach(item => {
-        arr.push(item.campus_name);
+    axios
+      .get('https://api.poly.edu.vn/myap/fu/campus/get-list')
+      .then(res => res.data)
+      .then(data => {
+        setCampus(data.data);
+        const arr = [];
+        data.data.forEach(item => {
+          arr.push(item.campus_name);
+        });
+        setDataSlot(arr);
       });
-      setDataSlot(arr);
-    }
-  }, [navigation]);
+  }, []);
 
   const carouselCardItem = ({item, index}) => {
     return (
@@ -75,8 +79,10 @@ const FirstLoginScreen = ({navigation}) => {
 
   const valueSelect = useCallback(value => {
     const checkCampus = campus.find(item => item.campus_name === value);
-    setCampusId(checkCampus.campus_code);
-  }, []);
+    if (checkCampus) {
+      setCampusId(checkCampus.campus_code);
+    }
+  }, [campus]);
 
   const onGoogleButtonPress = async () => {
     // Get the users ID token

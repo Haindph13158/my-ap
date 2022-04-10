@@ -2,7 +2,7 @@ import { axiosClientMyap } from "./axiosClient";
 
 const CampusApi = {
     getCampus(){
-        const url = `fu/campus/get-list`;
+        const url = `campus/get-list`;
         return axiosClientMyap.get(url)
     },
 }
