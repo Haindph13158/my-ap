@@ -1,35 +1,59 @@
 {
   "project_info": {
-    "project_number": "174896544594",
-    "project_id": "chatapp-22cd1",
-    "storage_bucket": "chatapp-22cd1.appspot.com"
+    "project_number": "977319685675",
+    "project_id": "myap-337510",
+    "storage_bucket": "myap-337510.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:174896544594:android:afb2b3cefb16a92081d88b",
+        "mobilesdk_app_id": "1:977319685675:android:3bf06a78f960ed8e5c846e",
         "android_client_info": {
           "package_name": "com.appapnew"
         }
       },
       "oauth_client": [
         {
-          "client_id": "174896544594-h4orashdj67esbrkc7hq141338c9s8d1.apps.googleusercontent.com",
+          "client_id": "977319685675-bq2l1cqrvn9ikekke7nef5a2dgu8udt9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appapnew",
+            "certificate_hash": "5148e4741ef4a066f9f091e5c955b5a47b11edf0"
+          }
+        },
+        {
+          "client_id": "977319685675-u9geqnqgja4h1bmnt8g6ah16otr08bvj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appapnew",
+            "certificate_hash": "afd8e9e12d33e7fa4ace67329956595d18700de6"
+          }
+        },
+        {
+          "client_id": "977319685675-uo35p98kivs0akm9r40u4g2dfb3u2t41.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBkOEC261nEcfrkkf8AvbJSdeIv1WEJOYw"
+          "current_key": "AIzaSyBAQ_pQNIAq6P8w6S23TMXYJ4XSfEoDn7w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "174896544594-h4orashdj67esbrkc7hq141338c9s8d1.apps.googleusercontent.com",
+              "client_id": "977319685675-97jfg1gjq73e1bpfb5u8b9d85d7rlm2o.apps.googleusercontent.com",
               "client_type": 3
-            }
+            },
+            {
+              "client_id": "977319685675-1bmadjkqkhgh99gqrk24e05gih73oiik.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.appapnew.poly",
+                "app_store_id": " luckyzzzxxx@gmail.com"
+              }
+            } 
           ]
         }
       }

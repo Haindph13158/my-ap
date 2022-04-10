@@ -7,8 +7,8 @@
  */
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Alert, StyleSheet, View, TextInput} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import persistor, {store} from './src/app/store';
@@ -33,21 +33,91 @@ import PointSubject from './src/screens/subject/PointSubject';
 import TuitionScreen from './src/screens/Setting/TuitionScreen';
 import SettingDetail from './src/screens/Setting/settingDetail';
 import PrivateScreen from './src/screens/Setting/PrivateScreen';
+import messaging from '@react-native-firebase/messaging';
+import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
 });
 
+async function saveTokenToDatabase(token) {
+  // Assume user is already signed in
+  const userId = auth().currentUser.uid;
+
+  // Add the token to the users datastore
+  await firestore()
+    .collection('users')
+    .doc(userId)
+    .update({
+      tokens: firestore.FieldValue.arrayUnion(token),
+    });
+}
+
 const Stack = createNativeStackNavigator();
 const App = () => {
   const MainScreen = () => {
     return <NavBottom />;
   };
+  const requestUserPermission = async () => {
+    const authStatus = await messaging().requestPermission();
+    const enabled =
+      authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+    if (enabled) {
+      console.log('Authorization status:', authStatus);
+    }
+  };
+
+  const [tokenApp, setTokenApp] = useState('');
+
+  useEffect(() => {
+    requestUserPermission();
+    messaging()
+      .getToken()
+      .then(token => {
+        console.log('token', token);
+        setTokenApp(token)
+        // return saveTokenToDatabase(token);
+      });
+    if (Platform.OS == 'ios') {
+      messaging()
+        .getAPNSToken()
+        .then(token => {
+          console.log('token', token);
+          // return saveTokenToDatabase(token);
+        });
+    }
+    // messaging().onNotificationOpenedApp(remoteMessage => {
+    //   console.log(
+    //     'Notification caused app to open from background state:',
+    //     remoteMessage.notification,
+    //   );
+    //   // navigation.navigate(remoteMessage.data.type);
+    // });
+
+    // // Check whether an initial notification is available
+    // messaging()
+    //   .getInitialNotification()
+    //   .then(remoteMessage => {
+    //     if (remoteMessage) {
+    //       console.log(
+    //         'Notification caused app to open from quit state:',
+    //         remoteMessage.notification,
+    //       );
+    //       setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+    //     }
+    //     setLoading(false);
+    //   });
+  }, []);
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <View style={styles.container}>
+          <TextInput value={tokenApp} />
           <NavigationContainer>
             <Stack.Navigator initialRouteName="App">
               <Stack.Screen
