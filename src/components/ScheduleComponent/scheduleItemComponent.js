@@ -12,6 +12,7 @@ const ScheduleItem = ({schedule}) => {
   // console.log(schedule);
   const [expanded, setExpanded] = React.useState(true);
   const [messgage, setMessgage] = useState('');
+  const {users} = useSelector(state => state.auths);
   const dispatch = useDispatch();
   const toggleExpanded = () => {
     setExpanded(!expanded);
@@ -35,7 +36,7 @@ const ScheduleItem = ({schedule}) => {
     if (new Date(schedule.timestamp).getTime() - time > 0) {
       PushNotification.cancelLocalNotification();
       PushNotification.localNotificationSchedule({
-        channelId: `${schedule.id}`,
+        channelId: `${schedule.id}_${users.user_code}`,
         subText: `Nội dung tiết học: ${schedule.syllabus_plan_description} - ${schedule.syllabus_plan_noi_dung}`,
         title: 'Click xem lịch học',
         message: `Bạn sắp có lịch học môn ${schedule.subject_name}`, // message text
@@ -43,7 +44,7 @@ const ScheduleItem = ({schedule}) => {
         allowWhileIdle: true,
         largeIcon: 'icon',
         smallIcon: 'icon',
-        shortcutId: `${schedule.id}`,
+        shortcutId: `${schedule.id}_${users.user_code}`,
         playSound: true,
         soundName: 'bcd',
         repeatType: 'day',
@@ -63,19 +64,22 @@ const ScheduleItem = ({schedule}) => {
     setDate(date);
     onShowModal();
     const notifi = {
-      id: schedule.id,
+      id: `${schedule.id}_${users.user_code}`,
       time: date,
+      user_code: users.user_code,
     };
-    const name = `${schedule.subject_name} - ${schedule.id}`;
-    createChannels(`${schedule.id}`, name);
+    const name = `${schedule.subject_name} - ${schedule.id} - ${users.user_code}`;
+    createChannels(`${schedule.id}_${users.user_code}`, name);
     handelNoti(date);
+    setExpanded(false)
     dispatch(notification(notifi));
   };
 
   let check = false;
 
   if (notis.length > 0) {
-    const checkClock = notis.find(item => item.id === schedule.id);
+    const checkID = `${schedule.id}_${users.user_code}`
+    const checkClock = notis.find(item => item.id === checkID);
     if (checkClock) {
       check = true;
     }
