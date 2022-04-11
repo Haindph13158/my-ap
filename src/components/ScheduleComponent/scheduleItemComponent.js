@@ -17,7 +17,8 @@ const ScheduleItem = ({schedule}) => {
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
-  const [date, setDate] = useState(new Date(schedule.timestamp));
+  const [date, setDate] = useState(new Date(schedule['timestamp']));
+
   const [open, setOpen] = useState(false);
   const {notis} = useSelector(state => state.notis);
   const [isShowModal, setIsShowModal] = useState(false);
@@ -33,7 +34,10 @@ const ScheduleItem = ({schedule}) => {
   };
 
   const handelNoti = time => {
-    if (new Date(schedule.timestamp).getTime() - time > 0) {
+    if (
+      new Date(schedule.timestamp).getTime() - time > 0 &&
+      new Date(schedule['timestamp']).getTime() - new Date().getTime() > 0
+    ) {
       PushNotification.cancelLocalNotification();
       PushNotification.localNotificationSchedule({
         channelId: `${schedule.id}_${users.user_code}`,
@@ -71,14 +75,14 @@ const ScheduleItem = ({schedule}) => {
     const name = `${schedule.subject_name} - ${schedule.id} - ${users.user_code}`;
     createChannels(`${schedule.id}_${users.user_code}`, name);
     handelNoti(date);
-    setExpanded(false)
+    setExpanded(false);
     dispatch(notification(notifi));
   };
 
   let check = false;
 
   if (notis.length > 0) {
-    const checkID = `${schedule.id}_${users.user_code}`
+    const checkID = `${schedule.id}_${users.user_code}`;
     const checkClock = notis.find(item => item.id === checkID);
     if (checkClock) {
       check = true;
@@ -190,21 +194,22 @@ const ScheduleItem = ({schedule}) => {
               </View>
             </View>
           </View>
-          {!check && (
-            <View style={styles.flexBox}>
-              <Text style={styles.text_note_content}>Đặt lịch hẹn giờ :</Text>
-              <TouchableOpacity
-                style={styles.btnBox}
-                onPress={() => setOpen(true)}>
-                <Text>Đặt thời gian</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          {!check &&
+            new Date(schedule['timestamp']).getTime() - new Date().getTime() >
+              0 && (
+              <View style={styles.flexBox}>
+                <Text style={styles.text_note_content}>Đặt lịch hẹn giờ :</Text>
+                <TouchableOpacity
+                  style={styles.btnBox}
+                  onPress={() => setOpen(true)}>
+                  <Text>Đặt thời gian</Text>
+                </TouchableOpacity>
+              </View>
+            )}
         </Collapsible>
       </View>
       <DatePicker
         maximumDate={new Date(schedule.timestamp)}
-        minimumDate={new Date()}
         modal
         title="Đặt thời gian báo"
         confirmText="Đặt thời gian"

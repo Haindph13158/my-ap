@@ -23,7 +23,7 @@ const SchedulesApi = {
         })
     },
     getListTest(value) {
-        const url = `fu/schedule/get-test-schedule?campus_id=${value.campus_code}&user_code=${value.user_code}&term_id=39`
+        const url = `fu/schedule/get-test-schedule?campus_id=${value.campus_code}&days=${value.day}&user_code=${value.user_code}&term_id=39`
         return axiosClinetMobile.get(url, {
             headers: {
                 "Content-Type": "application/json",

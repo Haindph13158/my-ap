@@ -62,12 +62,12 @@ function ScheduleList(props) {
           `https://6132c0c8ab7b1e001799b5bc.mockapi.io/token-device/${checkToken.id}`,
           data,
         )
-        .then(res => console.log(res))
+        .then(res => res)
         .catch(err => console.log(err));
     } else {
       axios
         .post('https://6132c0c8ab7b1e001799b5bc.mockapi.io/token-device', data)
-        .then(res => console.log(res))
+        .then(res => res)
         .catch(err => console.log(err));
     }
   };
