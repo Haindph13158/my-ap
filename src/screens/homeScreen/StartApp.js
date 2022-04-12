@@ -1,3 +1,4 @@
+import {GoogleSignin} from '@react-native-google-signin/google-signin';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
@@ -55,6 +56,16 @@ function StartApp(props) {
     setIsShowModal(prev => !prev);
     navigation.navigate('FirstLogin');
   };
+
+  const signOut = async () => {
+    await GoogleSignin.signOut();
+    if (users?.token) {
+      setIsShowModal(true);
+    } else {
+      navigation.navigate('FirstLogin');
+    }
+  };
+
   useEffect(() => {
     axios
       .get(
@@ -62,17 +73,13 @@ function StartApp(props) {
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + users.token,
+            Authorization: 'Bearer ' + users?.token,
           },
         },
       )
       .then(res => navigation.navigate('Home'))
       .catch(err => {
-        if (users?.token) {
-          setIsShowModal(true);
-        } else {
-          navigation.navigate('FirstLogin');
-        }
+        signOut();
       });
   }, [navigation]);
   return (
@@ -101,7 +108,11 @@ function StartApp(props) {
             </View>
           )}
           {isShowModal && users?.token && (
-            <ConfirmMessage message={messgageError} onShowModal={onShowModal} type="error" />
+            <ConfirmMessage
+              message={messgageError}
+              onShowModal={onShowModal}
+              type="error"
+            />
           )}
         </View>
       </View>

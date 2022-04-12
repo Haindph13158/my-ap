@@ -42,7 +42,7 @@ const carouselItems = [
 ];
 
 const messgageError =
-  'Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại !';
+  'Email của bạn không hợp lệ, vui lòng đăng nhập lại email đúng !';
 
 const FirstLoginScreen = ({navigation}) => {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -51,6 +51,9 @@ const FirstLoginScreen = ({navigation}) => {
     setIsShowModal(prev => !prev);
   };
   const dispatch = useDispatch();
+  const signOut = async () => {
+    await GoogleSignin.signOut();
+  };
   // const {campus} = useSelector(state => state.campus);
   const [campus, setCampus] = useState([]);
   const [dataSlot, setDataSlot] = useState([]);
@@ -96,6 +99,7 @@ const FirstLoginScreen = ({navigation}) => {
         dispatch(login(data.data));
         navigation.navigate('Home');
       } catch (err) {
+        signOut();
         onShowModal();
       }
     }
