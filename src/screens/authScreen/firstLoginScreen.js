@@ -15,7 +15,7 @@ import Carousel, {Pagination} from 'react-native-snap-carousel';
 import {useDispatch, useSelector} from 'react-redux';
 import googleIcon from '../../assets/google-plus.png';
 import ConfirmMessage from '../../components/confirmMessage/confirmMessage';
-import {login} from '../../features/auth/authSlide';
+import {login, logout} from '../../features/auth/authSlide';
 import {fetchCampus} from '../../features/reducer/campusSlide';
 GoogleSignin.configure({
   offlineAccess: true,
@@ -52,6 +52,7 @@ const FirstLoginScreen = ({navigation}) => {
   };
   const dispatch = useDispatch();
   const signOut = async () => {
+    dispatch(logout({}))
     await GoogleSignin.signOut();
   };
   // const {campus} = useSelector(state => state.campus);

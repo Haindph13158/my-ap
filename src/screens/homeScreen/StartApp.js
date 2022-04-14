@@ -52,18 +52,15 @@ function StartApp(props) {
   const [loading, setLoading] = useState(true);
   const {users} = useSelector(state => state.auths);
   const [isShowModal, setIsShowModal] = useState(false);
-  const onShowModal = () => {
-    setIsShowModal(prev => !prev);
-    navigation.navigate('FirstLogin');
-  };
+  // const onShowModal = () => {
+  //   setIsShowModal(prev => !prev);
+  //   navigation.navigate('FirstLogin');
+  // };
 
   const signOut = async () => {
     await GoogleSignin.signOut();
-    if (users?.token) {
-      setIsShowModal(true);
-    } else {
-      navigation.navigate('FirstLogin');
-    }
+    navigation.navigate('FirstLogin');
+    dispatch(logout({}));
   };
 
   useEffect(() => {
@@ -107,13 +104,13 @@ function StartApp(props) {
               </View>
             </View>
           )}
-          {isShowModal && users?.token && (
+          {/* {isShowModal && users?.token && (
             <ConfirmMessage
               message={messgageError}
               onShowModal={onShowModal}
               type="error"
             />
-          )}
+          )} */}
         </View>
       </View>
     </>
