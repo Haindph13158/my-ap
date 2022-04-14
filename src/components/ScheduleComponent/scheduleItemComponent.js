@@ -1,11 +1,19 @@
-import React, {memo, useState} from 'react';
-import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React, {memo, useState, useCallback} from 'react';
+import {
+  Button,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Linking,
+} from 'react-native';
+import moment from 'moment';
 import Collapsible from 'react-native-collapsible';
 import DatePicker from 'react-native-date-picker';
 import PushNotification from 'react-native-push-notification';
 import {useDispatch, useSelector} from 'react-redux';
 import IconView from '../../common/IconView';
-import {notification} from '../../features/reducer/notiSlide';
+import {notification, removeNoti} from '../../features/reducer/notiSlide';
 import ConfirmMessage from '../confirmMessage/confirmMessage';
 
 const ScheduleItem = ({schedule}) => {
@@ -19,7 +27,7 @@ const ScheduleItem = ({schedule}) => {
     setExpanded(!expanded);
   };
   const [date, setDate] = useState(new Date(schedule['timestamp']));
-  
+
   const [open, setOpen] = useState(false);
   const {notis} = useSelector(state => state.notis);
   const [isShowModal, setIsShowModal] = useState(false);
@@ -34,12 +42,35 @@ const ScheduleItem = ({schedule}) => {
     });
   };
 
+  const OpenURLButton = ({url, children}) => {
+    const handlePress = useCallback(async () => {
+      // Checking if the link is supported for links with custom URL scheme.
+      const supported = await Linking.canOpenURL(url);
+
+      if (supported) {
+        // Opening the link with some app, if the URL scheme is "http" the web link should be opened
+        // by some browser in the mobile
+        await Linking.openURL(url);
+      } else {
+        Alert.alert(`Don't know how to open this URL: ${url}`);
+      }
+    }, [url]);
+
+    return (
+      <TouchableOpacity onPress={handlePress} activeOpacity={1}>
+        <Text>
+          Link Online: <Text style={{color: 'blue'}}>{url}</Text>{' '}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
   const handelNoti = time => {
     if (
       new Date(schedule.timestamp).getTime() - time > 0 &&
       new Date(schedule.timestamp).getTime() - new Date().getTime() > 0
     ) {
-      PushNotification.cancelLocalNotification();
+      PushNotification.deleteChannel(`${schedule.id}_${users.user_code}`);
       PushNotification.localNotificationSchedule({
         channelId: `${schedule.id}_${users.user_code}`,
         subText: `Nội dung tiết học: ${schedule.syllabus_plan_description} - ${schedule.syllabus_plan_noi_dung}`,
@@ -63,7 +94,9 @@ const ScheduleItem = ({schedule}) => {
   };
 
   const onSetTime = date => {
-    const message = `Bạn đã đặt báo lịch học môn ${schedule.subject_name} - thời gian là ${date}`;
+    const message = `Bạn đã đặt báo lịch học môn ${
+      schedule.subject_name
+    } - thời gian là ${moment(new Date(date)).format('h:mm DD-MM-YYYY')}`;
     setMessgage(message);
     setOpen(false);
     setDate(date);
@@ -78,10 +111,10 @@ const ScheduleItem = ({schedule}) => {
     handelNoti(date);
     setExpanded(false);
     dispatch(notification(notifi));
+    toggleExpanded();
   };
 
   let check = false;
-
   if (notis.length > 0) {
     const checkID = `${schedule.id}_${users.user_code}`;
     const checkClock = notis.find(item => item.id === checkID);
@@ -89,6 +122,29 @@ const ScheduleItem = ({schedule}) => {
       check = true;
     }
   }
+
+  const renderEditTime = () => {
+    const checkID = `${schedule.id}_${users.user_code}`;
+    const checkClock = notis.find(item => item.id === checkID);
+
+    return (
+      <TouchableOpacity style={styles.btnBox} onPress={() => setOpen(true)}>
+        <Text>
+          {moment(new Date(checkClock.time)).format('h:mm DD-MM-YYYY')}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  const onRemoveClock = () => {
+    PushNotification.deleteChannel(`${schedule.id}_${users.user_code}`);
+    const message = 'Huỷ đặt lịch thông báo thành công !';
+    setMessgage(message);
+    dispatch(removeNoti(`${schedule.id}_${users.user_code}`));
+    onShowModal();
+    toggleExpanded();
+  };
+
   return (
     <View style={styles.accordion}>
       {isShowModal && (
@@ -144,9 +200,7 @@ const ScheduleItem = ({schedule}) => {
         <Collapsible duration={200} collapsed={expanded} align="center">
           <View>
             {schedule.url_room_online ? (
-              <Text>
-                Link Online: <Text>{schedule.url_room_online}</Text>{' '}
-              </Text>
+              <OpenURLButton url={schedule.url_room_online}></OpenURLButton>
             ) : null}
 
             <View
@@ -206,6 +260,21 @@ const ScheduleItem = ({schedule}) => {
                 </TouchableOpacity>
               </View>
             )}
+          {check &&
+            new Date(schedule.timestamp).getTime() - new Date().getTime() >
+              0 && (
+              <View style={styles.flexBox}>
+                <Text style={styles.text_note_content}>Sửa lịch hẹn giờ :</Text>
+                {renderEditTime()}
+              </View>
+            )}
+          {check && (
+            <TouchableOpacity
+              onPress={onRemoveClock}
+              style={styles.justifyContent}>
+              <Text style={styles.btnRemove}>Xoá hẹn giờ</Text>
+            </TouchableOpacity>
+          )}
         </Collapsible>
       </View>
       <DatePicker
@@ -315,6 +384,28 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: -8,
     top: -8,
+  },
+  justifyContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    padding: 10,
+    borderRadius: 8,
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4.65,
+    elevation: 8,
+    marginLeft: 60,
+    marginRight: 60,
+    marginBottom: 10,
+  },
+  btnRemove: {
+    color: 'black',
   },
 });
 
