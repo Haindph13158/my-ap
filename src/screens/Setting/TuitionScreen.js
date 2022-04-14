@@ -202,7 +202,7 @@ function TuitionScreen(props) {
               <View style={styles.list_english}>
                 {tuitions?.list_english &&
                   tuitions?.list_english.length &&
-                  tuitions.list_english.map(item => (
+                  tuitions?.list_english.map(item => (
                     <View key={item.level} style={styles.list_english_item}>
                       <Text style={styles.textBold}>{item.subject_name}</Text>
                       <Text style={styles.textStatus}>{item.text}</Text>
@@ -215,18 +215,18 @@ function TuitionScreen(props) {
                 </Text>
                 <View style={styles.flexRow}>
                   <Text style={styles.textDetailKey}>Level: </Text>
-                  <Text>{tuitions.english_finish}</Text>
+                  <Text>{tuitions?.english_finish}</Text>
                 </View>
                 <View style={styles.flexRow}>
                   <Text style={styles.textDetailKey}>Tên môn: </Text>
-                  <Text>{tuitions.list_english[kihoc].subject_name}</Text>
+                  <Text>{tuitions?.list_english[kihoc]?.subject_name}</Text>
                 </View>
                 <View style={styles.flexRow}>
                   <Text style={styles.textDetailKey}>Trạng thái: </Text>
                   <Text style={styles.textStatus}>
                     {tuitions?.list_english &&
-                      tuitions?.list_english.length &&
-                      tuitions.list_english[kihoc].text}
+                      tuitions?.list_english?.length &&
+                      tuitions?.list_english[kihoc]?.text}
                   </Text>
                 </View>
 
@@ -281,7 +281,7 @@ function TuitionScreen(props) {
                   </View>
                   {tuitions?.list_english &&
                     tuitions?.list_english.length > 0 &&
-                    tuitions.list_english.map(item => (
+                    tuitions?.list_english.map(item => (
                       <View
                         key={item.level}
                         style={[

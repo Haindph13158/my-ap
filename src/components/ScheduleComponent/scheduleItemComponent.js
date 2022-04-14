@@ -13,12 +13,13 @@ const ScheduleItem = ({schedule}) => {
   const [expanded, setExpanded] = React.useState(true);
   const [messgage, setMessgage] = useState('');
   const {users} = useSelector(state => state.auths);
+
   const dispatch = useDispatch();
   const toggleExpanded = () => {
     setExpanded(!expanded);
   };
   const [date, setDate] = useState(new Date(schedule['timestamp']));
-
+  
   const [open, setOpen] = useState(false);
   const {notis} = useSelector(state => state.notis);
   const [isShowModal, setIsShowModal] = useState(false);
@@ -36,7 +37,7 @@ const ScheduleItem = ({schedule}) => {
   const handelNoti = time => {
     if (
       new Date(schedule.timestamp).getTime() - time > 0 &&
-      new Date(schedule['timestamp']).getTime() - new Date().getTime() > 0
+      new Date(schedule.timestamp).getTime() - new Date().getTime() > 0
     ) {
       PushNotification.cancelLocalNotification();
       PushNotification.localNotificationSchedule({
@@ -88,7 +89,6 @@ const ScheduleItem = ({schedule}) => {
       check = true;
     }
   }
-
   return (
     <View style={styles.accordion}>
       {isShowModal && (
@@ -195,7 +195,7 @@ const ScheduleItem = ({schedule}) => {
             </View>
           </View>
           {!check &&
-            new Date(schedule['timestamp']).getTime() - new Date().getTime() >
+            new Date(schedule.timestamp).getTime() - new Date().getTime() >
               0 && (
               <View style={styles.flexBox}>
                 <Text style={styles.text_note_content}>Đặt lịch hẹn giờ :</Text>
