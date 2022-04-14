@@ -69,7 +69,6 @@ const App = () => {
         'https://6132c0c8ab7b1e001799b5bc.mockapi.io/token-device',
       )
     ).data;
-    console.log(listToken);
   };
 
   useEffect(() => {

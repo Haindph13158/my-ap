@@ -23,6 +23,7 @@ export const authSlice = createSlice({
     initialState,
     reducers: {
         login: (state, action) => {
+            console.log(action);
             state.users = action.payload
         },
         logout: (state, action) => {
