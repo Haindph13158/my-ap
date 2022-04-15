@@ -66,29 +66,30 @@ const ScheduleItem = ({schedule}) => {
       </TouchableOpacity>
     );
   };
-
   const handelNoti = time => {
     if (
       new Date(schedule.timestamp).getTime() - time > 0 &&
       new Date(schedule.timestamp).getTime() - new Date().getTime() > 0
     ) {
-      PushNotification.deleteChannel(`${schedule.id}_${users.user_code}`);
+      // PushNotification.deleteChannel(`${schedule.id}_${users.user_code}`);
       PushNotification.localNotificationSchedule({
         channelId: `${schedule.id}_${users.user_code}`,
-        subText: `Nội dung tiết học: ${schedule.syllabus_plan_description} - ${schedule.syllabus_plan_noi_dung}`,
+        subText: `Thông báo lịch học`,
         title: 'Click xem lịch học',
-        message: `Bạn sắp có lịch học môn ${schedule.subject_name}`, // message text
+        message: `Bạn sắp có lịch học môn ${schedule.subject_name} vào ${moment(
+          new Date(schedule.timestamp),
+        ).format('h:mm DD-MM-YYYY')} - 
+        Nội dung tiết học: ${schedule.syllabus_plan_description} - ${
+          schedule.syllabus_plan_noi_dung
+        }`, // message text
         date: new Date(time),
         allowWhileIdle: true,
-        largeIcon: 'icon',
-        smallIcon: 'icon',
+        largeIcon: 'playstore',
+        smallIcon: 'playstore',
         shortcutId: `${schedule.id}_${users.user_code}`,
         playSound: true,
         soundName: 'bcd',
-        repeatType: 'day',
         vibration: 30000,
-        repeatTime: 2,
-        number: 30,
         autoCancel: false,
         priority: 'max',
       });
@@ -120,7 +121,7 @@ const ScheduleItem = ({schedule}) => {
   if (notis.length > 0) {
     const checkID = `${schedule.id}_${users.user_code}`;
     const checkClock = notis.find(item => item.id === checkID);
-    if (checkClock) {
+    if (checkClock && new Date(checkClock?.time) - new Date().getTime() > 0) {
       check = true;
     }
   }

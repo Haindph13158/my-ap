@@ -1,13 +1,18 @@
 import messaging from '@react-native-firebase/messaging';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import React, {memo, useCallback, useEffect, useState} from 'react';
-import {RefreshControl, ScrollView, StyleSheet, View} from 'react-native';
-import PushNotification from 'react-native-push-notification';
-import {useDispatch, useSelector} from 'react-redux';
+import React, { memo, useCallback, useEffect, useState } from 'react';
+import {
+  Alert,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  View
+} from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import ScheduleItem from '../../components/ScheduleComponent/scheduleItemComponent';
 import SelectTime from '../../components/SelectTime/SelectTime';
-import {fetchSchedules} from '../../features/scheduleSlide/scheduleSlide';
+import { fetchSchedules } from '../../features/scheduleSlide/scheduleSlide';
 const dataSlot = [
   '7 ngày tới',
   '30 ngày tới',
@@ -92,10 +97,8 @@ function ScheduleList(props) {
           });
       }
       const unsubscribe = messaging().onMessage(async remoteMessage => {
-        Alert.alert(
-          'A new FCM message arrived!',
-          JSON.stringify(remoteMessage),
-        );
+        console.log(remoteMessage);
+        Alert.alert(JSON.stringify(remoteMessage.notification.body));
       });
 
       return unsubscribe;
@@ -131,43 +134,6 @@ function ScheduleList(props) {
     };
     dispatch(fetchSchedules(optionSchedule));
   }, [day, users]);
-
-  const createChannels = () => {
-    PushNotification.createChannel({
-      channelId: 'test dsads',
-      channelName: 'test channel',
-    });
-  };
-  const handelNoti = item => {
-    const time = new Date(item.timestamp).getTime() - 30 * 60 * 1000;
-    if (time - Date.now() > 0) {
-      PushNotification.cancelLocalNotification();
-      PushNotification.localNotificationSchedule({
-        channelId: 'test dsads',
-        subText: `Nội dung tiết học: ${item.syllabus_plan_description} - ${item.syllabus_plan_noi_dung}`,
-        title: 'Click xem lịch học',
-        message: `Bạn sắp có lịch học môn ${item.subject_name} sau 30p nữa`, // message text
-        date: new Date(time),
-        allowWhileIdle: true,
-        largeIcon: 'icon',
-        smallIcon: 'icon',
-        shortcutId: item.id,
-      });
-    }
-  };
-
-  const callNotifile = useCallback(() => {
-    if (schedules.length > 0) {
-      schedules.forEach(item => {
-        handelNoti(item);
-      });
-    }
-  }, []);
-
-  useEffect(() => {
-    createChannels();
-    callNotifile();
-  }, []);
 
   useEffect(() => {
     getApiData();
@@ -223,13 +189,6 @@ function ScheduleList(props) {
               <ScheduleItem key={index} schedule={schedule} />
             ))}
           </View>
-          {/* {isShowModal !=='' && users?.token && (
-            <ConfirmMessage
-              message={messgageError}
-              onShowModal={onShowModal}
-              type="error"
-            />
-          )} */}
         </ScrollView>
       </View>
     </>
