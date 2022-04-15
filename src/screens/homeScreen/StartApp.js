@@ -9,10 +9,10 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {useSelector} from 'react-redux';
-import ConfirmMessage from '../../components/confirmMessage/confirmMessage';
+import {useDispatch, useSelector} from 'react-redux';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
+import {logout} from '../../features/auth/authSlide';
 const messgageError =
   'Phiên đăng nhập của bạn đã hết hạn, vui lòng đăng nhập lại !';
 const styles = StyleSheet.create({
@@ -52,6 +52,7 @@ function StartApp(props) {
   const [loading, setLoading] = useState(true);
   const {users} = useSelector(state => state.auths);
   const [isShowModal, setIsShowModal] = useState(false);
+  const dispatch = useDispatch();
   // const onShowModal = () => {
   //   setIsShowModal(prev => !prev);
   //   navigation.navigate('FirstLogin');
