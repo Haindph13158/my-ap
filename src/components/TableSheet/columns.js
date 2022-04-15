@@ -128,7 +128,8 @@ export const columnPoint = [
             width: 100,
             justifyContent: 'center',
             paddingTop: 10,
-            paddingBottom: 10
+            paddingBottom: 10,
+            color: 'black'
         }
     }
 ]

@@ -12,6 +12,7 @@ export default function PointSubject({route}) {
         <TableSheet
         item={item.grades}
         key={index}
+        getCellProps={() => {return 'black'}}
         column={columnPoint}
         status={item.status_name}
         medium_score={item.medium_score}

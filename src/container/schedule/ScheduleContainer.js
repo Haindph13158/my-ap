@@ -78,7 +78,6 @@ function ScheduleContainer({colums}) {
       {colums.map((item, index) => (
         <View key={index} tabLabel={item.title}>
           {renderData}
-          
         </View>
       ))}
     </ScrollableTabView>

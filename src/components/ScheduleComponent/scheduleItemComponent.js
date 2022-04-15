@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   Linking,
+  Alert,
 } from 'react-native';
 import moment from 'moment';
 import Collapsible from 'react-native-collapsible';
@@ -15,8 +16,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import IconView from '../../common/IconView';
 import {notification, removeNoti} from '../../features/reducer/notiSlide';
 import ConfirmMessage from '../confirmMessage/confirmMessage';
-
+import {useTheme} from '@react-navigation/native';
 const ScheduleItem = ({schedule}) => {
+  const {colors} = useTheme();
   // console.log(schedule);
   const [expanded, setExpanded] = React.useState(true);
   const [messgage, setMessgage] = useState('');
@@ -58,7 +60,7 @@ const ScheduleItem = ({schedule}) => {
 
     return (
       <TouchableOpacity onPress={handlePress} activeOpacity={1}>
-        <Text>
+        <Text style={{color: colors.text}}>
           Link Online: <Text style={{color: 'blue'}}>{url}</Text>{' '}
         </Text>
       </TouchableOpacity>
@@ -129,7 +131,7 @@ const ScheduleItem = ({schedule}) => {
 
     return (
       <TouchableOpacity style={styles.btnBox} onPress={() => setOpen(true)}>
-        <Text>
+        <Text style={{color: colors.text}}>
           {moment(new Date(checkClock.time)).format('h:mm DD-MM-YYYY')}
         </Text>
       </TouchableOpacity>
@@ -168,13 +170,17 @@ const ScheduleItem = ({schedule}) => {
         <TouchableOpacity activeOpacity={0.8} onPress={toggleExpanded}>
           <View style={styles.box_content_item}>
             <View style={styles.box_left_title}>
-              <Text style={{fontSize: 14}}>
+              <Text style={{fontSize: 14, color: colors.text}}>
                 {schedule.room_name} - Ca {schedule.slot}
               </Text>
             </View>
             <View style={styles.box_right_title}>
-              <Text style={styles.text_top}>{schedule.day}</Text>
-              <Text numberOfLines={2} style={styles.text_bottom}>
+              <Text style={[styles.text_top, {color: colors.text}]}>
+                {schedule.day}
+              </Text>
+              <Text
+                numberOfLines={2}
+                style={[styles.text_bottom, {color: colors.text}]}>
                 {schedule.subject_name} - {schedule.subject_code}
               </Text>
             </View>
@@ -214,34 +220,69 @@ const ScheduleItem = ({schedule}) => {
               ]}>
               <View style={styles.box_left_dropdown}>
                 <Text>
-                  <Text style={styles.text_note_content}>Giảng đường: </Text>
-                  <Text style={styles.data_text_note_content}>
+                  <Text
+                    style={[styles.text_note_content, {color: colors.text}]}>
+                    Giảng đường:{' '}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.data_text_note_content,
+                      {color: colors.text},
+                    ]}>
                     {schedule.area_name}
                   </Text>
                 </Text>
                 <Text>
-                  <Text style={styles.text_note_content}>Mã môn: </Text>
-                  <Text style={styles.data_text_note_content}>
+                  <Text
+                    style={[styles.text_note_content, {color: colors.text}]}>
+                    Mã môn:{' '}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.data_text_note_content,
+                      {color: colors.text},
+                    ]}>
                     {schedule.subject_code}
                   </Text>
                 </Text>
                 <Text>
-                  <Text style={styles.text_note_content}>Thời gian: </Text>
-                  <Text style={styles.data_text_note_content}>
+                  <Text
+                    style={[styles.text_note_content, {color: colors.text}]}>
+                    Thời gian:{' '}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.data_text_note_content,
+                      {color: colors.text},
+                    ]}>
                     {schedule.slot_time}
                   </Text>
                 </Text>
               </View>
               <View style={styles.box_right_dropdown}>
                 <Text>
-                  <Text style={styles.text_note_content}>Lớp: </Text>
-                  <Text style={styles.data_text_note_content}>
+                  <Text
+                    style={[styles.text_note_content, {color: colors.text}]}>
+                    Lớp:{' '}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.data_text_note_content,
+                      {color: colors.text},
+                    ]}>
                     {schedule.room_name}
                   </Text>
                 </Text>
                 <Text>
-                  <Text style={styles.text_note_content}>Giảng viên: </Text>
-                  <Text style={styles.data_text_note_content}>
+                  <Text
+                    style={[styles.text_note_content, {color: colors.text}]}>
+                    Giảng viên:{' '}
+                  </Text>
+                  <Text
+                    style={[
+                      styles.data_text_note_content,
+                      {color: colors.text},
+                    ]}>
                     {schedule.activity_leader_login}
                   </Text>
                 </Text>
@@ -252,11 +293,13 @@ const ScheduleItem = ({schedule}) => {
             new Date(schedule.timestamp).getTime() - new Date().getTime() >
               0 && (
               <View style={styles.flexBox}>
-                <Text style={styles.text_note_content}>Đặt lịch hẹn giờ :</Text>
+                <Text style={[styles.text_note_content, {color: colors.text}]}>
+                  Đặt lịch hẹn giờ :
+                </Text>
                 <TouchableOpacity
                   style={styles.btnBox}
                   onPress={() => setOpen(true)}>
-                  <Text>Đặt thời gian</Text>
+                  <Text style={{color: colors.text}}>Đặt thời gian</Text>
                 </TouchableOpacity>
               </View>
             )}
@@ -264,7 +307,9 @@ const ScheduleItem = ({schedule}) => {
             new Date(schedule.timestamp).getTime() - new Date().getTime() >
               0 && (
               <View style={styles.flexBox}>
-                <Text style={styles.text_note_content}>Sửa lịch hẹn giờ :</Text>
+                <Text style={[styles.text_note_content, {color: colors.text}]}>
+                  Sửa lịch hẹn giờ :
+                </Text>
                 {renderEditTime()}
               </View>
             )}
@@ -272,7 +317,9 @@ const ScheduleItem = ({schedule}) => {
             <TouchableOpacity
               onPress={onRemoveClock}
               style={styles.justifyContent}>
-              <Text style={styles.btnRemove}>Xoá hẹn giờ</Text>
+              <Text style={[styles.btnRemove, {color: colors.text}]}>
+                Xoá hẹn giờ
+              </Text>
             </TouchableOpacity>
           )}
         </Collapsible>
@@ -282,6 +329,8 @@ const ScheduleItem = ({schedule}) => {
         modal
         title="Đặt thời gian báo"
         confirmText="Đặt thời gian"
+        textColor="#000000"
+        fadeToColor="#000000"
         open={open}
         date={date}
         mode="time"

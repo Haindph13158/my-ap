@@ -10,7 +10,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux';
 import TableITem from '../../components/TableItem/TableITem';
 import {fetchAttendace} from '../../features/scheduleSlide/AttendanceSlide';
-
+import {useTheme} from '@react-navigation/native';
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
 });
 function ListAttendance(props) {
   const dispatch = useDispatch();
+  const {colors} = useTheme();
   const navigation = useNavigation();
   const {attendances, loading} = useSelector(state => state.attendances);
   const {users} = useSelector(state => state.auths);
@@ -46,7 +47,7 @@ function ListAttendance(props) {
         <RefreshControl refreshing={loading} onRefresh={_onRefresh} />
       }
       keyboardShouldPersistTaps="always">
-      <View style={styles.container}>
+      <View style={[styles.container, {color: colors.text}]}>
         {attendances &&
           Array.isArray(attendances) &&
           attendances.map((item, index) => (

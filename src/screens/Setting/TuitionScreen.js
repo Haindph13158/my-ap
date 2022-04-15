@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   },
   textContent: {
     fontStyle: 'italic',
+    color: 'black'
   },
   textStatus: {
     fontWeight: 'bold',
@@ -89,6 +90,10 @@ const styles = StyleSheet.create({
   },
   marginLeft: {
     marginLeft: 5,
+    color: 'black'
+  },
+  colorBlack: {
+    color: 'black'
   },
   textWidth50: {
     width: '40%',
@@ -215,11 +220,11 @@ function TuitionScreen(props) {
                 </Text>
                 <View style={styles.flexRow}>
                   <Text style={styles.textDetailKey}>Level: </Text>
-                  <Text>{tuitions?.english_finish}</Text>
+                  <Text style={styles.colorBlack}>{tuitions?.english_finish}</Text>
                 </View>
                 <View style={styles.flexRow}>
                   <Text style={styles.textDetailKey}>Tên môn: </Text>
-                  <Text>{tuitions?.list_english[kihoc]?.subject_name}</Text>
+                  <Text style={styles.colorBlack}>{tuitions?.list_english[kihoc]?.subject_name}</Text>
                 </View>
                 <View style={styles.flexRow}>
                   <Text style={styles.textDetailKey}>Trạng thái: </Text>

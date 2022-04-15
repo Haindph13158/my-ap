@@ -32,6 +32,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  colorBlack: {
+    color: 'black'
+  }
 });
 function TuitionComponent(props) {
   const {tran} = props;
@@ -48,7 +51,7 @@ function TuitionComponent(props) {
         activeOpacity={0.8}>
         <View style={styles.flexRow}>
           <Text style={styles.textDetailKey}>Học kỳ: </Text>
-          <Text>{tran.term_name}</Text>
+          <Text style={styles.colorBlack}>{tran.term_name}</Text>
         </View>
         <View style={styles.viewIcon}>
           {expanded ? (
@@ -88,7 +91,7 @@ function TuitionComponent(props) {
               },
             ]}>
             <Text style={styles.textDetailKey}>Mã hoá đơn: </Text>
-            <Text>{tran.invoice_id}</Text>
+            <Text style={styles.colorBlack}>{tran.invoice_id}</Text>
           </View>
           <View
             style={[
@@ -99,7 +102,7 @@ function TuitionComponent(props) {
               },
             ]}>
             <Text style={styles.textDetailKey}>Số tiền: </Text>
-            <Text>{tran.amount_text} đ</Text>
+            <Text style={styles.colorBlack}>{tran.amount_text} đ</Text>
           </View>
           <View
             style={[
@@ -110,7 +113,7 @@ function TuitionComponent(props) {
               },
             ]}>
             <Text style={styles.textDetailKey}>Loại: </Text>
-            <Text>{tran.type_extension}</Text>
+            <Text style={styles.colorBlack}>{tran.type_extension}</Text>
           </View>
           <View
             style={[
@@ -121,7 +124,7 @@ function TuitionComponent(props) {
               },
             ]}>
             <Text style={styles.textDetailKey}>Học kỳ: </Text>
-            <Text>{tran.term_name}</Text>
+            <Text style={styles.colorBlack}>{tran.term_name}</Text>
           </View>
           <View
             style={[
@@ -132,7 +135,7 @@ function TuitionComponent(props) {
               },
             ]}>
             <Text style={styles.textDetailKey}>Thời gian: </Text>
-            <Text>{tran.created_at_format}</Text>
+            <Text style={styles.colorBlack}>{tran.created_at_format}</Text>
           </View>
           <View
             style={[
@@ -143,7 +146,7 @@ function TuitionComponent(props) {
               },
             ]}>
             <Text style={styles.textDetailKey}>Chú thích: </Text>
-            <Text>{tran.note}</Text>
+            <Text style={styles.colorBlack}>{tran.note}</Text>
           </View>
         </View>
       </Collapsible>

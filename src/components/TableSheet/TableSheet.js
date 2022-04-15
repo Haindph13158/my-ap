@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {Dimensions, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useTable} from 'react-table/dist/react-table.development';
 const HEIGHT = Dimensions.get('window').height;
-const defaultPropGetter = () => ({});
+import {useTheme} from '@react-navigation/native';
 export default function TableSheet({
   absent,
   session,
@@ -10,9 +10,10 @@ export default function TableSheet({
   item,
   column,
   status,
-  getCellProps = defaultPropGetter,
+  getCellProps,
   medium_score,
 }) {
+  const {colors} = useTheme();
   const percentSession = (absent / session) * 100;
   const percentNow = (absent / now) * 100;
   const columns = useMemo(() => column, []);
@@ -29,7 +30,8 @@ export default function TableSheet({
       {absent ? (
         <View style={styles.bottomCell}>
           <View style={styles.borderBotLeft}>
-            <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+            <Text
+              style={{fontSize: 13, fontWeight: 'bold', color: colors.text}}>
               Vắng:
               <Text style={styles.colorAbsent}>
                 {absent}/{session} {percentSession.toFixed()}%
@@ -38,9 +40,10 @@ export default function TableSheet({
             </Text>
           </View>
           <View style={styles.borderBotRight}>
-            <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+            <Text
+              style={{fontSize: 13, fontWeight: 'bold', color: colors.text}}>
               Vắng:
-              <Text style={styles.colorAbsent}>
+              <Text style={[styles.colorAbsent]}>
                 {absent}/{now} {percentNow.toFixed()}%
               </Text>
               tới hiện tại
@@ -51,12 +54,14 @@ export default function TableSheet({
       <View style={styles.table} {...getTableProps}>
         <View style={styles.header}>
           <View style={styles.border1}>
-            <Text style={styles.textHeader}>STT</Text>
+            <Text style={[styles.textHeader, {color: colors.text}]}>STT</Text>
           </View>
           {headerGroups.map((item, i) =>
             item.headers.map((columzz, index) => (
               <View key={index} style={columzz.styleHeader}>
-                <Text style={styles.textHeader}>{columzz.render('title')}</Text>
+                <Text style={[styles.textHeader, {color: colors.text}]}>
+                  {columzz.render('title')}
+                </Text>
               </View>
             )),
           )}
@@ -71,7 +76,7 @@ export default function TableSheet({
                 return (
                   <View key={index} style={styles.rowTable}>
                     <View key={item.id} style={styles.row1}>
-                      <Text style={styles.textHeader}>{index + 1}</Text>
+                      <Text style={[styles.textHeader, {color: colors.text}]}>{index + 1}</Text>
                     </View>
                     {row.cells.map(cell => (
                       <View
@@ -83,7 +88,7 @@ export default function TableSheet({
                         ])}>
                         <Text
                           style={{
-                            color: getCellProps(cell),
+                            color: getCellProps(cell) ? getCellProps(cell): 'black',
                             ...styles.textHeader,
                           }}>
                           {cell.render('Cell')}
@@ -97,13 +102,13 @@ export default function TableSheet({
             {status ? (
               <View style={styles.bottomCell}>
                 <View style={styles.borderBotLeft}>
-                  <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+                  <Text style={{fontSize: 13, fontWeight: 'bold', color: colors.text}}>
                     Trung bình:
                     <Text style={styles.colorAbsent}>{medium_score} </Text>
                   </Text>
                 </View>
                 <View style={styles.borderBotRight}>
-                  <Text style={{fontSize: 13, fontWeight: 'bold'}}>
+                  <Text style={{fontSize: 13, fontWeight: 'bold', color: colors.text}}>
                     Trạng thái:
                     <Text style={styles.colorAbsent}>{status} </Text>
                   </Text>

@@ -30,7 +30,7 @@ const PrivateScreen = props => {
       <TopBar />
       <View style={styles.box}>
         <View style={styles.boxItem}>
-          <Text>Cho phép nhận thông báo trên app</Text>
+          <Text style={{color: 'black'}}>Cho phép nhận thông báo trên app</Text>
           <Switch
             color="#F95B00"
             value={value}
