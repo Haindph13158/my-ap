@@ -1,3 +1,4 @@
+import { useTheme } from '@react-navigation/native';
 import React, {memo, useState} from 'react';
 import {
   StyleSheet,
@@ -20,8 +21,11 @@ function InfoServiceComponent({
   titleSelect1,
   titleSelect2,
 }) {
+  const {colors} = useTheme();
   const {info} = useSelector(state => state.infoUser);
   const [typeSelect, setTypeSelect] = useState('');
+
+
   return (
     <>
       <View style={styles.container}>
@@ -210,6 +214,7 @@ const styles = StyleSheet.create({
   text: {
     marginTop: 10,
     fontWeight: 'bold',
+    color: 'black'
   },
   column: {
     flexDirection: 'row',
@@ -260,6 +265,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
     marginRight: 10,
     width: 80,
+    color: 'black'
   },
   buttonStyle: {
     borderRadius: 10,

@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   textBold: {
     fontWeight: 'bold',
     fontSize: 16,
+    color: 'black'
   },
   title: {
     fontSize: 14,
@@ -29,6 +30,7 @@ const styles = StyleSheet.create({
   },
   textContent: {
     fontSize: 14,
+    color: 'black'
   },
   two: {
     flex: 1,
