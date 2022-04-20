@@ -12,7 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		19F3F7826AEC40C5BFB01FD4 /* libPods-appapnew-appapnewTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 92EA5F6094FBEF6AE06C52DE /* libPods-appapnew-appapnewTests.a */; };
-		74D9535D2804140600F2220A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 74D9535C2804140600F2220A /* GoogleService-Info.plist */; };
+		74FC23C6280D7295000C7C70 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 74FC23C5280D7295000C7C70 /* GoogleService-Info.plist */; };
 		7561D94FA5F2851F49979071 /* libPods-appapnew.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D36C8F6DF89B7CDFE8E0D9 /* libPods-appapnew.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
@@ -48,7 +48,9 @@
 		423AC6A2A12C4F8789BF4110 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		587495AB14714249B0A73DF7 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		6DCB3DE396F7408DBBC7C353 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		74D9535C2804140600F2220A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		74B3AC7328082AD300942FB6 /* appapnewDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = appapnewDebug.entitlements; path = appapnew/appapnewDebug.entitlements; sourceTree = "<group>"; };
+		74B3AC742808482D00942FB6 /* appapnew.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = appapnew.entitlements; path = appapnew/appapnew.entitlements; sourceTree = "<group>"; };
+		74FC23C5280D7295000C7C70 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "Certificates/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7D2299F451F348FFA5EC93A5 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = appapnew/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		85EA20639E041FF8FEA9131E /* Pods-appapnew.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-appapnew.release.xcconfig"; path = "Target Support Files/Pods-appapnew/Pods-appapnew.release.xcconfig"; sourceTree = "<group>"; };
@@ -104,7 +106,9 @@
 		13B07FAE1A68108700A75B9A /* appapnew */ = {
 			isa = PBXGroup;
 			children = (
-				74D9535C2804140600F2220A /* GoogleService-Info.plist */,
+				74FC23C5280D7295000C7C70 /* GoogleService-Info.plist */,
+				74B3AC742808482D00942FB6 /* appapnew.entitlements */,
+				74B3AC7328082AD300942FB6 /* appapnewDebug.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -288,7 +292,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				74D9535D2804140600F2220A /* GoogleService-Info.plist in Resources */,
+				74FC23C6280D7295000C7C70 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -543,8 +547,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = appapnew/appapnewDebug.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QU5RA3UF77;
+				DEVELOPMENT_TEAM = AR7MQF42S7;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = appapnew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -556,8 +563,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.appapnew;
+				PRODUCT_BUNDLE_IDENTIFIER = example.native.reactjs.org;
 				PRODUCT_NAME = appapnew;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -570,8 +578,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = appapnew/appapnew.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = QU5RA3UF77;
+				DEVELOPMENT_TEAM = AR7MQF42S7;
 				INFOPLIST_FILE = appapnew/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -582,8 +593,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.appapnew;
+				PRODUCT_BUNDLE_IDENTIFIER = example.native.reactjs.org;
 				PRODUCT_NAME = appapnew;
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
