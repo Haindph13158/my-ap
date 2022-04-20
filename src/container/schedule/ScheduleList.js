@@ -47,7 +47,6 @@ function ScheduleList(props) {
     const enabled =
       authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
       authStatus === messaging.AuthorizationStatus.PROVISIONAL;
-
     if (enabled) {
       console.log('Authorization status:', authStatus);
     }
@@ -83,13 +82,12 @@ function ScheduleList(props) {
       messaging()
         .getToken()
         .then(token => {
-          console.log('token', token);
           pushTokenServer(token);
           // return saveTokenToDatabase(token);
         });
       if (Platform.OS == 'ios') {
         messaging()
-          .getAPNSToken()
+          .getToken()
           .then(token => {
             console.log('token', token);
             pushTokenServer(token);
@@ -100,30 +98,32 @@ function ScheduleList(props) {
         console.log(remoteMessage);
         Alert.alert(JSON.stringify(remoteMessage.notification.body));
       });
-
+ 
       return unsubscribe;
     }
-    // messaging().onNotificationOpenedApp(remoteMessage => {
-    //   console.log(
-    //     'Notification caused app to open from background state:',
-    //     remoteMessage.notification,
-    //   );
-    //   // navigation.navigate(remoteMessage.data.type);
-    // });
+ 
+    messaging().onNotificationOpenedApp(remoteMessage => {
+      console.log(
+        'Notification caused app to open from background state:',
+        remoteMessage.notification,
+      );
+      // navigation.navigate(remoteMessage.data.type);
+    });
 
+    
     // // Check whether an initial notification is available
-    // messaging()
-    //   .getInitialNotification()
-    //   .then(remoteMessage => {
-    //     if (remoteMessage) {
-    //       console.log(
-    //         'Notification caused app to open from quit state:',
-    //         remoteMessage.notification,
-    //       );
-    //       setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
-    //     }
-    //     setLoading(false);
-    //   });
+    messaging()
+      .getInitialNotification()
+      .then(remoteMessage => {
+        if (remoteMessage) {
+          console.log(
+            'Notification caused app to open from quit state:',
+            remoteMessage.notification,
+          );
+          setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+        }
+        setLoading(false);
+      });
   }, [users]);
   const getApiData = useCallback(() => {
     const optionSchedule = {
